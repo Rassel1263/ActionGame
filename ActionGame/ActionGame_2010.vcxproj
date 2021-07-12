@@ -387,6 +387,25 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
@@ -415,6 +434,7 @@
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="ActionGame.rc" />
   </ItemGroup>
