@@ -9,6 +9,10 @@ enum class UnitState
 	FALL,
 	LATTACK,
 	HATTACK,
+	LSATTACK1,
+	LSATTACK2,
+	HSATTACK1,
+	HSATTACK2,
 	DIE,
 };
 
@@ -22,6 +26,7 @@ public:
 		float atkPower = 0.0f;
 		float atkSpeed = 0.0f;
 	} ability;
+
 
 	std::map<UnitState, Sprite> spr;
 	RenderInfo ri;

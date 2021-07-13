@@ -9,6 +9,8 @@ Units::Units(D3DXVECTOR2 pos)
 void Units::Update(float deltaTime)
 {
     spr[(UnitState)renderNum].Update(deltaTime);
+
+    Object::Update(deltaTime);
 }
 
 void Units::Render()
