@@ -43,6 +43,8 @@ void Sprite::Update(float deltaTime)
 
     if (aniTime >= aniMaxTime)
     {
+        aniTime = 0.0f;
+
         if (scene < szScene)
             scene++;
         else if (bAniLoop)

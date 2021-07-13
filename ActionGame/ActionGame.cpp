@@ -61,6 +61,8 @@ HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFA
 //--------------------------------------------------------------------------------------
 void CALLBACK OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
+    Game::GetInstance().unscaleTime = fElapsedTime;
+
     Game::GetInstance().Update(fElapsedTime);
 }
 

@@ -1,13 +1,14 @@
 #pragma once
-class Player : public Object
+
+class Player : public Units
 {
 public:
-	Sprite spr;
-	RenderInfo ri;
+	CState<Player>* nowState = NULL;
 
 	Player();
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
+	virtual bool Move(float deltaTime) override;
 };
 
