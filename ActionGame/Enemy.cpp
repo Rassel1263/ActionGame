@@ -4,17 +4,21 @@
 EnemyIdle* EnemyIdle::instance = new EnemyIdle;
 EnemyWalk* EnemyWalk::instance = new EnemyWalk;
 EnemyAttack* EnemyAttack::instance = new EnemyAttack;
+EnemySAttack* EnemySAttack::instance = new EnemySAttack;
 EnemyHit* EnemyHit::instance = new EnemyHit;
+EnemyDie* EnemyDie::instance = new EnemyDie;
 
 
 Enemy::Enemy(D3DXVECTOR2 pos, EnemyType type) : Units(pos)
 {
+	this->type = type;
+	tag = L"enemy";
+
 	SetInfo();
 
 	EnemyIdle::instance->EnterState(this);
 	renderer = UnitState::IDLE;
 
-	tag = L"enemy";
 
 	ri.scale.x = -ri.scale.x;
 }
@@ -66,17 +70,23 @@ void Enemy::SetInfo()
 		SetCollider(-30, -50, 30, 50);
 		break;
 	case EnemyType::Power:
-		break;
-	case EnemyType::Range:
+		SetAbility(10, 100, 20, 1.0f);
+		SetCollider(-50, -50, 50, 50);
 		break;
 	case EnemyType::Bind:
+		SetAbility(5, 200, 10, 0.5f);
+		SetCollider(-30, -30, 30, 30);
+		break;
+	case EnemyType::Range:
 		break;
 	}
 
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Idle");
 	spr[UnitState::WALK].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Walk");
 	spr[UnitState::LATTACK].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Attack", 0.1f, false);
+	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/SpecialAttack", 0.2f, false);
 	spr[UnitState::HIT].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Hit", 0.1f, false);
+	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Die", 0.1f, false);
 }
 
 bool Enemy::CheckPlayer(float distance)

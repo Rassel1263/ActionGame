@@ -12,6 +12,7 @@ public:
 	D3DXVECTOR2 pos = { 0, 0 };
 	float z = 0;
 
+	bool bRigid = true;
 	bool bGround = true;
 	float gravity = 1;
 	float groundPosY = 0;

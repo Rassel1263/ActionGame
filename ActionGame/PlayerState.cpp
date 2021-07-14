@@ -47,6 +47,18 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		PlayerDown::instance->EnterState(obj);
 		return;
 	}
+
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
+		return;
+	}
 }
 
 void PlayerIdle::ExitState(Player* obj)
@@ -126,6 +138,18 @@ void PlayerWalk::UpdateState(Player* obj, float deltaTime)
 	if (Input::GetInstance().KeyDown('D'))
 	{
 		PlayerDown::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
 		return;
 	}
 
@@ -217,19 +241,36 @@ void PlayerLAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::LATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->ability.atkPower = 500;
-	obj->Attack(D3DXVECTOR2(obj->ri.scale.x * 50, -40), D3DXVECTOR2(1, 0));
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, -40), { 1, 0 }, 500, 1);
 }
 
 void PlayerLAttack::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->aniTimer <= 0.0f)
+	{
+		obj->Attack();
+		obj->aniTimer = 999.0f;
+	}
+
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;
 	}
 
-	//obj->Move(deltaTime);
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
+		return;
+	}
+
+	obj->aniTimer -= deltaTime;
 }
 
 void PlayerLAttack::ExitState(Player* obj)
@@ -246,21 +287,32 @@ void PlayerHAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::HATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->ability.atkPower = 600;
-	obj->aniTimer = obj->spr[obj->renderer].aniMaxTime * 4;
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, -40), { 1, -0.2 }, 600, 4);
 }
 
 void PlayerHAttack::UpdateState(Player* obj, float deltaTime)
 {
 	if (obj->aniTimer <= 0.0f)
 	{
-		obj->Attack(D3DXVECTOR2(obj->ri.scale.x * 50, -40), D3DXVECTOR2(1, -0.2));
+		obj->Attack();
 		obj->aniTimer = 999.0f;
 	}
 
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
 		return;
 	}
 
@@ -297,6 +349,18 @@ void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 		PlayerIdle::instance->EnterState(obj);
 		return;
 	}
+
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
+		return;
+	}
 }
 
 void PlayerLSAttack::ExitState(Player* obj)
@@ -331,9 +395,106 @@ void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 		PlayerIdle::instance->EnterState(obj);
 		return;
 	}
+
+	if (obj->bind)
+	{
+		PlayerBind::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		PlayerHit::instance->EnterState(obj);
+		return;
+	}
 }
 
 void PlayerHSAttack::ExitState(Player* obj)
 {
 	obj->specialIndex = -1;
 }
+
+void PlayerBind::EnterState(Player* obj)
+{
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+
+	obj->renderer = UnitState::BIND;
+	obj->spr[obj->renderer].Reset();
+}
+
+void PlayerBind::UpdateState(Player* obj, float deltaTime)
+{
+	if (!obj->bind)
+	{
+		PlayerHit::instance->EnterState(obj);
+		return;
+	}
+}
+
+void PlayerBind::ExitState(Player* obj)
+{
+}
+
+
+void PlayerHit::EnterState(Player* obj)
+{
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+
+	obj->renderer = UnitState::HIT;
+	obj->spr[obj->renderer].Reset();
+
+	obj->ability.hp--;
+}
+
+void PlayerHit::UpdateState(Player* obj, float deltaTime)
+{
+	if (obj->ability.hp <= 0)
+	{
+		PlayerDie::instance->EnterState(obj);
+		return;
+	}
+
+	if (!obj->spr[obj->renderer].bAnimation)
+	{
+		PlayerIdle::instance->EnterState(obj);
+		return;
+	}
+}
+
+void PlayerHit::ExitState(Player* obj)
+{
+	obj->bHit = false;
+}
+
+void PlayerDie::EnterState(Player* obj)
+{
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+
+	obj->renderer = UnitState::DIE;
+	obj->spr[obj->renderer].Reset();
+}
+
+void PlayerDie::UpdateState(Player* obj, float deltaTime)
+{
+	if (!obj->spr[obj->renderer].bAnimation)
+	{
+		PlayerIdle::instance->EnterState(obj);
+		return;
+	}
+}
+
+void PlayerDie::ExitState(Player* obj)
+{
+	obj->ability.hp = 5;
+	obj->bHit = false;
+}
+

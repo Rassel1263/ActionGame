@@ -94,3 +94,33 @@ public:
 	virtual void UpdateState(Player* obj, float deltaTime);
 	virtual void ExitState(Player* obj);
 };
+
+class PlayerBind : public CState<Player>
+{
+public:
+	static PlayerBind* instance;
+
+	virtual void EnterState(Player* obj);
+	virtual void UpdateState(Player* obj, float deltaTime);
+	virtual void ExitState(Player* obj);
+};
+
+class PlayerHit : public CState<Player>
+{
+public:
+	static PlayerHit* instance;
+
+	virtual void EnterState(Player* obj);
+	virtual void UpdateState(Player* obj, float deltaTime);
+	virtual void ExitState(Player* obj);
+};
+
+class PlayerDie : public CState<Player>
+{
+public:
+	static PlayerDie* instance;
+
+	virtual void EnterState(Player* obj);
+	virtual void UpdateState(Player* obj, float deltaTime);
+	virtual void ExitState(Player* obj);
+};

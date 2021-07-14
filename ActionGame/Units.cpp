@@ -44,7 +44,15 @@ void Units::SetCollider(float left, float top, float right, float bottom, D3DXCO
     bodies.push_back(Collider(this, tag, &aabb, 0, color));
 }
 
-void Units::Attack(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec)
+void Units::SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPower, float timer)
+{
+    this->offset = offset;
+    this->attackVec = attackVec;
+    ability.atkPower = atkPower;
+    this->aniTimer = spr[renderer].aniMaxTime * timer;
+}
+
+void Units::Attack()
 {
     nowScene->obm.AddObject(new AttackCollider(this, offset, attackVec));
 }
