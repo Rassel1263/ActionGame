@@ -3,7 +3,8 @@
 
 void GameScene::Init()
 {
-	obm.AddObject(new Player());
+	obm.AddObject(new Enemy(D3DXVECTOR2(900, -200), EnemyType::Speedy));
+	obm.AddObject(player = new Player());
 }
 
 void GameScene::Update(float deltaTime)

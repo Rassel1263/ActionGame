@@ -8,7 +8,7 @@ Units::Units(D3DXVECTOR2 pos)
 
 void Units::Update(float deltaTime)
 {
-    spr[(UnitState)renderNum].Update(deltaTime);
+    spr[renderer].Update(deltaTime);
 
     Object::Update(deltaTime);
 }
@@ -16,7 +16,7 @@ void Units::Update(float deltaTime)
 void Units::Render()
 {
     ri.pos = pos;
-    spr[(UnitState)renderNum].Render(ri);
+    spr[renderer].Render(ri);
 
     Object::Render();
 }
@@ -32,4 +32,19 @@ void Units::SetAbility(float hp, float speed, float atkPower, float atkSpeed)
     ability.speed = speed;
     ability.atkPower = atkPower;
     ability.atkSpeed = atkSpeed;
+
+}
+
+void Units::SetCollider(float left, float top, float right, float bottom, D3DXCOLOR color)
+{
+    Collider::AABB aabb;
+    aabb.min = { left, top };
+    aabb.max = { right, bottom };
+
+    bodies.push_back(Collider(this, tag, &aabb, 0, color));
+}
+
+void Units::Attack(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec)
+{
+    nowScene->obm.AddObject(new AttackCollider(this, offset, attackVec));
 }

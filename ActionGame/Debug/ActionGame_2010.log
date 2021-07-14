@@ -1,0 +1,88 @@
+﻿  DXUT.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUT.cpp(696,131): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUT.cpp(696,187): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUT.cpp(697,135): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUT.cpp(697,195): warning C4838: 'UINT'에서 'LONG'(으)로의 변환에는 축소 변환이 필요합니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUT.cpp(4961,13): warning C4996: 'GetVersionExW': deprecated로 선언되었습니다.
+  Collider.cpp
+  Game.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Game.cpp(20,62): warning C4244: '=': 'LONG'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Game.cpp(101,31): warning C4458: 'nextScene' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Game.h(39,9): message : 'Game::nextScene' 선언을 참조하십시오.
+  GameScene.cpp
+  Input.cpp
+  Object.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Object.cpp(47,24): warning C4458: 'pos' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Object.h(12,14): message : 'Object::pos' 선언을 참조하십시오.
+  Player.cpp
+  PlayerState.cpp
+  Scene.cpp
+  Sprite.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(4,21): error C2039: 'filesystem': 'std'의 멤버가 아닙니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\map(25): message : 'std' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(4,31): error C2878: 'filesystem': 같은 이름을 가진 네임스페이스 또는 클래스가 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(12,35): warning C4458: 'filePath' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.h(29,15): message : 'Sprite::filePath' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(12,51): warning C4458: 'aniMaxTime' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.h(18,8): message : 'Sprite::aniMaxTime' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(16,9): error C2653: 'fs': 클래스 또는 네임스페이스 이름이 아닙니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(16,13): error C3861: 'is_directory': 식별자를 찾을 수 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(18,26): error C2653: 'fs': 클래스 또는 네임스페이스 이름이 아닙니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(18,30): error C3861: 'recursive_directory_iterator': 식별자를 찾을 수 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(18,58): error C2672: 'begin': 일치하는 오버로드된 함수가 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C2893: 함수 템플릿 'unknown-type std::begin(_Container &)'을(를) 특수화하지 못했습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\xutility(1916): message : 'std::begin' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): message : 다음 템플릿 인수 사용:
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): message : '_Container=unknown-type'
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C2784: 'const _Elem *std::begin(std::initializer_list<_Elem>) noexcept': 'std::initializer_list<_Elem>'의 템플릿 인수를 'unknown-type'에서 추론할 수 없습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\initializer_list(57): message : 'std::begin' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(18,58): error C2672: 'end': 일치하는 오버로드된 함수가 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C2893: 함수 템플릿 'unknown-type std::end(_Container &)'을(를) 특수화하지 못했습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\xutility(1926): message : 'std::end' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): message : 다음 템플릿 인수 사용:
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): message : '_Container=unknown-type'
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C2784: 'const _Elem *std::end(std::initializer_list<_Elem>) noexcept': 'std::initializer_list<_Elem>'의 템플릿 인수를 'unknown-type'에서 추론할 수 없습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\initializer_list(63): message : 'std::end' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C3536: '<begin>$L0': 초기화되기 전에 사용할 수 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(19,9): error C3536: '<end>$L0': 초기화되기 전에 사용할 수 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(18,68): error C2100: 간접 참조가 잘못되었습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(20,85): error C3536: 'texture': 초기화되기 전에 사용할 수 없습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(21,43): error C2664: 'void std::vector<const Texture *,std::allocator<const Texture *>>::push_back(const _Ty &)': 인수 1을(를) 'int'에서 'const _Ty &'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Ty=const Texture *
+          ]
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(21,43): message : 원인: 'int'에서 'const _Ty'(으)로 변환할 수 없습니다.
+          with
+          [
+              _Ty=const Texture *
+          ]
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(21,36): message : 정수 계열 형식에서 포인터 형식으로 변환하려면 reinterpret_cast, C 스타일 캐스트 또는 함수 스타일 캐스트가 필요합니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30037\include\vector(755,33): message : 'std::vector<const Texture *,std::allocator<const Texture *>>::push_back' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(61): warning C4238: 비표준 확장이 사용됨: 클래스 rvalue를 lvalue로 사용했습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Sprite.cpp(61,125): warning C4238: 비표준 확장이 사용됨: 클래스 rvalue를 lvalue로 사용했습니다.
+  Texture.cpp
+  Units.cpp
+  DXUTenum.cpp
+  DXUTmisc.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Core\DXUTmisc.cpp(1263,13): warning C4996: 'GetVersionExA': deprecated로 선언되었습니다.
+  DXUTcamera.cpp
+  DXUTgui.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.cpp(6846,37): warning C4458: 'iTexture' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.h(109,10): message : 'CDXUTElement::iTexture' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.cpp(6860,34): warning C4458: 'iFont' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.h(110,10): message : 'CDXUTElement::iFont' 선언을 참조하십시오.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.cpp(6860,74): warning C4458: 'dwTextFormat' 선언은 클래스 멤버를 숨깁니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\DXUT\Optional\DXUTgui.h(111,11): message : 'CDXUTElement::dwTextFormat' 선언을 참조하십시오.
+  DXUTres.cpp
+  DXUTsettingsdlg.cpp
+  SDKmesh.cpp
+  SDKmisc.cpp
+  ActionGame.cpp
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\ActionGame.cpp(102,86): warning C4244: '+=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\ActionGame.cpp(104,86): warning C4244: '-=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\ActionGame.cpp(157,81): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\ActionGame.cpp(157,48): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
+C:\Users\lomil\Desktop\Git\ActionGame\ActionGame\Collider.cpp(34): warning C4715: 'IntersectCollider': 모든 제어 경로에서 값을 반환하지는 않습니다.

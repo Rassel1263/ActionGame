@@ -16,8 +16,10 @@ void Object::Update(float deltaTime)
 	else
 		velocity.x = 0;
 
-	if (pos.y  >= 200 + z)
+	if (pos.y >= 200 + z)
 	{
+		if (!bGround) pos.y = 200 + z;
+
 		bGround = true;
 		velocity.y = 0;
 	}

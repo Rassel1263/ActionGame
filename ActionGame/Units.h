@@ -13,6 +13,7 @@ enum class UnitState
 	LSATTACK2,
 	HSATTACK1,
 	HSATTACK2,
+	HIT,
 	DIE,
 };
 
@@ -27,11 +28,15 @@ public:
 		float atkSpeed = 0.0f;
 	} ability;
 
+	bool bHit = false;
+
+	float aniTimer = 0.0f;
 
 	std::map<UnitState, Sprite> spr;
 	RenderInfo ri;
 
-	int renderNum = 0;
+	UnitState renderer = UnitState::IDLE;
+	std::wstring tag;
 
 	Units(D3DXVECTOR2 pos);
 
@@ -40,5 +45,8 @@ public:
 	virtual bool Move(float deltaTime);
 
 	void SetAbility(float hp, float speed, float atkPower, float atkSpeed);
+	void SetCollider(float left, float top, float right, float bottom, D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 0, 0));
+	void Attack(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec);
+
 };
 

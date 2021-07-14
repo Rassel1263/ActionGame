@@ -7,7 +7,7 @@ void PlayerIdle::EnterState(Player* obj)
 		obj->nowState->ExitState(obj);
 
 	obj->nowState = this;
-	obj->renderNum = 0;
+	obj->renderer = UnitState::IDLE;
 }
 
 void PlayerIdle::UpdateState(Player* obj, float deltaTime)
@@ -61,7 +61,7 @@ void PlayerDown::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 1;
+	obj->renderer = UnitState::DOWN;
 }
 
 void PlayerDown::UpdateState(Player* obj, float deltaTime)
@@ -85,7 +85,10 @@ void PlayerWalk::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 2;
+	obj->renderer = UnitState::WALK;
+
+	if (obj->SpecialIndex() == 0)
+		obj->velocity.x = 1500 * obj->ri.scale.x;
 }
 
 void PlayerWalk::UpdateState(Player* obj, float deltaTime)
@@ -138,8 +141,8 @@ void PlayerJump::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 3;
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->renderer = UnitState::JUMP;
+	obj->spr[obj->renderer].Reset();
 
 	obj->velocity.y = -800;
 }
@@ -173,8 +176,8 @@ void PlayerFall::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 4;
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->renderer = UnitState::FALL;
+	obj->spr[obj->renderer].Reset();
 }
 
 void PlayerFall::UpdateState(Player* obj, float deltaTime)
@@ -200,13 +203,16 @@ void PlayerLAttack::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 5;
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->renderer = UnitState::LATTACK;
+	obj->spr[obj->renderer].Reset();
+
+	obj->ability.atkPower = 500;
+	obj->Attack(D3DXVECTOR2(obj->ri.scale.x * 50, -40), D3DXVECTOR2(1, 0));
 }
 
 void PlayerLAttack::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[(UnitState)obj->renderNum].bAnimation)
+	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;
@@ -226,22 +232,32 @@ void PlayerHAttack::EnterState(Player* obj)
 
 	obj->nowState = this;
 
-	obj->renderNum = 6;
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->renderer = UnitState::HATTACK;
+	obj->spr[obj->renderer].Reset();
+
+	obj->ability.atkPower = 600;
+	obj->aniTimer = obj->spr[obj->renderer].aniMaxTime * 4;
 }
 
 void PlayerHAttack::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[(UnitState)obj->renderNum].bAnimation)
+	if (obj->aniTimer <= 0.0f)
+	{
+		obj->Attack(D3DXVECTOR2(obj->ri.scale.x * 50, -40), D3DXVECTOR2(1, -0.2));
+		obj->aniTimer = 999.0f;
+	}
+
+	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;
 	}
+
+	obj->aniTimer -= deltaTime;
 }
 
 void PlayerHAttack::ExitState(Player* obj)
 {
-
 }
 
 void PlayerLSAttack::EnterState(Player* obj)
@@ -254,18 +270,18 @@ void PlayerLSAttack::EnterState(Player* obj)
 	switch (obj->specialIndex)
 	{
 	case 0:
-		obj->renderNum = 7;
+		obj->renderer = UnitState::LSATTACK1;
 		break;
 	case 1:
-		obj->renderNum = 8;
+		obj->renderer = UnitState::LSATTACK2;
 		break;
 	}
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->spr[obj->renderer].Reset();
 }
 
 void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[(UnitState)obj->renderNum].bAnimation)
+	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;
@@ -287,19 +303,19 @@ void PlayerHSAttack::EnterState(Player* obj)
 	switch (obj->specialIndex)
 	{
 	case 0:
-		obj->renderNum = 9;
+		obj->renderer = UnitState::HSATTACK1;
 		break;
 	case 1:
-		obj->renderNum = 10;
+		obj->renderer = UnitState::HSATTACK2;
 		break;
 	}
 
-	obj->spr[(UnitState)obj->renderNum].Reset();
+	obj->spr[obj->renderer].Reset();
 }
 
 void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[(UnitState)obj->renderNum].bAnimation)
+	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;

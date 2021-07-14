@@ -18,18 +18,21 @@ Player::Player() : Units(D3DXVECTOR2(0, -200))
 	spr[UnitState::WALK].LoadAll(L"Assets/Sprites/Units/Player/Walk");
 	spr[UnitState::JUMP].LoadAll(L"Assets/Sprites/Units/Player/Jump", 0.1f, false);
 	spr[UnitState::FALL].LoadAll(L"Assets/Sprites/Units/Player/Fall", 0.1f, false);
-	spr[UnitState::LATTACK].LoadAll(L"Assets/Sprites/Units/Player/LightAttack", 0.1f, false);
-	spr[UnitState::HATTACK].LoadAll(L"Assets/Sprites/Units/Player/HeavyAttack", 0.1f, false);
-	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L1", 0.1f, false);
-	spr[UnitState::LSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L2", 0.1f, false);
-	spr[UnitState::HSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H1", 0.1f, false);
-	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.1f, false);
+	spr[UnitState::LATTACK].LoadAll(L"Assets/Sprites/Units/Player/LightAttack", 0.05f, false);
+	spr[UnitState::HATTACK].LoadAll(L"Assets/Sprites/Units/Player/HeavyAttack", 0.08f, false);
+	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L1", 0.05f, false);
+	spr[UnitState::LSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L2", 0.05f, false);
+	spr[UnitState::HSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H1", 0.08f, false);
+	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.08f, false);
 
 	PlayerIdle::instance->EnterState(this);
 
-	renderNum = 0;
+	renderer = UnitState::IDLE;
+
+	tag = L"player";
 
 	SetAbility(5, 300, 1, 1);
+	SetCollider(-30, -50, 30, 50);
 }
 
 void Player::Update(float deltaTime)
@@ -69,12 +72,12 @@ bool Player::Move(float deltaTime)
 	if (Input::GetInstance().KeyPress(VK_LEFT))
 	{
 		vMove.x = -1;
-		ri.scale.x = -vMove.x;
+		ri.scale.x = vMove.x;
 	}
 	else if (Input::GetInstance().KeyPress(VK_RIGHT))
 	{
 		vMove.x = 1;
-		ri.scale.x = -vMove.x;
+		ri.scale.x = vMove.x;
 	}
 
 	if (bGround)

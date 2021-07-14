@@ -118,6 +118,13 @@
     <ClCompile Include="PlayerState.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -162,6 +169,13 @@
     <ClInclude Include="PlayerState.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
