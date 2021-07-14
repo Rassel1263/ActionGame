@@ -389,6 +389,7 @@
   <ItemGroup>
     <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyState.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -404,6 +405,7 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CState.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyState.h" />
     <ClInclude Include="Game.h" />

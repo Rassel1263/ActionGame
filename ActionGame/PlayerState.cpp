@@ -128,6 +128,17 @@ void PlayerWalk::UpdateState(Player* obj, float deltaTime)
 		PlayerDown::instance->EnterState(obj);
 		return;
 	}
+
+	if (abs(obj->velocity.x) > 0)
+	{
+		if (eftTimer >= 0.02f)
+		{
+			nowScene->obm.AddObject(new Effect(obj->spr[obj->renderer], obj->ri.scale, obj->pos, 0.2f));
+			eftTimer = 0.0f;
+		}
+
+		eftTimer += deltaTime;
+	}
 }
 
 void PlayerWalk::ExitState(Player* obj)

@@ -21,6 +21,15 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{56f5e57f-ba2e-4cbb-9c7c-9e5fd829a704}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Unit">
+      <UniqueIdentifier>{61bacbc9-9833-4ba9-8d95-23f914b02469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit\State">
+      <UniqueIdentifier>{41067389-f969-4691-b9ca-3dda7e36b9d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{5789a36d-58e9-4a77-861c-13cefebb4b55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -109,22 +118,27 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
     </ClCompile>
     <ClCompile Include="Units.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
     </ClCompile>
     <ClCompile Include="PlayerState.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit\State</Filter>
     </ClCompile>
     <ClCompile Include="EnemyState.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit\State</Filter>
     </ClCompile>
-    <ClCompile Include="AttackCollider.cpp" />
+    <ClCompile Include="AttackCollider.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -157,25 +171,30 @@
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
     </ClInclude>
     <ClInclude Include="Units.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="CState.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
     </ClInclude>
     <ClInclude Include="PlayerState.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit\State</Filter>
     </ClInclude>
     <ClInclude Include="EnemyState.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit\State</Filter>
     </ClInclude>
-    <ClInclude Include="AttackCollider.h" />
+    <ClInclude Include="CState.h">
+      <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

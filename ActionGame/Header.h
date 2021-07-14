@@ -21,13 +21,15 @@
 #include "CState.h"
 
 #include "Units.h"
+#include "AttackCollider.h"
+
 #include "Player.h"
 #include "PlayerState.h"
 
 #include "Enemy.h"
 #include "EnemyState.h"
 
-#include "AttackCollider.h"
+#include "Effect.h"
 
 #include "Scene.h"
 #include "GameScene.h"

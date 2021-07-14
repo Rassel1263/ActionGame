@@ -23,6 +23,8 @@ public:
 class PlayerWalk : public CState<Player>
 {
 public:
+	float eftTimer = 0.0f;
+
 	static PlayerWalk* instance;
 
 	virtual void EnterState(Player* obj);
@@ -33,6 +35,7 @@ public:
 class PlayerJump : public CState<Player>
 {
 public:
+
 	static PlayerJump* instance;
 
 	virtual void EnterState(Player* obj);
