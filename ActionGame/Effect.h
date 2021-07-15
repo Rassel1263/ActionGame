@@ -1,16 +1,10 @@
 #pragma once
-class Effect : public Object
+class Effect : public IEffect
 {
 public:
-	Sprite spr;
-	RenderInfo ri;
+	Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, float visibleTime = 0.0f);
 
-	float visibleTime = 0.0f;
-	float timer = 0.0f;
-
-	Effect(Sprite spr, D3DXVECTOR2 scale, D3DXVECTOR2 pos, float visibleTime);
-
-	virtual void Update(float deltaTime);
-	virtual void Render();
+	virtual void Update(float deltaTime) override;
+	virtual void Render() override;
 };
 

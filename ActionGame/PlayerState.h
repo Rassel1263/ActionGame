@@ -76,6 +76,8 @@ public:
 class PlayerLSAttack : public CState<Player>
 {
 public:
+	bool bAttack = false;
+
 	static PlayerLSAttack* instance;
 
 	virtual void EnterState(Player* obj);
@@ -87,6 +89,8 @@ public:
 class PlayerHSAttack : public CState<Player>
 {
 public:
+	bool bAttack = false;
+
 	static PlayerHSAttack* instance;
 
 	virtual void EnterState(Player* obj);

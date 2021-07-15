@@ -33,6 +33,9 @@
     <Filter Include="Object\UI">
       <UniqueIdentifier>{281f871a-8ac4-4cf0-9743-470ae4dff288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Item">
+      <UniqueIdentifier>{bf1c0641-1ef7-4642-b431-555ae6d08690}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -136,9 +139,6 @@
     <ClCompile Include="AttackCollider.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="EnemyRange.cpp">
       <Filter>Object\Unit</Filter>
@@ -151,6 +151,19 @@
     </ClCompile>
     <ClCompile Include="Units.cpp">
       <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Spectrum.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="IEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="Chest.cpp">
+      <Filter>Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -202,9 +215,6 @@
     <ClInclude Include="AttackCollider.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Background.h" />
     <ClInclude Include="EnemyRange.h">
       <Filter>Object\Unit</Filter>
@@ -217,6 +227,19 @@
     </ClInclude>
     <ClInclude Include="Units.h">
       <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Spectrum.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="IEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="Chest.h">
+      <Filter>Object\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

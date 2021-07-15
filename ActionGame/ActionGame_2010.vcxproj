@@ -389,8 +389,12 @@
   <ItemGroup>
     <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Chest.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="Spectrum.cpp" />
+    <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyRange.cpp" />
     <ClCompile Include="EnemyState.cpp" />
@@ -408,9 +412,13 @@
     <ClCompile Include="Units.cpp" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Chest.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="Spectrum.h" />
+    <ClInclude Include="IEffect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyRange.h" />
     <ClInclude Include="EnemyState.h" />

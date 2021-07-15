@@ -13,7 +13,7 @@ AttackCollider::AttackCollider(Units* obj, D3DXVECTOR2 offset, D3DXVECTOR2 attac
 	aabb.min = { -5, -5 };
 	aabb.max = { 5, 5 };
 
-	bodies.push_back(Collider(this, obj->tag, &aabb, 0));
+	bodies.push_back(Collider(this, obj->tag + L"Attack", &aabb, 0));
 }
 
 void AttackCollider::Update(float deltaTime)
@@ -35,8 +35,12 @@ void AttackCollider::Render()
 void AttackCollider::OnCollision(Collider& other)
 {
 	if (obj->tag == other.tag) return;
+	if (obj->tag == L"enemy" && other.tag == L"enemyRange") return;
+
 	if (other.tag == L"enemy")
 		nowScene->player->target = static_cast<Enemy*>(other.obj);
+
+	nowScene->obm.AddObject(new Effect(L"Hit", pos, D3DXVECTOR2(0.2, 0.2)));
 
 	D3DXVECTOR2 vtemp = attackVec;
 

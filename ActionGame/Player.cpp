@@ -14,7 +14,7 @@ PlayerBind* PlayerBind::instance = new PlayerBind;
 PlayerHit* PlayerHit::instance = new PlayerHit;
 PlayerDie* PlayerDie::instance = new PlayerDie;
 
-Player::Player() : Units(D3DXVECTOR2(0, 0))
+Player::Player() : Units(D3DXVECTOR2(-800, 0))
 {
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Player/Idle");
 	spr[UnitState::DOWN].LoadAll(L"Assets/Sprites/Units/Player/Down");
@@ -37,19 +37,20 @@ Player::Player() : Units(D3DXVECTOR2(0, 0))
 
 	tag = L"player";
 
-	SetAbility(5, 300, 1, 1);
+	SetAbility(5, 200, 1, 1);
 	SetCollider(-30, -50, 30, 50);
 
-	Game::GetInstance().destCameraPos = { 0, 120 };
+	Game::GetInstance().destCameraPos = { -699, 120 };
+	Game::GetInstance().cameraPos = { -699, 120 };
 }
 
 void Player::Update(float deltaTime)
 {
-	if (pos.x > -700 )
+	if (pos.x > limitLeft && pos.x < limitRight)
 		Game::GetInstance().destCameraPos.x = pos.x;
 
 	//std::cout << Input::GetInstance().mousePos.x << std::endl;
-	std::cout << pos.y << std::endl;
+	std::cout << pos.x << std::endl;
 
 	inputTimer += deltaTime;
 	for (int i = 0; i < 4; ++i)
@@ -75,7 +76,7 @@ void Player::Update(float deltaTime)
 	{
 		if (eftTimer >= 0.02f)
 		{
-			nowScene->obm.AddObject(new Effect(spr[renderer], ri.scale, pos, 0.2f));
+			nowScene->obm.AddObject(new Spectrum(spr[renderer], pos, ri.scale , 0.2f));
 			eftTimer = 0.0f;
 		}
 
@@ -125,6 +126,12 @@ bool Player::Move(float deltaTime)
 	
 	if (vMove.x == 0 && vMove.y == 0)
 		return false;
+
+	if (pos.x + vMove.x < limitLeft - 300 || pos.x + vMove.x > limitRight + 300)
+	{
+		velocity.x = 0;
+		return false;
+	}
 
 	pos.x += vMove.x * ability.speed * deltaTime;
 

@@ -12,6 +12,7 @@ EnemyDie* EnemyDie::instance = new EnemyDie;
 Enemy::Enemy(D3DXVECTOR2 pos, EnemyType type) : Units(pos)
 {
 	this->type = type;
+	this->z = pos.y;
 	tag = L"enemy";
 
 	SetInfo();
@@ -37,7 +38,7 @@ void Enemy::Render()
 
 bool Enemy::Move(float deltaTime)
 {
-	if (CheckDistance(200))
+	if (CheckDistance(400))
 	{
 		D3DXVECTOR2 distanceVec = nowScene->player->pos - pos;
 

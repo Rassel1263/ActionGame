@@ -15,6 +15,9 @@ public:
 	float specialMaxGaze = 100.0f;
 	float eftTimer = 0.0f;
 
+	float limitLeft = -700;
+	float limitRight = 700;
+
 	Player();
 
 	Enemy* target = NULL;

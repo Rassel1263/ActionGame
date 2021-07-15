@@ -29,11 +29,16 @@
 #include "EnemyRange.h"
 #include "Enemy.h"
 #include "EnemyState.h"
+#include "EnemySpawner.h"
+
+#include "Chest.h"
 
 #include "PGaze.h"
 #include "UnitHp.h"
 
+#include "IEffect.h"
 #include "Effect.h"
+#include "Spectrum.h"
 
 #include "Background.h"
 
