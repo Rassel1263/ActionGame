@@ -1,13 +1,15 @@
 #pragma once
-class Item : public Object
+class Boom : public Object
 {
 public:
 	Sprite spr;
 	RenderInfo ri;
 
-	int index = 0;
+	bool ignition = false;
 
-	Item(D3DXVECTOR2 pos, int index);
+	float timer = 0.0f;
+
+	Boom(D3DXVECTOR2 pos, D3DXVECTOR2 scale, float timer);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

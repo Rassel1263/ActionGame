@@ -32,8 +32,12 @@ public:
 
 	bool bHit = false;
 	bool bind = false;
+	bool bPowerUp = false;
 
 	float aniTimer = 0.0f;
+	float shaderTimer = 0.0f;
+	float abilityTimer = 0.0f;
+
 	D3DXVECTOR2 offset = { 0, 0 };
 	D3DXVECTOR2 attackVec = { 0, 0 };
 
@@ -42,6 +46,8 @@ public:
 
 	UnitState renderer = UnitState::IDLE;
 	std::wstring tag;
+
+	SimpleShader* simpleShader;
 
 	Units(D3DXVECTOR2 pos);
 

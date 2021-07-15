@@ -74,6 +74,12 @@ void PlayerDown::EnterState(Player* obj)
 	obj->nowState = this;
 
 	obj->renderer = UnitState::DOWN;
+
+	if (obj->boom)
+	{
+		nowScene->obm.AddObject(new Boom(obj->pos, obj->ri.scale, 3.0f));
+		obj->boom = false;
+	}
 }
 
 void PlayerDown::UpdateState(Player* obj, float deltaTime)

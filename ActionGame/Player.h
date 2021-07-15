@@ -15,8 +15,15 @@ public:
 	float specialMaxGaze = 100.0f;
 	float eftTimer = 0.0f;
 
+	float hpGaze = 0.0f;
+	float hpMaxGaze = 100.0f;
+
+
 	float limitLeft = -700;
 	float limitRight = 700;
+
+	int itemIndex = 0;
+	bool boom = false;
 
 	Player();
 
@@ -27,5 +34,6 @@ public:
 	virtual bool Move(float deltaTime) override;
 	int SpecialIndex();
 	void PlusSpecialGaze(int amount);
+	void SetItemEffect(int index);
 };
 

@@ -95,6 +95,9 @@
     <ClCompile Include="DXUT\Optional\SDKmisc.cpp">
       <Filter>DXUT</Filter>
     </ClCompile>
+    <None Include="Assets\Shader\SimpleShader.fx">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -163,6 +166,14 @@
     </ClCompile>
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Chest.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleShader.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="Boom.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -241,6 +252,14 @@
     <ClInclude Include="Chest.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="Boom.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -249,7 +268,5 @@
     <ResourceCompile Include="ActionGame.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

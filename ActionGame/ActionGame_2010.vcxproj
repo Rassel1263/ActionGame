@@ -389,10 +389,14 @@
   <ItemGroup>
     <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Boom.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="SimpleShader.cpp" />
     <ClCompile Include="Spectrum.cpp" />
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -412,11 +416,15 @@
     <ClCompile Include="Units.cpp" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Background.h" />
+    <ClInclude Include="Boom.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="Spectrum.h" />
     <ClInclude Include="IEffect.h" />
     <ClInclude Include="Enemy.h" />
@@ -461,6 +469,10 @@
     <ClCompile Include="ActionGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shader\SimpleShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h" />

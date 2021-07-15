@@ -33,6 +33,8 @@ UnitHp::UnitHp()
 
 void UnitHp::Update(float deltaTime)
 {
+	hp[1].widthRatio = nowScene->player->ability.hp / nowScene->player->ability.maxHp;
+
 	if(nowScene->player->target)
 		hp[4].widthRatio = nowScene->player->target->ability.hp / nowScene->player->target->ability.maxHp;
 }

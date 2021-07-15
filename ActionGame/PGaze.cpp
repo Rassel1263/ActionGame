@@ -27,7 +27,7 @@ PGaze::PGaze(Player* player)
 void PGaze::Update(float deltaTime)
 {
 	gaze[0].widthRatio = nowScene->player->specialGaze / nowScene->player->specialMaxGaze;
-	gaze[2].widthRatio = nowScene->player->ability.hp / nowScene->player->ability.maxHp;
+	gaze[2].widthRatio = nowScene->player->hpGaze / nowScene->player->hpMaxGaze;
 }
 
 void PGaze::Render()

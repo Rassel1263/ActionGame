@@ -15,6 +15,9 @@
 #include "Texture.h"
 #include "Sprite.h"
 
+#include "ShaderManager.h"
+#include "SimpleShader.h"
+
 #include "Object.h"
 #include "Collider.h"
 
@@ -32,6 +35,8 @@
 #include "EnemySpawner.h"
 
 #include "Chest.h"
+#include "Item.h"
+#include "Boom.h"
 
 #include "PGaze.h"
 #include "UnitHp.h"

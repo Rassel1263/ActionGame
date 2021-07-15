@@ -4,6 +4,8 @@
 Units::Units(D3DXVECTOR2 pos)
 {
     this->pos = pos;
+
+    simpleShader = new SimpleShader();
 }
 
 void Units::Update(float deltaTime)
@@ -49,7 +51,7 @@ void Units::SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPo
 {
     this->offset = offset;
     this->attackVec = attackVec;
-    ability.atkPower = atkPower;
+    (bPowerUp) ? ability.atkPower = atkPower * 1.3f : ability.atkPower = atkPower;
     this->aniTimer = spr[renderer].aniMaxTime * timer;
 }
 

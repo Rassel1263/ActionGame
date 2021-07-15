@@ -49,8 +49,6 @@ void Player::Update(float deltaTime)
 	if (pos.x > limitLeft && pos.x < limitRight)
 		Game::GetInstance().destCameraPos.x = pos.x;
 
-	//std::cout << Input::GetInstance().mousePos.x << std::endl;
-	std::cout << pos.x << std::endl;
 
 	inputTimer += deltaTime;
 	for (int i = 0; i < 4; ++i)
@@ -69,19 +67,45 @@ void Player::Update(float deltaTime)
 		nowInput = -1;
 	}
 
-	if (nowState)
-		nowState->UpdateState(this, deltaTime);
-
 	if (abs(velocity.x) > 0 && !bHit)
 	{
 		if (eftTimer >= 0.02f)
 		{
-			nowScene->obm.AddObject(new Spectrum(spr[renderer], pos, ri.scale , 0.2f));
+			nowScene->obm.AddObject(new Spectrum(spr[renderer], pos, ri.scale, 0.2f));
 			eftTimer = 0.0f;
 		}
 
 		eftTimer += deltaTime;
 	}
+
+	if (bPowerUp)
+	{
+		abilityTimer += deltaTime;
+		if (abilityTimer >= 3.0f)
+		{
+			bPowerUp = false;
+			abilityTimer = 0.0f;
+		}
+	}
+
+	if (hpGaze >= hpMaxGaze)
+	{
+		if (Input::GetInstance().KeyDown(VK_SPACE))
+		{
+			hpGaze = 0;
+			ability.hp++;
+		}
+	}
+
+	shaderTimer += deltaTime * 2;
+
+	while (shaderTimer >= 2.0f)
+		shaderTimer -= 3.0f;
+
+	if (nowState)
+		nowState->UpdateState(this, deltaTime);
+
+	std::cout << ability.atkPower << std::endl;
 
 	Units::Update(deltaTime);
 }
@@ -89,6 +113,9 @@ void Player::Update(float deltaTime)
 void Player::Render()
 {
 	Units::Render();
+
+	if (bPowerUp)
+		simpleShader->Render(simpleShader, spr[renderer].GetNowScene(), spr[renderer], ri, D3DXVECTOR4(1.0f, 0.0f, 0.0f, 1.0f), D3DXVECTOR4(0.8f, 0.8f, 0.8f, 1.0f), shaderTimer);
 }
 
 bool Player::Move(float deltaTime)
@@ -122,8 +149,8 @@ bool Player::Move(float deltaTime)
 			if (z > -20)
 				z -= 2;
 		}
-	} 
-	
+	}
+
 	if (vMove.x == 0 && vMove.y == 0)
 		return false;
 
@@ -132,6 +159,9 @@ bool Player::Move(float deltaTime)
 		velocity.x = 0;
 		return false;
 	}
+
+	if(hpGaze < hpMaxGaze)
+		hpGaze += 10 * deltaTime;
 
 	pos.x += vMove.x * ability.speed * deltaTime;
 
@@ -169,4 +199,27 @@ void Player::PlusSpecialGaze(int amount)
 	if (specialGaze > specialMaxGaze)
 		specialGaze = 100;
 
+}
+
+void Player::SetItemEffect(int index)
+{
+	switch (index)
+	{
+	case 0:
+		bPowerUp = true;
+		break;
+
+	case 1:
+		boom = true;
+		break;
+
+	case 2:
+		ability.hp += 2;
+		if (ability.hp >= ability.maxHp)
+			ability.hp = ability.maxHp;
+
+		체력 올라가는거 정리하기
+		break;
+
+	}
 }

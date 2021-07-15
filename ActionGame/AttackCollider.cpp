@@ -37,7 +37,7 @@ void AttackCollider::OnCollision(Collider& other)
 	if (obj->tag == other.tag) return;
 	if (obj->tag == L"enemy" && other.tag == L"enemyRange") return;
 
-	if (other.tag == L"enemy")
+	if (other.tag == L"enemy") 
 		nowScene->player->target = static_cast<Enemy*>(other.obj);
 
 	nowScene->obm.AddObject(new Effect(L"Hit", pos, D3DXVECTOR2(0.2, 0.2)));

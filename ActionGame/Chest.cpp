@@ -42,7 +42,11 @@ void Chest::OnCollision(Collider& other)
 {
 	if (other.tag == L"playerAttack")
 	{
-		renderNum = 1;
+		if (renderNum == 0)
+		{
+			nowScene->obm.AddObject(new Item(pos, 2));
+			renderNum = 1;
+		}
 		spr[renderNum].bAniLoop = false;
 	}
 }
