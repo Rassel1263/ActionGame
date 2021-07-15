@@ -6,7 +6,7 @@ void Object::Update(float deltaTime)
 	if (bRigid)
 	{
 		if (!bGround)
-			force.y += gravity * 2;
+			force.y -= gravity * 2;
 
 		velocity += force * 10;
 		force = { 0, 0 };
@@ -18,12 +18,10 @@ void Object::Update(float deltaTime)
 		else
 			velocity.x = 0;
 
-		if (pos.y >= 200 + z)
+		if (pos.y <= z)
 		{
-			if (!bGround) pos.y = 200 + z;
-
 			bGround = true;
-			velocity.y = 0;
+			pos.y = z;
 		}
 		else
 			bGround = false;
@@ -32,13 +30,14 @@ void Object::Update(float deltaTime)
 
 void Object::Render()
 {
-	for (auto& body : bodies)
+#ifdef _DEBUG
+	if (bCollision)
 	{
-		D3DXMATRIX matrix;
-		D3DXMatrixTranslation(&matrix, pos.x - Game::GetInstance().cameraPos.x, -pos.y + Game::GetInstance().cameraPos.y, 0.0f);
-
-		if (bCollision)
+		for (auto body : bodies)
 		{
+			D3DXMATRIX matrix;
+			D3DXMatrixTranslation(&matrix, pos.x, pos.y, 0.0f);
+
 			if (body.type == Collider::Type::AABB)
 			{
 				Game::GetInstance().DrawLine(body.aabb.min, D3DXVECTOR2(body.aabb.max.x, body.aabb.min.y), matrix, body.color);
@@ -56,24 +55,20 @@ void Object::Render()
 			}
 		}
 	}
+#endif
 }
 
-void Object::OnCollision(Collider& obj)
+void Object::OnCollision(Collider& coll)
 {
 }
 
 ObjectManager::~ObjectManager()
 {
-	for (auto& object : objects)
-		SAFE_DELETE(object);
-
-	for (auto& addObject : addObjects)
-		SAFE_DELETE(addObject);
 }
 
-void ObjectManager::AddObject(Object* obj)
+void ObjectManager::AddObject(Object* addObject)
 {
-	addObjects.push_back(obj);
+	addObjects.push_back(addObject);
 }
 
 void ObjectManager::Update(float deltaTime)
@@ -81,19 +76,18 @@ void ObjectManager::Update(float deltaTime)
 	objects.insert(objects.end(), addObjects.begin(), addObjects.end());
 	addObjects.clear();
 
-	std::sort(objects.begin(), objects.end(), [](Object* lo, Object* ro) {return lo->layer < ro->layer; });
+	std::sort(objects.begin(), objects.end(), [](const Object* RO, const Object* LO) -> bool { return RO->layer < LO->layer; });
 
-	for (auto object = objects.begin(); object != objects.end();)
+	for (auto it = objects.begin(); it != objects.end();)
 	{
-		(*object)->Update(deltaTime);
-
-		if ((*object)->destroy)
+		(*it)->Update(deltaTime);
+		if ((*it)->destroy)
 		{
-			SAFE_DELETE(*object);
-			object = objects.erase(object);
+			SAFE_DELETE(*it);
+			it = objects.erase(it);
 		}
 		else
-			++object;
+			++it;
 	}
 }
 
@@ -101,9 +95,9 @@ void ObjectManager::Collision()
 {
 	for (auto it = objects.begin(); it != objects.end(); ++it)
 	{
-		for (auto it2 = it + 1; it2 != objects.end(); ++it2)
+		for (auto it2 = it + 1; it2 != objects.end(); it2++)
 		{
-			if (!(*it)->bCollision || !(*it2)->bCollision) continue;
+			if (!(*it)->bCollision && !(*it2)->bCollision) continue;
 
 			for (auto body1 : (*it)->bodies)
 			{
@@ -122,6 +116,6 @@ void ObjectManager::Collision()
 
 void ObjectManager::Render()
 {
-	for (auto& object : objects)
+	for (auto object : objects)
 		object->Render();
 }

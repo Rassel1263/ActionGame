@@ -23,7 +23,6 @@ public:
 class PlayerWalk : public CState<Player>
 {
 public:
-	float eftTimer = 0.0f;
 
 	static PlayerWalk* instance;
 

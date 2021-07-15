@@ -24,6 +24,7 @@ public:
 	struct UnitAbility
 	{
 		float hp = 0.0f;
+		float maxHp = 0.0f;
 		float speed = 0.0f;
 		float atkPower = 0.0f;
 		float atkSpeed = 0.0f;

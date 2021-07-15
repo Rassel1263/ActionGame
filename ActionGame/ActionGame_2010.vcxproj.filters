@@ -30,6 +30,9 @@
     <Filter Include="Object\Effect">
       <UniqueIdentifier>{5789a36d-58e9-4a77-861c-13cefebb4b55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{281f871a-8ac4-4cf0-9743-470ae4dff288}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -124,9 +127,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="Units.cpp">
-      <Filter>Object\Unit</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerState.cpp">
       <Filter>Object\Unit\State</Filter>
     </ClCompile>
@@ -138,6 +138,19 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="EnemyRange.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="PGaze.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitHp.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Units.cpp">
+      <Filter>Object\Unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +190,6 @@
     <ClInclude Include="Player.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="Units.h">
-      <Filter>Object\Unit</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerState.h">
       <Filter>Object\Unit\State</Filter>
     </ClInclude>
@@ -194,6 +204,19 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="EnemyRange.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="PGaze.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitHp.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Object\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

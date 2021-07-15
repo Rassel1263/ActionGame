@@ -12,6 +12,7 @@ class Enemy : public Units
 {
 public:
 	EnemyType type = EnemyType::Speedy;
+	EnemyRange* enemyRange = NULL;
 	CState<Enemy>* nowState = NULL;
 
 	Enemy(D3DXVECTOR2 pos, EnemyType type);
@@ -21,6 +22,7 @@ public:
 	virtual bool Move(float deltaTime) override;
 
 	void SetInfo();
-	bool CheckPlayer(float distance);
+	void SetAttackRange(D3DXVECTOR2 min, D3DXVECTOR2 max);
+	bool CheckDistance(float distance);
 };
 

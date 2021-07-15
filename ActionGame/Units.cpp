@@ -29,6 +29,7 @@ bool Units::Move(float deltaTime)
 void Units::SetAbility(float hp, float speed, float atkPower, float atkSpeed)
 {
     ability.hp = hp;
+    ability.maxHp = hp;
     ability.speed = speed;
     ability.atkPower = atkPower;
     ability.atkSpeed = atkSpeed;

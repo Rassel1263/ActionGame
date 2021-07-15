@@ -38,21 +38,21 @@ void EnemyWalk::EnterState(Enemy* obj)
 
 	obj->renderer = UnitState::WALK;
 
-	randNum = rand()% 5;
+	randNum = rand() % 5;
 }
 
 void EnemyWalk::UpdateState(Enemy* obj, float deltaTime)
 {
 	if (obj->type == EnemyType::Bind)
 	{
-		if (obj->CheckPlayer(200) && randNum == 1)
+		if (obj->enemyRange->findTarget && randNum == 1)
 		{
 			EnemySAttack::instance->EnterState(obj);
 			return;
 		}
 	}
 
-	if (obj->CheckPlayer(50))
+	if (obj->enemyRange->findTarget)
 	{
 		EnemyAttack::instance->EnterState(obj);
 		return;
@@ -89,13 +89,13 @@ void EnemyAttack::EnterState(Enemy* obj)
 	switch (obj->type)
 	{
 	case EnemyType::Speedy:
-		obj->SetAttackInfo(D3DXVECTOR2(20 * -obj->ri.scale.x, -30), D3DXVECTOR2(-1, 0), 300, 2);
+		obj->SetAttackInfo(D3DXVECTOR2(20 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 3, 2);
 		break;
 	case EnemyType::Power:
-		obj->SetAttackInfo(D3DXVECTOR2(80 * -obj->ri.scale.x, -30), D3DXVECTOR2(-1, 0), 500, 3);
+		obj->SetAttackInfo(D3DXVECTOR2(80 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 5, 3);
 		break;
 	case EnemyType::Bind:
-		obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, -30), D3DXVECTOR2(-1, 0), 500, 1);
+		obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 5, 1);
 		break;
 	}
 	//obj->Attack(D3DXVECTOR2(20 * -obj->ri.scale.x, -30), D3DXVECTOR2(-1, 0));
@@ -138,8 +138,8 @@ void EnemySAttack::EnterState(Enemy* obj)
 	obj->renderer = UnitState::LSATTACK1;
 	obj->spr[obj->renderer].Reset();
 
-	obj->velocity.x = 800 * -obj->ri.scale.x;
-	obj->velocity.y = -500;
+	obj->velocity.x = 1000 * -obj->ri.scale.x;
+	obj->velocity.y = 500;
 }
 
 void EnemySAttack::UpdateState(Enemy* obj, float deltaTime)
@@ -156,11 +156,18 @@ void EnemySAttack::UpdateState(Enemy* obj, float deltaTime)
 		}
 	}
 
-	if (obj->CheckPlayer(50) && !nowScene->player->bind)
+	// 언젠가 잡기 콜라이더를 만들지 않을까????????????
+	if (obj->CheckDistance(50) && !nowScene->player->bind)
 	{
-		obj->pos = nowScene->player->pos + D3DXVECTOR2(30 * obj->ri.scale.x, -50);
+		obj->pos = nowScene->player->pos + D3DXVECTOR2(30 * obj->ri.scale.x, 50);
 		obj->bRigid = false;
 		nowScene->player->bind = true;
+	}
+
+	if (obj->bHit)
+	{
+		EnemyHit::instance->EnterState(obj);
+		return;
 	}
 
 	if (obj->bGround)
@@ -188,6 +195,7 @@ void EnemyHit::EnterState(Enemy* obj)
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
 
+	nowScene->player->PlusSpecialGaze(10);
 	obj->ability.hp--;
 }
 
@@ -226,7 +234,12 @@ void EnemyDie::UpdateState(Enemy* obj, float deltaTime)
 {
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
-		obj->destroy = true;
+		if (nowScene->player->target == obj)
+		{
+			nowScene->player->target = NULL;
+			obj->enemyRange->destroy = true;
+			obj->destroy = true;
+		}
 		return;
 	}
 }

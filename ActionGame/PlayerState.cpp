@@ -153,16 +153,7 @@ void PlayerWalk::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
-	if (abs(obj->velocity.x) > 0)
-	{
-		if (eftTimer >= 0.02f)
-		{
-			nowScene->obm.AddObject(new Effect(obj->spr[obj->renderer], obj->ri.scale, obj->pos, 0.2f));
-			eftTimer = 0.0f;
-		}
-
-		eftTimer += deltaTime;
-	}
+	
 }
 
 void PlayerWalk::ExitState(Player* obj)
@@ -179,7 +170,7 @@ void PlayerJump::EnterState(Player* obj)
 	obj->renderer = UnitState::JUMP;
 	obj->spr[obj->renderer].Reset();
 
-	obj->velocity.y = -800;
+	obj->velocity.y = 800;
 }
 
 void PlayerJump::UpdateState(Player* obj, float deltaTime)
@@ -241,7 +232,7 @@ void PlayerLAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::LATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, -40), { 1, 0 }, 500, 1);
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, 0 }, 5, 1);
 }
 
 void PlayerLAttack::UpdateState(Player* obj, float deltaTime)
@@ -287,7 +278,7 @@ void PlayerHAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::HATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, -40), { 1, -0.2 }, 600, 4);
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, -0.2 }, 6, 4);
 }
 
 void PlayerHAttack::UpdateState(Player* obj, float deltaTime)
@@ -334,6 +325,7 @@ void PlayerLSAttack::EnterState(Player* obj)
 	{
 	case 0:
 		obj->renderer = UnitState::LSATTACK1;
+		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 10), { 1, 0 }, 6, 3);
 		break;
 	case 1:
 		obj->renderer = UnitState::LSATTACK2;
@@ -344,6 +336,12 @@ void PlayerLSAttack::EnterState(Player* obj)
 
 void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->aniTimer <= 0.0f)
+	{
+		obj->Attack();
+		obj->aniTimer = 999.0f;
+	}
+
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
@@ -361,6 +359,8 @@ void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 		PlayerHit::instance->EnterState(obj);
 		return;
 	}
+
+	obj->aniTimer -= deltaTime;
 }
 
 void PlayerLSAttack::ExitState(Player* obj)
@@ -370,6 +370,12 @@ void PlayerLSAttack::ExitState(Player* obj)
 
 void PlayerHSAttack::EnterState(Player* obj)
 {
+	if (obj->aniTimer <= 0.0f)
+	{
+		obj->Attack();
+		obj->aniTimer = 999.0f;
+	}
+
 	if (obj->nowState)
 		obj->nowState->ExitState(obj);
 
@@ -379,6 +385,7 @@ void PlayerHSAttack::EnterState(Player* obj)
 	{
 	case 0:
 		obj->renderer = UnitState::HSATTACK1;
+		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 60, 10), { 1, 0.2 }, 7, 7);
 		break;
 	case 1:
 		obj->renderer = UnitState::HSATTACK2;
@@ -390,6 +397,12 @@ void PlayerHSAttack::EnterState(Player* obj)
 
 void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->aniTimer <= 0.0f)
+	{
+		obj->Attack();
+		obj->aniTimer = 999.0f;
+	}
+
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		PlayerIdle::instance->EnterState(obj);
@@ -407,6 +420,8 @@ void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 		PlayerHit::instance->EnterState(obj);
 		return;
 	}
+
+	obj->aniTimer -= deltaTime;
 }
 
 void PlayerHSAttack::ExitState(Player* obj)

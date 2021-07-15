@@ -26,10 +26,16 @@
 #include "Player.h"
 #include "PlayerState.h"
 
+#include "EnemyRange.h"
 #include "Enemy.h"
 #include "EnemyState.h"
 
+#include "PGaze.h"
+#include "UnitHp.h"
+
 #include "Effect.h"
+
+#include "Background.h"
 
 #include "Scene.h"
 #include "GameScene.h"

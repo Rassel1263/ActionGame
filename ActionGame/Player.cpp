@@ -14,7 +14,7 @@ PlayerBind* PlayerBind::instance = new PlayerBind;
 PlayerHit* PlayerHit::instance = new PlayerHit;
 PlayerDie* PlayerDie::instance = new PlayerDie;
 
-Player::Player() : Units(D3DXVECTOR2(0, -200))
+Player::Player() : Units(D3DXVECTOR2(0, 0))
 {
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Player/Idle");
 	spr[UnitState::DOWN].LoadAll(L"Assets/Sprites/Units/Player/Down");
@@ -39,10 +39,18 @@ Player::Player() : Units(D3DXVECTOR2(0, -200))
 
 	SetAbility(5, 300, 1, 1);
 	SetCollider(-30, -50, 30, 50);
+
+	Game::GetInstance().destCameraPos = { 0, 120 };
 }
 
 void Player::Update(float deltaTime)
 {
+	if (pos.x > -700 )
+		Game::GetInstance().destCameraPos.x = pos.x;
+
+	//std::cout << Input::GetInstance().mousePos.x << std::endl;
+	std::cout << pos.y << std::endl;
+
 	inputTimer += deltaTime;
 	for (int i = 0; i < 4; ++i)
 	{
@@ -62,6 +70,17 @@ void Player::Update(float deltaTime)
 
 	if (nowState)
 		nowState->UpdateState(this, deltaTime);
+
+	if (abs(velocity.x) > 0 && !bHit)
+	{
+		if (eftTimer >= 0.02f)
+		{
+			nowScene->obm.AddObject(new Effect(spr[renderer], ri.scale, pos, 0.2f));
+			eftTimer = 0.0f;
+		}
+
+		eftTimer += deltaTime;
+	}
 
 	Units::Update(deltaTime);
 }
@@ -89,17 +108,25 @@ bool Player::Move(float deltaTime)
 	if (bGround)
 	{
 		if (Input::GetInstance().KeyPress(VK_UP))
-			vMove.y = -1;
-		else if (Input::GetInstance().KeyPress(VK_DOWN))
+		{
 			vMove.y = 1;
+
+			if (z < 100)
+				z += 2;
+		}
+		else if (Input::GetInstance().KeyPress(VK_DOWN))
+		{
+			vMove.y = -1;
+
+			if (z > -20)
+				z -= 2;
+		}
 	} 
 	
 	if (vMove.x == 0 && vMove.y == 0)
 		return false;
 
 	pos.x += vMove.x * ability.speed * deltaTime;
-	pos.y += vMove.y * ability.speed / 2 * deltaTime;
-	z += vMove.y * ability.speed / 2 * deltaTime;
 
 	return true;
 }
@@ -126,4 +153,13 @@ int Player::SpecialIndex()
 	}
 
 	return specialIndex;
+}
+
+void Player::PlusSpecialGaze(int amount)
+{
+	specialGaze += amount;
+
+	if (specialGaze > specialMaxGaze)
+		specialGaze = 100;
+
 }

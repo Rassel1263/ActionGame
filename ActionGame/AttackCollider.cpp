@@ -35,6 +35,8 @@ void AttackCollider::Render()
 void AttackCollider::OnCollision(Collider& other)
 {
 	if (obj->tag == other.tag) return;
+	if (other.tag == L"enemy")
+		nowScene->player->target = static_cast<Enemy*>(other.obj);
 
 	D3DXVECTOR2 vtemp = attackVec;
 
@@ -43,12 +45,12 @@ void AttackCollider::OnCollision(Collider& other)
 
 	if (!other.obj->bGround)
 	{
-		other.obj->force.x += vtemp.x * obj->ability.atkPower * 0.1f;
-		other.obj->velocity.y = vtemp.y * obj->ability.atkPower;
+		other.obj->force.x += vtemp.x * obj->ability.atkPower * 10.0f;
+		other.obj->velocity.y = vtemp.y * obj->ability.atkPower * 100.0f;
 	}
 	else
 	{
-		other.obj->force += vtemp * obj->ability.atkPower * 0.1f;
+		other.obj->force += vtemp * obj->ability.atkPower * 10.0f;
 	}
 
 	static_cast<Units*>(other.obj)->bHit = true;
