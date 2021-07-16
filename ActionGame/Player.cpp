@@ -1,6 +1,7 @@
 #include "DXUT.h"
 #include "Player.h"
 
+PlayerIntro* PlayerIntro::instance = new PlayerIntro;
 PlayerIdle* PlayerIdle::instance = new PlayerIdle;
 PlayerDown* PlayerDown::instance = new PlayerDown;
 PlayerWalk* PlayerWalk::instance = new PlayerWalk;
@@ -15,7 +16,7 @@ PlayerHit* PlayerHit::instance = new PlayerHit;
 PlayerDie* PlayerDie::instance = new PlayerDie;
 PlayerCereMony* PlayerCereMony::instance = new PlayerCereMony;
 
-Player::Player() : Units(D3DXVECTOR2(-800, 0))
+Player::Player() : Units(D3DXVECTOR2(-1300, 0))
 {
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Player/Idle");
 	spr[UnitState::DOWN].LoadAll(L"Assets/Sprites/Units/Player/Down");
@@ -33,9 +34,9 @@ Player::Player() : Units(D3DXVECTOR2(-800, 0))
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Player/Die", 0.08f, false);
 	spr[UnitState::CEREMONY].LoadAll(L"Assets/Sprites/Units/Player/Ceremony", 0.1f, false);
 
-	PlayerIdle::instance->EnterState(this);
+	PlayerIntro::instance->EnterState(this);
 
-	renderer = UnitState::IDLE;
+	renderer = UnitState::WALK;
 
 	tag = L"player";
 

@@ -1,5 +1,15 @@
 #pragma once
 
+class PlayerIntro : public CState<Player>
+{
+public:
+	static PlayerIntro* instance;
+
+	virtual void EnterState(Player* obj);
+	virtual void UpdateState(Player* obj, float deltaTime);
+	virtual void ExitState(Player* obj);
+};
+
 class PlayerIdle : public CState<Player>
 {
 public:

@@ -1,6 +1,31 @@
 #include "DXUT.h"
 #include "PlayerState.h"
 
+void PlayerIntro::EnterState(Player* obj)
+{
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+	obj->renderer = UnitState::WALK;
+}
+
+void PlayerIntro::UpdateState(Player* obj, float deltaTime)
+{
+	if (obj->pos.x <= -800)
+		obj->pos.x += 150 * deltaTime;
+	else
+	{
+		PlayerIdle::instance->EnterState(obj);
+		return;
+	}
+}
+
+void PlayerIntro::ExitState(Player* obj)
+{
+}
+
+
 void PlayerIdle::EnterState(Player* obj)
 {
 	if (obj->nowState)
@@ -552,3 +577,4 @@ void PlayerCereMony::UpdateState(Player* obj, float deltaTime)
 void PlayerCereMony::ExitState(Player* obj)
 {
 }
+
