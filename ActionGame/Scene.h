@@ -6,7 +6,7 @@ public:
 	Player* player = NULL;
 	
 	int stage = 0;
-	bool clear = false;
+	int wave = 3;
 
 	virtual void Init();
 	virtual void Update(float deltaTime);

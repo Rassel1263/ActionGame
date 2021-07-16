@@ -69,7 +69,7 @@ public:
 class BossHit : public CState<Boss>
 {
 public: 
-	bool miss = false;
+	int miss = 0;
 
 	static BossHit* instance;
 
@@ -80,6 +80,7 @@ public:
 
 class BossDie : public CState<Boss>
 {
+public:
 	static BossDie* instance;
 
 	virtual void EnterState(Boss* obj);

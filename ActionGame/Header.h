@@ -49,6 +49,7 @@
 #include "CollisionEffect.h"
 #include "Spectrum.h"
 
+#include "ResultScreen.h"
 #include "Background.h"
 
 #include "Scene.h"

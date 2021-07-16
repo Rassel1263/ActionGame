@@ -7,13 +7,14 @@ void GameScene2::Init()
 
 	stage = 2;
 
-	/*obm.AddObject(new Background(stage));
+	ShaderManager::GetInstance().CreateEffect("Simple", L"Assets/Shader/SimpleShader.fx", 0);
+
+	obm.AddObject(new Background(stage));
 
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(-300, 0), EnemyType::Speedy));
-
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(200, 0), EnemyType::Power));
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(800, 0), EnemyType::Speedy));
-	obm.AddObject(new Chest(D3DXVECTOR2(-700, 100)));*/
+	obm.AddObject(new Chest(D3DXVECTOR2(-700, 100)));
 
 	obm.AddObject(new Boss(D3DXVECTOR2(-300, 0)));
 

@@ -11,7 +11,7 @@ Game::~Game()
 
 void Game::Init()
 {
-	ChangeScene(new GameScene());
+	ChangeScene(new GameScene2());
 
 	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -10.0f);
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);

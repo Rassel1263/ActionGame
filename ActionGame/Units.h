@@ -28,6 +28,7 @@ public:
 		float maxHp = 0.0f;
 		float speed = 0.0f;
 		float atkPower = 0.0f;
+		float atkDamage = 0.0f;
 		float atkSpeed = 0.0f;
 	} ability;
 
@@ -61,7 +62,7 @@ public:
 	bool CheckDistance(float distance);
 	void SetAbility(float hp, float speed, float atkPower, float atkSpeed);
 	void SetCollider(float left, float top, float right, float bottom, D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 0, 0));
-	void SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPower, float timer);
+	void SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPower, float atkDamage, float timer);
 	void Attack();
 
 

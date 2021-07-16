@@ -31,9 +31,9 @@ bool Units::Move(float deltaTime)
 bool Units::CheckDistance(float distance)
 {
     D3DXVECTOR2 distanceVec = nowScene->player->pos - pos;
-    float dis = sqrt(pow(distanceVec.x, 2) + pow(distanceVec.y, 2));
+    float dis = pow(distanceVec.x, 2) + pow(distanceVec.y, 2);
 
-    if (dis < distance) return true;
+    if (dis < distance * distance) return true;
 
     return false;
 }
@@ -58,11 +58,12 @@ void Units::SetCollider(float left, float top, float right, float bottom, D3DXCO
     bodies.push_back(Collider(this, tag, &aabb, 0, color));
 }
 
-void Units::SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPower, float timer)
+void Units::SetAttackInfo(D3DXVECTOR2 offset, D3DXVECTOR2 attackVec, float atkPower, float atkDamage, float timer)
 {
     this->offset = offset;
     this->attackVec = attackVec;
-    (bPowerUp) ? ability.atkPower = atkPower * 1.3f : ability.atkPower = atkPower;
+    this->ability.atkPower = atkPower;
+    (bPowerUp) ? ability.atkDamage = atkDamage * 1.3f : ability.atkDamage = atkDamage;
     this->aniTimer = spr[renderer].aniMaxTime * timer;
 }
 

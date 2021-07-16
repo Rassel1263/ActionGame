@@ -18,6 +18,9 @@ void EnemyRange::Update(float deltaTime)
 	findTarget = false;
 
 	pos = enemy->pos;
+
+	if (enemy->destroy)
+		destroy = true;
 }
 
 void EnemyRange::Render()
@@ -28,11 +31,6 @@ void EnemyRange::Render()
 void EnemyRange::OnCollision(Collider& coll)
 {
 	if (coll.tag == L"player")
-	{
 		if (abs(enemy->z - nowScene->player->z) < 5)
-		{
-			intro = true;
 			findTarget = true;
-		}
-	}
 }

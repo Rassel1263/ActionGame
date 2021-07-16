@@ -23,12 +23,11 @@ Boss::Boss(D3DXVECTOR2 pos) : Units(pos)
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Boss/Die", 0.1f, false);
 
 	BossIdle::instance->EnterState(this);
-
 	renderer = UnitState::IDLE;
 
 	tag = L"boss";
 
-	SetAbility(100, 100, 10, 1);
+	SetAbility(5, 100, 10, 1);
 	SetCollider(-30, -50, 30, 50);
 
 	enemyRange = new EnemyRange(this, D3DXVECTOR2(-50, -50), D3DXVECTOR2(50, 50));

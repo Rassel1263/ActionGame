@@ -48,7 +48,7 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
-	if (nowScene->clear)
+	if (nowScene->wave <= 0)
 	{
 		PlayerCereMony::instance->EnterState(obj);
 		return;
@@ -251,7 +251,7 @@ void PlayerLAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::LATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, 0 }, 10, 1);
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, 0 }, 300, 5, 1);
 }
 
 void PlayerLAttack::UpdateState(Player* obj, float deltaTime)
@@ -297,7 +297,7 @@ void PlayerHAttack::EnterState(Player* obj)
 	obj->renderer = UnitState::HATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, -0.2 }, 15, 4);
+	obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 40), { 1, -0.2 }, 500, 7, 4);
 }
 
 void PlayerHAttack::UpdateState(Player* obj, float deltaTime)
@@ -345,7 +345,7 @@ void PlayerLSAttack::EnterState(Player* obj)
 	case 0:
 		obj->renderer = UnitState::LSATTACK1;
 		obj->spr[obj->renderer].Reset();
-		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 10), { 1, 0 }, 6, 3);
+		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 50, 10), { 1, 0 }, 700, 15, 3);
 		break;
 	case 1:
 		obj->renderer = UnitState::LSATTACK2;
@@ -400,7 +400,7 @@ void PlayerHSAttack::EnterState(Player* obj)
 	case 0:
 		obj->renderer = UnitState::HSATTACK1;
 		obj->spr[obj->renderer].Reset();
-		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 60, 10), { 1, 0.2 }, 7, 7);
+		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 60, 10), { 1, 0.2 }, 1200 ,20, 7);
 		break;
 	case 1:
 		obj->renderer = UnitState::HSATTACK2;
@@ -541,8 +541,12 @@ void PlayerCereMony::EnterState(Player* obj)
 
 void PlayerCereMony::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[obj->renderer].bAnimation)
-		Game::GetInstance().ChangeScene(new GameScene2());
+	if (obj->spr[obj->renderer].scene >= obj->spr[obj->renderer].szScene)
+	{
+		obj->spr[obj->renderer].scene = 8;
+		nowScene->obm.AddObject(new ResultScreen());
+		//Game::GetInstance().ChangeScene(new GameScene2());
+	}
 }
 
 void PlayerCereMony::ExitState(Player* obj)

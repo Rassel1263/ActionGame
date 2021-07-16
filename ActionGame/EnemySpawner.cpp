@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "EnemySpawner.h"
 
-EnemySpawner::EnemySpawner(D3DXVECTOR2 pos, EnemyType type, bool clear) : clear(clear)
+EnemySpawner::EnemySpawner(D3DXVECTOR2 pos, EnemyType type)
 {
 	this->pos = pos;
 	this->type = type;
@@ -34,9 +34,7 @@ void EnemySpawner::Update(float deltaTime)
 			nowScene->player->limitLeft = -700;
 			nowScene->player->limitRight = 700;
 
-			if (nowScene->player->pos.x >= 600)
-				clear = true;
-
+			nowScene->wave--;
 			destroy = true;
 		}
 

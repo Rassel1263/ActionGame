@@ -400,6 +400,7 @@
     <ClCompile Include="GameScene2.cpp" />
     <ClCompile Include="GameScene3.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ResultScreen.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SimpleShader.cpp" />
     <ClCompile Include="Spectrum.cpp" />
@@ -433,6 +434,7 @@
     <ClInclude Include="GameScene2.h" />
     <ClInclude Include="GameScene3.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ResultScreen.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SimpleShader.h" />
     <ClInclude Include="Spectrum.h" />

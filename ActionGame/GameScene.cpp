@@ -10,8 +10,8 @@ void GameScene::Init()
 
 	obm.AddObject(new Background(stage));
 
-	obm.AddObject(new EnemySpawner(D3DXVECTOR2(-300, 0), EnemyType::Speedy));
-	obm.AddObject(new EnemySpawner(D3DXVECTOR2(200, 0), EnemyType::Power));
+	//obm.AddObject(new EnemySpawner(D3DXVECTOR2(-300, 0), EnemyType::Speedy));
+	//obm.AddObject(new EnemySpawner(D3DXVECTOR2(200, 0), EnemyType::Power));
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(600, 0), EnemyType::Speedy));
 
 	obm.AddObject(new Enemy(D3DXVECTOR2(-400, 0), EnemyType::Bind));

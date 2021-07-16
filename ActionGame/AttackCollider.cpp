@@ -34,11 +34,12 @@ void AttackCollider::Render()
 
 void AttackCollider::OnCollision(Collider& other)
 {
-	if (obj->tag == other.tag) return;
-	if (obj->tag == L"enemy" && other.tag == L"enemyRange") return;
-	if (obj->tag == L"boss" && other.tag == L"enemyRange") return;
+	if (obj->tag == other.tag) return; // 태그가 같을 때
+	if (other.tag == L"playerAttack" || other.tag == L"enemyAttack" || other.tag == L"bossAttack") return;
+	if (other.tag == L"enemyRange") return;
+	if (other.tag == L"item" || other.tag == L"chest") return;
 
-	if (other.tag == L"enemy")
+	if (obj->tag == L"player" && other.tag == L"enemy")
 	{
 		nowScene->player->target = static_cast<Enemy*>(other.obj);
 	}
@@ -52,15 +53,15 @@ void AttackCollider::OnCollision(Collider& other)
 
 	if (!other.obj->bGround)
 	{
-		other.obj->force.x += vtemp.x * obj->ability.atkPower * 10.0f;
-		other.obj->velocity.y = vtemp.y * obj->ability.atkPower * 100.0f;
+		other.obj->force.x += vtemp.x * obj->ability.atkPower * 0.1f;
+		other.obj->velocity.y = vtemp.y * obj->ability.atkPower * 0.01f;
 	}
 	else
 	{
-		other.obj->force += vtemp * obj->ability.atkPower * 10.0f;
+		other.obj->force += vtemp * obj->ability.atkPower * 0.1f;
 	}
 
 	static_cast<Units*>(other.obj)->bHit = true;
-	static_cast<Units*>(other.obj)->damage = obj->ability.atkPower;
+	static_cast<Units*>(other.obj)->damage = obj->ability.atkDamage;
 }
 

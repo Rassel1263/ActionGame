@@ -84,6 +84,7 @@ void BossBack::UpdateState(Boss* obj, float deltaTime)
 void BossBack::ExitState(Boss* obj)
 {
 	eftTimer = 0.0f;
+	obj->bHit = false;
 }
 
 void BossWalk::EnterState(Boss* obj)
@@ -100,6 +101,12 @@ void BossWalk::UpdateState(Boss* obj, float deltaTime)
 	if (!obj->Move(deltaTime))
 	{
 		BossLAttack::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->bHit)
+	{
+		BossHit::instance->EnterState(obj);
 		return;
 	}
 }
@@ -159,7 +166,7 @@ void BossLAttack::EnterState(Boss* obj)
 	obj->renderer = UnitState::LATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 5, 3);
+	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 500 ,5, 3);
 }
 
 void BossLAttack::UpdateState(Boss* obj, float deltaTime)
@@ -198,7 +205,7 @@ void BossHAttack::EnterState(Boss* obj)
 	obj->renderer = UnitState::HATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 10, 3);
+	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 500, 10, 3);
 }
 
 void BossHAttack::UpdateState(Boss* obj, float deltaTime)
@@ -233,11 +240,19 @@ void BossHit::EnterState(Boss* obj)
 
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
+
+	obj->ability.hp -= obj->damage;
 }
 
 void BossHit::UpdateState(Boss* obj, float deltaTime)
 {
-	if (!miss)
+	if (obj->ability.hp <= 0)
+	{
+		BossDie::instance->EnterState(obj);
+		return;
+	}
+
+	if (miss)
 	{
 		BossBack::instance->EnterState(obj);
 		return;
@@ -257,10 +272,24 @@ void BossHit::ExitState(Boss* obj)
 
 void BossDie::EnterState(Boss* obj)
 {
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+
+	obj->renderer = UnitState::DIE;
+	obj->spr[obj->renderer].Reset();
 }
 
 void BossDie::UpdateState(Boss* obj, float deltaTime)
 {
+	if (!obj->spr[obj->renderer].bAnimation)
+	{
+		nowScene->wave = 0;
+		//obj->destroy = true;
+
+		return;
+	}
 }
 
 void BossDie::ExitState(Boss* obj)

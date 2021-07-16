@@ -142,7 +142,6 @@
     <ClCompile Include="AttackCollider.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp" />
     <ClCompile Include="EnemyRange.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
@@ -164,15 +163,12 @@
     <ClCompile Include="Effect.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Chest.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleShader.cpp" />
-    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="Boom.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
@@ -190,6 +186,19 @@
     </ClCompile>
     <ClCompile Include="BossState.cpp">
       <Filter>Object\Unit\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScreen.cpp" />
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Object\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,7 +250,6 @@
     <ClInclude Include="AttackCollider.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h" />
     <ClInclude Include="EnemyRange.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
@@ -263,15 +271,12 @@
     <ClInclude Include="Effect.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Chest.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleShader.h" />
-    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Boom.h">
       <Filter>Object\Item</Filter>
     </ClInclude>
@@ -289,6 +294,19 @@
     </ClInclude>
     <ClInclude Include="BossState.h">
       <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScreen.h" />
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
