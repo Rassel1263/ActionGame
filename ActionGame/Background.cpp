@@ -1,9 +1,9 @@
 #include "DXUT.h"
 #include "Background.h"
 
-Background::Background()
+Background::Background(int stage)
 {
-	spr.LoadAll(L"Assets/Sprites/Stage");
+	spr.LoadAll(L"Assets/Sprites/Stage/stage1-" + std::to_wstring(stage) + L".png");
 
 	pos = { 0, 130 };
 }

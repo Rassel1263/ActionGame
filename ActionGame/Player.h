@@ -33,6 +33,7 @@ public:
 	virtual void Render() override;
 	virtual bool Move(float deltaTime) override;
 	int SpecialIndex();
+	bool CheckSpecialGaze(int amount);
 	void PlusSpecialGaze(int amount);
 	void SetItemEffect(int index);
 };

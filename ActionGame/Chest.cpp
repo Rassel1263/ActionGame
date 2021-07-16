@@ -44,7 +44,7 @@ void Chest::OnCollision(Collider& other)
 	{
 		if (renderNum == 0)
 		{
-			nowScene->obm.AddObject(new Item(pos, 2));
+			nowScene->obm.AddObject(new Item(pos, rand() % 3));
 			renderNum = 1;
 		}
 		spr[renderNum].bAniLoop = false;

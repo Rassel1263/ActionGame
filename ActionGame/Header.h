@@ -34,6 +34,9 @@
 #include "EnemyState.h"
 #include "EnemySpawner.h"
 
+#include "Boss.h"
+#include "BossState.h"
+
 #include "Chest.h"
 #include "Item.h"
 #include "Boom.h"
@@ -43,12 +46,15 @@
 
 #include "IEffect.h"
 #include "Effect.h"
+#include "CollisionEffect.h"
 #include "Spectrum.h"
 
 #include "Background.h"
 
 #include "Scene.h"
 #include "GameScene.h"
+#include "GameScene2.h"
+#include "GameScene3.h"
 extern Scene* nowScene;
 
 #include "Game.h"

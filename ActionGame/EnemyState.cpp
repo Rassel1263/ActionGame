@@ -18,6 +18,12 @@ void EnemyIdle::UpdateState(Enemy* obj, float deltaTime)
 		return;
 	}
 
+	if (obj->ability.hp <= 0)
+	{
+		EnemyDie::instance->EnterState(obj);
+		return;
+	}
+
 	if (obj->bHit)
 	{
 		EnemyHit::instance->EnterState(obj);
@@ -61,6 +67,12 @@ void EnemyWalk::UpdateState(Enemy* obj, float deltaTime)
 	if (!obj->Move(deltaTime))
 	{
 		EnemyIdle::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->ability.hp <= 0)
+	{
+		EnemyDie::instance->EnterState(obj);
 		return;
 	}
 
@@ -112,6 +124,12 @@ void EnemyAttack::UpdateState(Enemy* obj, float deltaTime)
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		EnemyIdle::instance->EnterState(obj);
+		return;
+	}
+
+	if (obj->ability.hp <= 0)
+	{
+		EnemyDie::instance->EnterState(obj);
 		return;
 	}
 
@@ -196,7 +214,7 @@ void EnemyHit::EnterState(Enemy* obj)
 	obj->spr[obj->renderer].Reset();
 
 	nowScene->player->PlusSpecialGaze(10);
-	obj->ability.hp--;
+	obj->ability.hp -= obj->damage;
 }
 
 void EnemyHit::UpdateState(Enemy* obj, float deltaTime)
@@ -234,11 +252,12 @@ void EnemyDie::UpdateState(Enemy* obj, float deltaTime)
 {
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
+		obj->destroy = true;
+
 		if (nowScene->player->target == obj)
 		{
 			nowScene->player->target = NULL;
 			obj->enemyRange->destroy = true;
-			obj->destroy = true;
 		}
 		return;
 	}

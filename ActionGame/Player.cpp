@@ -13,6 +13,7 @@ PlayerHSAttack* PlayerHSAttack::instance = new PlayerHSAttack;
 PlayerBind* PlayerBind::instance = new PlayerBind;
 PlayerHit* PlayerHit::instance = new PlayerHit;
 PlayerDie* PlayerDie::instance = new PlayerDie;
+PlayerCereMony* PlayerCereMony::instance = new PlayerCereMony;
 
 Player::Player() : Units(D3DXVECTOR2(-800, 0))
 {
@@ -30,6 +31,7 @@ Player::Player() : Units(D3DXVECTOR2(-800, 0))
 	spr[UnitState::BIND].LoadAll(L"Assets/Sprites/Units/Player/Bind", 0.08f, false);
 	spr[UnitState::HIT].LoadAll(L"Assets/Sprites/Units/Player/Hit", 0.08f, false);
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Player/Die", 0.08f, false);
+	spr[UnitState::CEREMONY].LoadAll(L"Assets/Sprites/Units/Player/Ceremony", 0.1f, false);
 
 	PlayerIdle::instance->EnterState(this);
 
@@ -104,8 +106,6 @@ void Player::Update(float deltaTime)
 
 	if (nowState)
 		nowState->UpdateState(this, deltaTime);
-
-	std::cout << ability.atkPower << std::endl;
 
 	Units::Update(deltaTime);
 }
@@ -192,6 +192,33 @@ int Player::SpecialIndex()
 	return specialIndex;
 }
 
+bool Player::CheckSpecialGaze(int amount)
+{
+	int specialIndex = SpecialIndex();
+
+	if (specialIndex == -1) return false;
+
+	switch (specialIndex)
+	{
+	case 0:
+		if (specialGaze >= 20 * amount)
+		{
+			specialGaze -= 20 * amount;
+			return true;
+		}
+		break;
+	case 1:
+		if (specialGaze >= 20 * amount)
+		{
+			specialGaze -= 20 * amount;
+			return true;
+		}
+		break;
+	}
+
+	return false;
+}
+
 void Player::PlusSpecialGaze(int amount)
 {
 	specialGaze += amount;
@@ -217,8 +244,6 @@ void Player::SetItemEffect(int index)
 		ability.hp += 2;
 		if (ability.hp >= ability.maxHp)
 			ability.hp = ability.maxHp;
-
-		체력 올라가는거 정리하기
 		break;
 
 	}

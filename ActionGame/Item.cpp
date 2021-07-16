@@ -33,7 +33,7 @@ void Item::OnCollision(Collider& other)
 {
 	if (other.tag == L"player")
 	{
-		if (other.obj->z - 50 == z)
+		if (other.obj->z - 40 == z)
 		{
 			nowScene->player->SetItemEffect(index);
 			destroy = true;

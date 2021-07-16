@@ -23,6 +23,5 @@ public:
 
 	void SetInfo();
 	void SetAttackRange(D3DXVECTOR2 min, D3DXVECTOR2 max);
-	bool CheckDistance(float distance);
 };
 

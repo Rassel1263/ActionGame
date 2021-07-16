@@ -1,20 +1,15 @@
 #include "DXUT.h"
 #include "Boom.h"
 
-Boom::Boom(D3DXVECTOR2 pos, D3DXVECTOR2 scale, float timer)
+Boom::Boom(Units* obj, D3DXVECTOR2 pos, D3DXVECTOR2 scale, float timer)
 {
+	this->owner = obj;
 	this->pos = pos;
 	this->z = pos.y;
 	this->timer = timer;
 	ri.scale = scale;
 
 	spr.LoadAll(L"Assets/Sprites/Item/Boom");
-
-	Collider::AABB aabb;
-	aabb.min = D3DXVECTOR2(-100, -20);
-	aabb.max = D3DXVECTOR2(100, 80);
-
-	bodies.push_back(Collider(this, L"boom", &aabb, 0));
 }
 
 void Boom::Update(float deltaTime)
@@ -23,7 +18,10 @@ void Boom::Update(float deltaTime)
 
 	if (timer <= 0.0f)
 	{
-		ignition = true;
+		timer = 0.0f;
+
+		nowScene->obm.AddObject(new CollisionEffect(owner, L"Boom", pos + D3DXVECTOR2(0, 30), D3DXVECTOR2(-100, -20), D3DXVECTOR2(100, 80)));
+		destroy = true;
 	}
 
 	pos.x += ri.scale.x * timer * 100 * deltaTime;
@@ -39,11 +37,3 @@ void Boom::Render()
 	Object::Render();
 }
 
-void Boom::OnCollision(Collider& other)
-{
-	if (other.tag == L"enemy" && ignition)
-	{
-		static_cast<Enemy*>(other.obj)->bHit = true;
-		destroy = true;
-	}
-}

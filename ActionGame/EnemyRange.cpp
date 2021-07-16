@@ -1,14 +1,14 @@
 #include "DXUT.h"
 #include "EnemyRange.h"
 
-EnemyRange::EnemyRange(Enemy* obj, D3DXVECTOR2 min, D3DXVECTOR2 max)
+EnemyRange::EnemyRange(Units* obj, D3DXVECTOR2 min, D3DXVECTOR2 max)
 {
 	enemy = obj;
 
 	Collider::AABB aabb;
 	aabb.min = min;
 	aabb.max = max;
-	bodies.push_back(Collider(this, L"enemyRange", &aabb, 0, D3DCOLOR_ARGB(255, 255, 255, 0)));
+	bodies.push_back(Collider(this, obj->tag + L"Range", &aabb, 0, D3DCOLOR_ARGB(255, 255, 255, 0)));
 
 	layer = 2000;
 }

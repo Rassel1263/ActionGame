@@ -28,6 +28,17 @@ bool Units::Move(float deltaTime)
     return false;
 }
 
+bool Units::CheckDistance(float distance)
+{
+    D3DXVECTOR2 distanceVec = nowScene->player->pos - pos;
+    float dis = sqrt(pow(distanceVec.x, 2) + pow(distanceVec.y, 2));
+
+    if (dis < distance) return true;
+
+    return false;
+}
+
+
 void Units::SetAbility(float hp, float speed, float atkPower, float atkSpeed)
 {
     ability.hp = hp;
@@ -59,3 +70,4 @@ void Units::Attack()
 {
     nowScene->obm.AddObject(new AttackCollider(this, offset, attackVec));
 }
+

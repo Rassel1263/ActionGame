@@ -5,7 +5,7 @@ public:
 	Sprite spr;
 	RenderInfo ri;
 
-	Background();
+	Background(int stage);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

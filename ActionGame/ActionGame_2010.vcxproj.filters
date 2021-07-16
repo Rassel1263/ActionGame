@@ -176,6 +176,21 @@
     <ClCompile Include="Boom.cpp">
       <Filter>Object\Item</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene3.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Object\Unit\State</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -259,6 +274,21 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Boom.h">
       <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene3.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Object\Unit\State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,18 +1,19 @@
 #include "DXUT.h"
 #include "EnemySpawner.h"
 
-EnemySpawner::EnemySpawner(D3DXVECTOR2 pos)
+EnemySpawner::EnemySpawner(D3DXVECTOR2 pos, EnemyType type, bool clear) : clear(clear)
 {
 	this->pos = pos;
+	this->type = type;
 }
 
 void EnemySpawner::Update(float deltaTime)
 {
-	if (pos.x - nowScene->player->pos.x < 100 && !spawnEnemy)
+	if (pos.x - nowScene->player->pos.x < 50 && !spawnEnemy)
 	{
 		spawnEnemy = true;
-		nowScene->player->limitLeft = pos.x - 100;
-		nowScene->player->limitRight = pos.x + 100;
+		nowScene->player->limitLeft = pos.x - 80;
+		nowScene->player->limitRight = pos.x + 80;
 
 		Enemy* enemy;
 		for (int i = 0; i < 3; ++i)
@@ -21,7 +22,7 @@ void EnemySpawner::Update(float deltaTime)
 			randPos.x = (rand() % 2) ? 400 : -400;
 			randPos.y = rand() % 50;
 
-			nowScene->obm.AddObject(enemy = new Enemy(nowScene->player->pos + randPos, EnemyType::Speedy));
+			nowScene->obm.AddObject(enemy = new Enemy(nowScene->player->pos + randPos, type));
 			enemyVecs.push_back(enemy);
 		}
 	}
@@ -32,6 +33,10 @@ void EnemySpawner::Update(float deltaTime)
 		{
 			nowScene->player->limitLeft = -700;
 			nowScene->player->limitRight = 700;
+
+			if (nowScene->player->pos.x >= 600)
+				clear = true;
+
 			destroy = true;
 		}
 

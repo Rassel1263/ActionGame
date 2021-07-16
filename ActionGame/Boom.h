@@ -5,14 +5,13 @@ public:
 	Sprite spr;
 	RenderInfo ri;
 
-	bool ignition = false;
+	Units* owner = NULL;
 
 	float timer = 0.0f;
 
-	Boom(D3DXVECTOR2 pos, D3DXVECTOR2 scale, float timer);
+	Boom(Units* obj, D3DXVECTOR2 pos, D3DXVECTOR2 scale, float timer);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
-	virtual void OnCollision(Collider& other) override;
 };
 

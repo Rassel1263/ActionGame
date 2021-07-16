@@ -127,3 +127,13 @@ public:
 	virtual void UpdateState(Player* obj, float deltaTime);
 	virtual void ExitState(Player* obj);
 };
+
+class PlayerCereMony : public CState<Player>
+{
+public:
+	static PlayerCereMony* instance;
+
+	virtual void EnterState(Player* obj);
+	virtual void UpdateState(Player* obj, float deltaTime);
+	virtual void ExitState(Player* obj);
+};

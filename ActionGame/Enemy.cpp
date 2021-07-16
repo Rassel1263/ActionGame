@@ -70,17 +70,17 @@ void Enemy::SetInfo()
 	switch (type)
 	{
 	case EnemyType::Speedy:
-		SetAbility(5, 200, 10, 0.5f);
+		SetAbility(50, 200, 10, 0.5f);
 		SetCollider(-30, -50, 30, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
 		break;
 	case EnemyType::Power:
-		SetAbility(10, 100, 20, 0.2f);
+		SetAbility(100, 100, 20, 0.2f);
 		SetCollider(-50, -50, 50, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
 		break;
 	case EnemyType::Bind:
-		SetAbility(5, 200, 10, 0.3f);
+		SetAbility(50, 200, 10, 0.3f);
 		SetCollider(-50, -50, 50, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
 		break;
@@ -102,12 +102,3 @@ void Enemy::SetAttackRange(D3DXVECTOR2 min, D3DXVECTOR2 max)
 	nowScene->obm.AddObject(enemyRange);
 }
 
-bool Enemy::CheckDistance(float distance)
-{
-	D3DXVECTOR2 distanceVec = nowScene->player->pos - pos;
-	float dis = sqrt(pow(distanceVec.x, 2) + pow(distanceVec.y, 2));
-
-	if (dis < distance) return true;
-
-	return false;
-}
