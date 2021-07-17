@@ -43,6 +43,7 @@
 
 #include "PGaze.h"
 #include "UnitHp.h"
+#include "Font.h"
 
 #include "IEffect.h"
 #include "Effect.h"

@@ -200,6 +200,7 @@
     <ClCompile Include="Background.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -308,6 +309,7 @@
     <ClInclude Include="Background.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

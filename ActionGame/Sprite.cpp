@@ -19,7 +19,7 @@ void Sprite::LoadAll(std::wstring filePath, float aniTime, bool aniLoop)
 		if (auto texture = TextureManager::GetInstance().GetTexture(filePath))
 			textures.push_back(texture);
 		else
-			textures.push_back(TextureManager::GetInstance().GetTexture(L"Practice0714.jpg"));
+			textures.push_back(TextureManager::GetInstance().GetTexture(L"ActionGame.jpg"));
 	}
 
 	szScene = textures.size() - 1;

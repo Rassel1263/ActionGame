@@ -425,7 +425,7 @@ void PlayerHSAttack::EnterState(Player* obj)
 	case 0:
 		obj->renderer = UnitState::HSATTACK1;
 		obj->spr[obj->renderer].Reset();
-		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 60, 10), { 1, 0.2 }, 1200 ,20, 7);
+		obj->SetAttackInfo(D3DXVECTOR2(obj->ri.scale.x * 60, 10), { 1, 0.2 }, 1000 ,20, 7);
 		break;
 	case 1:
 		obj->renderer = UnitState::HSATTACK2;

@@ -9,17 +9,17 @@ EnemySpawner::EnemySpawner(D3DXVECTOR2 pos, EnemyType type)
 
 void EnemySpawner::Update(float deltaTime)
 {
-	if (pos.x - nowScene->player->pos.x < 50 && !spawnEnemy)
+	if (pos.x - nowScene->player->pos.x < 10 && !spawnEnemy)
 	{
 		spawnEnemy = true;
-		nowScene->player->limitLeft = pos.x - 80;
-		nowScene->player->limitRight = pos.x + 80;
+		nowScene->player->limitLeft = pos.x;
+		nowScene->player->limitRight = pos.x;
 
 		Enemy* enemy;
 		for (int i = 0; i < 3; ++i)
 		{
 			D3DXVECTOR2 randPos;
-			randPos.x = (rand() % 2) ? 400 : -400;
+			randPos.x = (rand() % 2) ? 400 : -360;
 			randPos.y = rand() % 50;
 
 			nowScene->obm.AddObject(enemy = new Enemy(nowScene->player->pos + randPos, type));

@@ -397,6 +397,7 @@
     <ClCompile Include="CollisionEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameScene2.cpp" />
     <ClCompile Include="GameScene3.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -431,6 +432,7 @@
     <ClInclude Include="CState.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="GameScene2.h" />
     <ClInclude Include="GameScene3.h" />
     <ClInclude Include="Item.h" />
