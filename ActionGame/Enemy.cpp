@@ -83,15 +83,21 @@ void Enemy::SetInfo()
 		SetAbility(50, 200, 10, 0.3f);
 		SetCollider(-50, -50, 50, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
+		sAttackTimer = 0.2f;
 		break;
+		SetCollider(-50, -50, 50, 50);
 	case EnemyType::Range:
+		SetAbility(30, 250, 15, 0.3f);
+		SetCollider(-50, -50, 50, 50);
+		SetAttackRange({ -50, -50 }, { 50, 50 });
+		sAttackTimer = 0.1f;
 		break;
 	}
 
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Idle");
 	spr[UnitState::WALK].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Walk");
 	spr[UnitState::LATTACK].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Attack", ability.atkSpeed, false);
-	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/SpecialAttack", 0.2f, false);
+	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/SpecialAttack", sAttackTimer, false);
 	spr[UnitState::HIT].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Hit", 0.1f, false);
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Enemy/" + std::to_wstring(index) + L"/Die", 0.1f, false);
 }

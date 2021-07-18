@@ -15,6 +15,8 @@ public:
 	EnemyRange* enemyRange = NULL;
 	CState<Enemy>* nowState = NULL;
 
+	float sAttackTimer = 0.0f;
+
 	Enemy(D3DXVECTOR2 pos, EnemyType type);
 
 	virtual void Update(float deltaTime) override;

@@ -25,6 +25,8 @@ public:
 	int itemIndex = 0;
 	bool boom = false;
 
+	bool invincibility = false;
+
 	Player();
 
 	Enemy* target = NULL;

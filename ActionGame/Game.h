@@ -16,6 +16,7 @@ public:
 	int screenHeight = 720;
 
 	float unscaleTime = 0.0f;
+	float timeScale = 1.0f;
 
 	LPDIRECT3DVERTEXBUFFER9 pVB;
 	LPD3DXLINE pLine;

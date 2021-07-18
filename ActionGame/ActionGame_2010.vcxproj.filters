@@ -36,6 +36,15 @@
     <Filter Include="Object\Item">
       <UniqueIdentifier>{bf1c0641-1ef7-4642-b431-555ae6d08690}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Rank">
+      <UniqueIdentifier>{a84335af-9c5c-4d3f-a327-d3ae47eb4445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Background">
+      <UniqueIdentifier>{df1adad2-dd2a-4dd9-934a-b1a67f41b36d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Screen">
+      <UniqueIdentifier>{39d27d3b-be08-4984-b000-159632495b75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -187,7 +196,6 @@
     <ClCompile Include="BossState.cpp">
       <Filter>Object\Unit\State</Filter>
     </ClCompile>
-    <ClCompile Include="ResultScreen.cpp" />
     <ClCompile Include="ShaderManager.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
@@ -197,10 +205,39 @@
     <ClCompile Include="EnemySpawner.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="RankingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainBackground.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
     <ClCompile Include="Background.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScreen.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RankPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Ranking.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="HelpPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -296,7 +333,6 @@
     <ClInclude Include="BossState.h">
       <Filter>Object\Unit\State</Filter>
     </ClInclude>
-    <ClInclude Include="ResultScreen.h" />
     <ClInclude Include="ShaderManager.h">
       <Filter>Shaders</Filter>
     </ClInclude>
@@ -306,10 +342,39 @@
     <ClInclude Include="EnemySpawner.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
+    <ClInclude Include="RankingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainBackground.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
     <ClInclude Include="Background.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScreen.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RankPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h" />
+    <ClInclude Include="HelpPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

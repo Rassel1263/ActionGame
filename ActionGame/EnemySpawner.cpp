@@ -24,6 +24,7 @@ void EnemySpawner::Update(float deltaTime)
 
 			nowScene->obm.AddObject(enemy = new Enemy(nowScene->player->pos + randPos, type));
 			enemyVecs.push_back(enemy);
+			nowScene->enemyVecs.push_back(enemy);
 		}
 	}
 

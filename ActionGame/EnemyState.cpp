@@ -64,6 +64,16 @@ void EnemyWalk::UpdateState(Enemy* obj, float deltaTime)
 		return;
 	}
 
+	if (obj->type == EnemyType::Range)
+	{
+		if (obj->CheckDistance(400))
+		{
+			EnemySAttack::instance->EnterState(obj);
+			return;
+		}
+	}
+
+
 	if (!obj->Move(deltaTime))
 	{
 		EnemyIdle::instance->EnterState(obj);
@@ -156,41 +166,63 @@ void EnemySAttack::EnterState(Enemy* obj)
 	obj->renderer = UnitState::LSATTACK1;
 	obj->spr[obj->renderer].Reset();
 
-	obj->velocity.x = 700 * -obj->ri.scale.x;
-	obj->velocity.y = 500;
+	if (obj->type == EnemyType::Bind)
+	{
+		obj->velocity.x = 700 * -obj->ri.scale.x;
+		obj->velocity.y = 500;
+	}
 }
 
 void EnemySAttack::UpdateState(Enemy* obj, float deltaTime)
 {
-	if (nowScene->player->bind)
+	if (obj->type == EnemyType::Bind)
 	{
-		timer += deltaTime;
-
-		if (timer >= 2.0f)
+		if (nowScene->player->bind)
 		{
-			obj->velocity.x = 700 * obj->ri.scale.x;
+			timer += deltaTime;
+
+			if (timer >= 2.0f)
+			{
+				obj->velocity.x = 700 * obj->ri.scale.x;
+				EnemyIdle::instance->EnterState(obj);
+				return;
+			}
+		}
+		// 언젠가 잡기 콜라이더를 만들지 않을까????????????
+		if (obj->CheckDistance(30) && !nowScene->player->bind && !nowScene->player->invincibility)
+		{
+			obj->pos = nowScene->player->pos + D3DXVECTOR2(30 * obj->ri.scale.x, 50);
+			obj->bRigid = false;
+			nowScene->player->bind = true;
+		}
+
+		if (obj->bGround)
+		{
 			EnemyIdle::instance->EnterState(obj);
 			return;
 		}
 	}
 
-	// 언젠가 잡기 콜라이더를 만들지 않을까????????????
-	if (obj->CheckDistance(30) && !nowScene->player->bind)
+	if (obj->type == EnemyType::Range)
 	{
-		obj->pos = nowScene->player->pos + D3DXVECTOR2(30 * obj->ri.scale.x, 50);
-		obj->bRigid = false;
-		nowScene->player->bind = true;
+		timer += deltaTime;
+
+		if (timer >= obj->spr[obj->renderer].aniMaxTime * 7)
+		{
+			nowScene->obm.AddObject(new FireBall(L"Enemy", obj->pos + D3DXVECTOR2(-obj->ri.scale.x * 40, 20), -obj->ri.scale, 10, obj->z));
+			timer = 0.0f;
+		}
+
+		if (!obj->spr[obj->renderer].bAnimation)
+		{
+			EnemyIdle::instance->EnterState(obj);
+			return;
+		}
 	}
 
 	if (obj->bHit)
 	{
 		EnemyHit::instance->EnterState(obj);
-		return;
-	}
-
-	if (obj->bGround)
-	{
-		EnemyIdle::instance->EnterState(obj);
 		return;
 	}
 }
@@ -252,6 +284,22 @@ void EnemyDie::UpdateState(Enemy* obj, float deltaTime)
 {
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
+		switch (obj->type)
+		{
+		case EnemyType::Speedy:
+			nowScene->GetScore(1000 * (1 + abs(obj->ability.hp)));
+			break;
+		case EnemyType::Power:
+			nowScene->GetScore(1500 * (1 + abs(obj->ability.hp)));
+			break;
+		case EnemyType::Bind:
+			nowScene->GetScore(2000 * (1 + abs(obj->ability.hp)));
+			break;
+		case EnemyType::Range:
+			nowScene->GetScore(3000);
+			break;
+		}
+
 		if (nowScene->player->target == obj)
 			nowScene->player->target = NULL;
 

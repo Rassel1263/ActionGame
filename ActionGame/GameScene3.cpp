@@ -6,6 +6,7 @@ void GameScene3::Init()
 	srand(time(NULL));
 
 	stage = 2;
+	nextScene = new RankingScene();
 
 	obm.AddObject(new Background(stage));
 

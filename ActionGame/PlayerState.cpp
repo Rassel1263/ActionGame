@@ -375,6 +375,7 @@ void PlayerLSAttack::EnterState(Player* obj)
 	case 1:
 		obj->renderer = UnitState::LSATTACK2;
 		obj->spr[obj->renderer].Reset();
+		obj->SetAttackInfo(D3DXVECTOR2(0, 0), { 1, 0 }, 0, 0, 7);
 		break;
 	}
 }
@@ -383,7 +384,10 @@ void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 {
 	if (obj->aniTimer <= 0.0f)
 	{
-		obj->Attack();
+		if (obj->renderer == UnitState::LSATTACK2)
+			nowScene->obm.AddObject(new FireBall(L"Light", obj->pos + D3DXVECTOR2(40 * obj->ri.scale.x, 20), obj->ri.scale, 20, obj->z));
+		else
+			obj->Attack();
 		obj->aniTimer = 999.0f;
 	}
 
@@ -430,6 +434,7 @@ void PlayerHSAttack::EnterState(Player* obj)
 	case 1:
 		obj->renderer = UnitState::HSATTACK2;
 		obj->spr[obj->renderer].Reset();
+		obj->SetAttackInfo(D3DXVECTOR2(0, 0), { 1, 0 }, 0, 0, 7);
 		break;
 	}
 
@@ -439,9 +444,14 @@ void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 {
 	if (obj->aniTimer <= 0.0f)
 	{
-		obj->Attack();
+		if (obj->renderer == UnitState::HSATTACK2)
+			nowScene->obm.AddObject(new FireBall(L"Heavy", obj->pos + D3DXVECTOR2(40 * obj->ri.scale.x, 20), obj->ri.scale, 30, obj->z ));
+		else
+			obj->Attack();
+
 		obj->aniTimer = 999.0f;
 	}
+
 
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
@@ -504,7 +514,7 @@ void PlayerHit::EnterState(Player* obj)
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
 
-	obj->ability.hp--;
+	obj->ability.hp -= obj->damage;
 }
 
 void PlayerHit::UpdateState(Player* obj, float deltaTime)
@@ -566,11 +576,12 @@ void PlayerCereMony::EnterState(Player* obj)
 
 void PlayerCereMony::UpdateState(Player* obj, float deltaTime)
 {
-	if (obj->spr[obj->renderer].scene >= obj->spr[obj->renderer].szScene)
+	if (obj->spr[obj->renderer].scene >= obj->spr[obj->renderer].szScene && !end)
 	{
+		end = true;
 		obj->spr[obj->renderer].scene = 8;
 		nowScene->obm.AddObject(new ResultScreen());
-		//Game::GetInstance().ChangeScene(new GameScene2());
+		return;
 	}
 }
 

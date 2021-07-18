@@ -11,7 +11,7 @@ Game::~Game()
 
 void Game::Init()
 {
-	ChangeScene(new GameScene2());
+	ChangeScene(new MainScene());
 
 	D3DXVECTOR3 vEyePt(0.0f, 0.0f, -10.0f);
 	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
@@ -69,7 +69,7 @@ void Game::Update(float deltaTime)
 	DXUTGetD3D9Device()->SetTransform(D3DTS_WORLD, &matWorld);
 
 	if (nowScene)
-		nowScene->Update(deltaTime);
+		nowScene->Update(deltaTime* timeScale);
 }
 
 void Game::Render()

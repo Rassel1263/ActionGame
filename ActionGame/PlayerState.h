@@ -141,6 +141,7 @@ public:
 class PlayerCereMony : public CState<Player>
 {
 public:
+	bool end = false;
 	static PlayerCereMony* instance;
 
 	virtual void EnterState(Player* obj);

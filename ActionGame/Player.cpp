@@ -28,7 +28,7 @@ Player::Player() : Units(D3DXVECTOR2(-1300, 0))
 	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L1", 0.05f, false);
 	spr[UnitState::LSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L2", 0.05f, false);
 	spr[UnitState::HSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H1", 0.08f, false);
-	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.08f, false);
+	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.05f, false);
 	spr[UnitState::BIND].LoadAll(L"Assets/Sprites/Units/Player/Bind", 0.08f, false);
 	spr[UnitState::HIT].LoadAll(L"Assets/Sprites/Units/Player/Hit", 0.08f, false);
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Player/Die", 0.08f, false);
@@ -38,9 +38,11 @@ Player::Player() : Units(D3DXVECTOR2(-1300, 0))
 
 	renderer = UnitState::WALK;
 
+	specialGaze = 100;
+
 	tag = L"player";
 
-	SetAbility(5, 200, 1, 1);
+	SetAbility(100, 200, 1, 1);
 	SetCollider(-30, -50, 30, 50);
 
 	Game::GetInstance().destCameraPos = { -699, 120 };
@@ -104,6 +106,9 @@ void Player::Update(float deltaTime)
 
 	while (shaderTimer >= 2.0f)
 		shaderTimer -= 3.0f;
+
+	if (invincibility)
+		bHit = false;
 
 	if (nowState)
 		nowState->UpdateState(this, deltaTime);

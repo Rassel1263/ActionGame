@@ -37,6 +37,8 @@
 #include "Boss.h"
 #include "BossState.h"
 
+#include "FireBall.h"
+
 #include "Chest.h"
 #include "Item.h"
 #include "Boom.h"
@@ -50,13 +52,21 @@
 #include "CollisionEffect.h"
 #include "Spectrum.h"
 
+#include "Ranking.h"
+
 #include "ResultScreen.h"
+#include "MainBackground.h"
 #include "Background.h"
+#include "RankPage.h"
+#include "HelpPage.h"
+#include "Fade.h"
 
 #include "Scene.h"
+#include "MainScene.h"
 #include "GameScene.h"
 #include "GameScene2.h"
 #include "GameScene3.h"
+#include "RankingScene.h"
 extern Scene* nowScene;
 
 #include "Game.h"
