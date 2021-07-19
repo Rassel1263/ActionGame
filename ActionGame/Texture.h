@@ -15,5 +15,6 @@ public:
 	virtual ~TextureManager();
 
 	const Texture* GetTexture(std::wstring filePath);
+	void Reset();
 };
 

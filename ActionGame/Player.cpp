@@ -19,7 +19,7 @@ PlayerCereMony* PlayerCereMony::instance = new PlayerCereMony;
 Player::Player() : Units(D3DXVECTOR2(-1300, 0))
 {
 	spr[UnitState::IDLE].LoadAll(L"Assets/Sprites/Units/Player/Idle");
-	spr[UnitState::DOWN].LoadAll(L"Assets/Sprites/Units/Player/Down");
+	spr[UnitState::DOWN].LoadAll(L"Assets/Sprites/Units/Player/Guard");
 	spr[UnitState::WALK].LoadAll(L"Assets/Sprites/Units/Player/Walk");
 	spr[UnitState::JUMP].LoadAll(L"Assets/Sprites/Units/Player/Jump", 0.1f, false);
 	spr[UnitState::FALL].LoadAll(L"Assets/Sprites/Units/Player/Fall", 0.1f, false);
@@ -72,6 +72,23 @@ void Player::Update(float deltaTime)
 		nowInput = -1;
 	}
 
+	if (Input::GetInstance().KeyDown('D'))
+	{
+		if (boom)
+		{
+			nowScene->obm.AddObject(new Boom(this, pos, ri.scale, 1.5f));
+			boom = false;
+		}
+	}
+
+	if (renderer != UnitState::DOWN)
+	{
+		if (guardTimer < 3.0f)
+			guardTimer += deltaTime;
+	}
+
+	std::cout << guardTimer << std::endl;
+
 	if (abs(velocity.x) > 0 && !bHit)
 	{
 		if (eftTimer >= 0.02f)
@@ -99,6 +116,17 @@ void Player::Update(float deltaTime)
 		{
 			hpGaze = 0;
 			ability.hp++;
+		}
+	}
+
+	if (guardCnt <= 0)
+	{
+		guardTimer += deltaTime;
+
+		if (guardTimer >= 3.0f)
+		{
+			guardCnt = 5;
+			guardTimer = 0.0f;
 		}
 	}
 

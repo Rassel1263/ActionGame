@@ -6,6 +6,8 @@ DiePage::DiePage()
 	spr.LoadAll(L"Assets/Sprites/UI/Die");
 	spr.bCamera = false;
 
+	layer = 99;
+
 	spr.color.a = 0.0f;
 }
 

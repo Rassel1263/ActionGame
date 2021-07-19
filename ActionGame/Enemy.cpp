@@ -82,7 +82,7 @@ void Enemy::SetInfo()
 	case EnemyType::Speedy:
 		SetAbility(40, 200, 10, 0.2f);
 		SetCollider(-30, -50, 30, 50);
-		SetAttackRange({ -50, -50 }, { 50, 50 });
+		SetAttackRange({ -30, -50 }, { 30, 50 });
 		break;
 	case EnemyType::Power:
 		SetAbility(70, 100, 20, 0.2f);

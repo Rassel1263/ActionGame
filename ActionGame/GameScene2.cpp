@@ -28,7 +28,6 @@ void GameScene2::Init()
 
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(200, 0), EnemyType::Power));
 
-
 	obm.AddObject(player = new Player());
 	obm.AddObject(new PGaze(player));
 	obm.AddObject(new UnitHp());

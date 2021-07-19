@@ -18,8 +18,6 @@ void Scene::Update(float deltaTime)
 	if (Input::GetInstance().KeyDown(VK_F2))
 		nowScene->player->PlusSpecialGaze(100);
 
-
-
 	if (Input::GetInstance().KeyDown(VK_F4))
 		Game::GetInstance().ChangeScene(new MainScene());
 
@@ -36,6 +34,12 @@ void Scene::Update(float deltaTime)
 		gameStop = !gameStop;
 
 	(gameStop) ? Game::GetInstance().timeScale = 0.0f : Game::GetInstance().timeScale = 1.0f;
+
+	if (timer <= 0.0f)
+	{
+		timer = 999.0f;
+		obm.AddObject(new DiePage());
+	}
 
 	obm.Collision();
 	obm.Update(deltaTime);

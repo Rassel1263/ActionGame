@@ -117,7 +117,7 @@ void EnemyAttack::EnterState(Enemy* obj)
 	switch (obj->type)
 	{
 	case EnemyType::Speedy:
-		obj->SetAttackInfo(D3DXVECTOR2(20 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 300 ,5, 2);
+		obj->SetAttackInfo(D3DXVECTOR2(40 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 300 ,5, 2);
 		break;
 	case EnemyType::Power:
 		obj->SetAttackInfo(D3DXVECTOR2(80 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0), 600 ,7, 3);
@@ -251,7 +251,7 @@ void EnemyHit::EnterState(Enemy* obj)
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
 
-	nowScene->player->PlusSpecialGaze(3);
+	nowScene->player->PlusSpecialGaze(obj->damage / 2);
 	obj->ability.hp -= obj->damage;
 }
 

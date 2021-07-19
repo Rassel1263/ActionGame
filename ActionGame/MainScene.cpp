@@ -3,7 +3,10 @@
 
 void MainScene::Init()
 {
+	SoundManager::GetInstance().StopAll();
+
 	Scene::Init();
+	
 
 	Game::GetInstance().cameraPos = { 0, -360 };
 	Game::GetInstance().destCameraPos = { 0, 0 };

@@ -67,7 +67,7 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
-	if (Input::GetInstance().KeyDown('D'))
+	if (Input::GetInstance().KeyDown('C') && obj->guardTimer > 0.0f)
 	{
 		PlayerDown::instance->EnterState(obj);
 		return;
@@ -108,20 +108,24 @@ void PlayerDown::EnterState(Player* obj)
 
 	obj->renderer = UnitState::DOWN;
 
-	if (obj->boom)
-	{
-		nowScene->obm.AddObject(new Boom(obj, obj->pos, obj->ri.scale, 1.5f));
-		obj->boom = false;
-	}
+
 }
 
 void PlayerDown::UpdateState(Player* obj, float deltaTime)
 {
-	if (Input::GetInstance().KeyUp('D'))
+	if (Input::GetInstance().KeyUp('C') || obj->guardTimer <= 0.0f)
 	{
 		PlayerIdle::instance->EnterState(obj);
 		return;
 	}
+
+	if (obj->bHit)
+	{
+		obj->ability.hp -= obj->damage * 0.1f;
+		obj->bHit = false;
+	}
+
+	obj->guardTimer -= deltaTime;
 }
 
 void PlayerDown::ExitState(Player* obj)

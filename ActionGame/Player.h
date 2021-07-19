@@ -22,6 +22,9 @@ public:
 	float limitRight = 700;
 
 	int itemIndex = 0;
+	int guardCnt = 5;
+
+	float guardTimer = 0.0f;
 	bool boom = false;
 
 	bool invincibility = false;

@@ -3,7 +3,7 @@
 
 AttackCollider::AttackCollider(Units* obj, D3DXVECTOR2 offset, D3DXVECTOR2 attackVec)
 {
-	spr.LoadAll(L"Assets/Sprites/Pixel.png");
+	spr.LoadAll(L"Assets/Sprites/pixel.png");
 
 	this->obj = obj;
 	pos = obj->pos + offset;
@@ -36,7 +36,7 @@ void AttackCollider::OnCollision(Collider& other)
 {
 	if (obj->tag == other.tag) return; // 태그가 같을 때
 	if (other.tag == L"playerAttack" || other.tag == L"enemyAttack" || other.tag == L"bossAttack") return;
-	if (other.tag == L"enemyRange") return;
+	if (other.tag == L"enemyRange" || other.tag == L"bossRange") return;
 	if (other.tag == L"item" || other.tag == L"chest") return;
 	if (other.tag == L"Lightfireball" || other.tag == L"Heavyfireball" || other.tag == L"Enemyfireball") return;
 

@@ -24,7 +24,6 @@ void GameScene::Init()
 	obm.AddObject(new Enemy(D3DXVECTOR2(120, 20), EnemyType::Speedy));
 
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(200, 0), EnemyType::Power));
-	obm.AddObject(new Enemy(D3DXVECTOR2(500, 0), EnemyType::Bind));
 	obm.AddObject(new EnemySpawner(D3DXVECTOR2(600, 0), EnemyType::Speedy));
 
 

@@ -3377,8 +3377,8 @@ void DXUTCleanup3DEnvironment9( bool bReleaseSettings )
             UINT references = pd3dDevice->Release();
             if( references > 0 )
             {
-                DXUTDisplayErrorMessage( DXUTERR_NONZEROREFCOUNT );
-                DXUT_ERR( L"DXUTCleanup3DEnvironment", DXUTERR_NONZEROREFCOUNT );
+                //DXUTDisplayErrorMessage( DXUTERR_NONZEROREFCOUNT );
+                //DXUT_ERR( L"DXUTCleanup3DEnvironment", DXUTERR_NONZEROREFCOUNT );
             }
         }
         GetDXUTState().SetD3D9Device( NULL );

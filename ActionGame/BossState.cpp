@@ -369,7 +369,6 @@ void BossDie::UpdateState(Boss* obj, float deltaTime)
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		nowScene->wave = 0;
-
 		obj->enemyRange->destroy = true;
 		//obj->destroy = true;
 

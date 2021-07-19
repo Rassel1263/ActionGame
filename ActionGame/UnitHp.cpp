@@ -36,6 +36,8 @@ UnitHp::UnitHp()
 
 	for (int i = 0; i < 2; ++i)
 		bUpper[i].bCamera = false;
+
+	layer = 2;
 }
 
 void UnitHp::Update(float deltaTime)

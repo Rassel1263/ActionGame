@@ -52,6 +52,8 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
 HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                     void* pUserContext )
 {
+    Game::GetInstance().pLine->OnResetDevice();
+    TextureManager::GetInstance().Reset();
     return S_OK;
 }
 
