@@ -5,6 +5,7 @@ float Scene::score = 0.0f;
 
 void Scene::Init()
 {
+	LoadAll();
 }
 
 void Scene::Update(float deltaTime)
@@ -17,17 +18,7 @@ void Scene::Update(float deltaTime)
 	if (Input::GetInstance().KeyDown(VK_F2))
 		nowScene->player->PlusSpecialGaze(100);
 
-	if (Input::GetInstance().KeyDown(VK_F2))
-	{
-		for (auto& enemy : enemyVecs)
-		{
-			if (enemy->pos.x > Game::GetInstance().destCameraPos.x - 360 && enemy->pos.x < Game::GetInstance().destCameraPos.x + 360)
-			{
-				enemy->bHit = true;
-				enemy->damage = enemy->ability.maxHp;
-			}
-		}
-	}
+
 
 	if (Input::GetInstance().KeyDown(VK_F4))
 		Game::GetInstance().ChangeScene(new MainScene());
@@ -53,6 +44,11 @@ void Scene::Update(float deltaTime)
 void Scene::Render()
 {
 	obm.Render();
+}
+
+void Scene::LoadAll()
+{
+
 }
 
 void Scene::GetScore(int score)

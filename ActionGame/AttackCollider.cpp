@@ -38,7 +38,7 @@ void AttackCollider::OnCollision(Collider& other)
 	if (other.tag == L"playerAttack" || other.tag == L"enemyAttack" || other.tag == L"bossAttack") return;
 	if (other.tag == L"enemyRange") return;
 	if (other.tag == L"item" || other.tag == L"chest") return;
-	if (other.tag == L"Lightfireball" || other.tag == L"Heavyfireball") return;
+	if (other.tag == L"Lightfireball" || other.tag == L"Heavyfireball" || other.tag == L"Enemyfireball") return;
 
 	if (obj->tag == L"player" && other.tag == L"enemy")
 	{
@@ -46,6 +46,7 @@ void AttackCollider::OnCollision(Collider& other)
 	}
 
 	nowScene->obm.AddObject(new Effect(L"Hit", pos, D3DXVECTOR2(0.2, 0.2)));
+	SoundManager::GetInstance().Play(L"Assets/Sound/LAttack.mp3");
 
 	D3DXVECTOR2 vtemp = attackVec;
 

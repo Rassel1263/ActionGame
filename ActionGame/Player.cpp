@@ -24,11 +24,11 @@ Player::Player() : Units(D3DXVECTOR2(-1300, 0))
 	spr[UnitState::JUMP].LoadAll(L"Assets/Sprites/Units/Player/Jump", 0.1f, false);
 	spr[UnitState::FALL].LoadAll(L"Assets/Sprites/Units/Player/Fall", 0.1f, false);
 	spr[UnitState::LATTACK].LoadAll(L"Assets/Sprites/Units/Player/LightAttack", 0.05f, false);
-	spr[UnitState::HATTACK].LoadAll(L"Assets/Sprites/Units/Player/HeavyAttack", 0.08f, false);
+	spr[UnitState::HATTACK].LoadAll(L"Assets/Sprites/Units/Player/HeavyAttack", 0.06f, false);
 	spr[UnitState::LSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L1", 0.05f, false);
 	spr[UnitState::LSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/L2", 0.05f, false);
-	spr[UnitState::HSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H1", 0.08f, false);
-	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.05f, false);
+	spr[UnitState::HSATTACK1].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H1", 0.06f, false);
+	spr[UnitState::HSATTACK2].LoadAll(L"Assets/Sprites/Units/Player/SpecialAttack/H2", 0.06f, false);
 	spr[UnitState::BIND].LoadAll(L"Assets/Sprites/Units/Player/Bind", 0.08f, false);
 	spr[UnitState::HIT].LoadAll(L"Assets/Sprites/Units/Player/Hit", 0.08f, false);
 	spr[UnitState::DIE].LoadAll(L"Assets/Sprites/Units/Player/Die", 0.08f, false);
@@ -159,9 +159,12 @@ bool Player::Move(float deltaTime)
 
 	if (vMove.x == 0 && vMove.y == 0)
 		return false;
-
-	if (pos.x + vMove.x < limitLeft - 300 || pos.x + vMove.x > limitRight + 300)
+	
+	bool leftGuard = pos.x + vMove.x < limitLeft - 300;
+	bool rightGuard = pos.x + vMove.x > limitRight + 300;
+	if (leftGuard || rightGuard)
 	{
+		pos.x = (leftGuard) ? limitLeft - 300 : limitRight + 300;
 		velocity.x = 0;
 		return false;
 	}
@@ -247,7 +250,7 @@ void Player::SetItemEffect(int index)
 		break;
 
 	case 2:
-		ability.hp += 2;
+		ability.hp += 10;
 		if (ability.hp >= ability.maxHp)
 			ability.hp = ability.maxHp;
 		break;

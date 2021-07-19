@@ -56,10 +56,32 @@ public:
 	virtual void ExitState(Boss* obj);
 };
 
+class BossSLAttack : public CState<Boss>
+{
+public:
+	float aniMaxTime = 0.0f;
+
+	static BossSLAttack* instance;
+
+	virtual void EnterState(Boss* obj);
+	virtual void UpdateState(Boss* obj, float deltaTime);
+	virtual void ExitState(Boss* obj);
+};
+
 class BossHAttack : public CState<Boss>
 {
 public:
 	static BossHAttack* instance;
+
+	virtual void EnterState(Boss* obj);
+	virtual void UpdateState(Boss* obj, float deltaTime);
+	virtual void ExitState(Boss* obj);
+};
+
+class BossSHAttack : public CState<Boss>
+{
+public:
+	static BossSHAttack* instance;
 
 	virtual void EnterState(Boss* obj);
 	virtual void UpdateState(Boss* obj, float deltaTime);

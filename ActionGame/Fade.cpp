@@ -35,6 +35,7 @@ void Fade::Update(float deltaTime)
 		if (fade.color.a >= 1.0f)
 		{
 			destroy = true;
+			SoundManager::GetInstance().StopAll();
 			Game::GetInstance().ChangeScene(new GameScene());
 		}
 	}

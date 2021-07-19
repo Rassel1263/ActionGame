@@ -131,6 +131,8 @@ public:
 class PlayerDie : public CState<Player>
 {
 public:
+	bool end = false;
+
 	static PlayerDie* instance;
 
 	virtual void EnterState(Player* obj);

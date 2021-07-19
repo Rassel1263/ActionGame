@@ -238,6 +238,16 @@
     <ClCompile Include="FireBall.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="Boss2.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="EndPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="EGaze.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Singleton.h">
@@ -374,6 +384,16 @@
     </ClInclude>
     <ClInclude Include="FireBall.h">
       <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss2.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="EndPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="EGaze.h">
+      <Filter>Object\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

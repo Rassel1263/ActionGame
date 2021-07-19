@@ -35,8 +35,8 @@ void ResultScreen::Update(float deltaTime)
 
 	if (!bFade)
 	{
-		CalcNum(time);
-		CalcNum(hp);
+		CalcNum(time, 100);
+		CalcNum(hp, 50);
 
 		if (Input::GetInstance().KeyDown(VK_SPACE))
 		{
@@ -64,7 +64,7 @@ void ResultScreen::Render()
 	}
 }
 
-void ResultScreen::CalcNum(float& num)
+void ResultScreen::CalcNum( float& num, float multifle)
 {
 	float tempNum = num;
 
@@ -76,7 +76,7 @@ void ResultScreen::CalcNum(float& num)
 
 		tempNum = tempNum - num;
 
-		score += tempNum;
+		score += tempNum * multifle;
 	}
 }
 

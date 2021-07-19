@@ -15,6 +15,7 @@
 #include "Texture.h"
 #include "Sprite.h"
 
+#include "SoundManager.h"
 #include "ShaderManager.h"
 #include "SimpleShader.h"
 
@@ -35,6 +36,7 @@
 #include "EnemySpawner.h"
 
 #include "Boss.h"
+#include "Boss2.h"
 #include "BossState.h"
 
 #include "FireBall.h"
@@ -44,6 +46,7 @@
 #include "Boom.h"
 
 #include "PGaze.h"
+#include "EGaze.h"
 #include "UnitHp.h"
 #include "Font.h"
 
@@ -59,6 +62,7 @@
 #include "Background.h"
 #include "RankPage.h"
 #include "HelpPage.h"
+#include "EndPage.h"
 #include "Fade.h"
 
 #include "Scene.h"

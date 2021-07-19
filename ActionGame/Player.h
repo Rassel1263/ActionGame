@@ -18,7 +18,6 @@ public:
 	float hpGaze = 0.0f;
 	float hpMaxGaze = 100.0f;
 
-
 	float limitLeft = -700;
 	float limitRight = 700;
 

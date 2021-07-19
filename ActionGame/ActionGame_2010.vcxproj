@@ -391,11 +391,14 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Boom.cpp" />
     <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Boss2.cpp" />
     <ClCompile Include="BossState.cpp" />
     <ClCompile Include="Chest.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionEffect.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EGaze.cpp" />
+    <ClCompile Include="EndPage.cpp" />
     <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="FireBall.cpp" />
@@ -412,6 +415,7 @@
     <ClCompile Include="ResultScreen.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SimpleShader.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spectrum.cpp" />
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="Enemy.cpp" />
@@ -433,12 +437,15 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Boom.h" />
     <ClInclude Include="Boss.h" />
+    <ClInclude Include="Boss2.h" />
     <ClInclude Include="BossState.h" />
     <ClInclude Include="Chest.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionEffect.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="EGaze.h" />
+    <ClInclude Include="EndPage.h" />
     <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="FireBall.h" />
@@ -455,6 +462,7 @@
     <ClInclude Include="ResultScreen.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="SimpleShader.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spectrum.h" />
     <ClInclude Include="IEffect.h" />
     <ClInclude Include="Enemy.h" />

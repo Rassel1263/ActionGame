@@ -18,6 +18,12 @@ void EnemyIdle::UpdateState(Enemy* obj, float deltaTime)
 		return;
 	}
 
+	if (obj->enemyRange->findTarget)
+	{
+		EnemyAttack::instance->EnterState(obj);
+		return;
+	}
+
 	if (obj->ability.hp <= 0)
 	{
 		EnemyDie::instance->EnterState(obj);
@@ -66,7 +72,7 @@ void EnemyWalk::UpdateState(Enemy* obj, float deltaTime)
 
 	if (obj->type == EnemyType::Range)
 	{
-		if (obj->CheckDistance(400))
+		if (obj->CheckDistance(250))
 		{
 			EnemySAttack::instance->EnterState(obj);
 			return;
@@ -207,7 +213,7 @@ void EnemySAttack::UpdateState(Enemy* obj, float deltaTime)
 	{
 		timer += deltaTime;
 
-		if (timer >= obj->spr[obj->renderer].aniMaxTime * 7)
+		if (timer >= obj->spr[obj->renderer].aniMaxTime * 8)
 		{
 			nowScene->obm.AddObject(new FireBall(L"Enemy", obj->pos + D3DXVECTOR2(-obj->ri.scale.x * 40, 20), -obj->ri.scale, 10, obj->z));
 			timer = 0.0f;
@@ -245,7 +251,7 @@ void EnemyHit::EnterState(Enemy* obj)
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
 
-	nowScene->player->PlusSpecialGaze(10);
+	nowScene->player->PlusSpecialGaze(3);
 	obj->ability.hp -= obj->damage;
 }
 

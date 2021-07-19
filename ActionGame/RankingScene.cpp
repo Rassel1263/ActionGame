@@ -3,6 +3,7 @@
 
 void RankingScene::Init()
 {
+	SoundManager::GetInstance().StopAll();
 	obm.AddObject(new Ranking());
 }
 

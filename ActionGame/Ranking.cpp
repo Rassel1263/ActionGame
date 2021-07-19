@@ -46,9 +46,6 @@ void Ranking::Render()
 		spr.Render(RenderInfo{ D3DXVECTOR2(-100 + count * 100, 0) });
 		count++;
 	}
-
-	//ri.pos = pos;
-	//spr.Render(ri);
 }
 
 void Ranking::WriteFile()
@@ -85,5 +82,7 @@ void Ranking::WriteFile()
 			write << rank[i].score << std::endl;
 			write << rank[i].initial << std::endl;
 		}
+
+		Game::GetInstance().ChangeScene(new MainScene());
 	}
 }

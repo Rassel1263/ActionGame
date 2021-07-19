@@ -20,11 +20,10 @@ void EnemySpawner::Update(float deltaTime)
 		{
 			D3DXVECTOR2 randPos;
 			randPos.x = (rand() % 2) ? 400 : -360;
-			randPos.y = rand() % 50;
+			randPos.y = rand() % 100 - 50;
 
 			nowScene->obm.AddObject(enemy = new Enemy(nowScene->player->pos + randPos, type));
 			enemyVecs.push_back(enemy);
-			nowScene->enemyVecs.push_back(enemy);
 		}
 	}
 

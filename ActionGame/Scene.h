@@ -5,9 +5,9 @@ public:
 	ObjectManager obm;
 
 	Player* player = NULL;
-	std::vector<Enemy*> enemyVecs;
-
+	Boss* boss = NULL;
 	Scene* nextScene;
+
 	
 	bool spawnBoss = false;
 	bool click = true;
@@ -23,6 +23,7 @@ public:
 	virtual void Init();
 	virtual void Update(float deltaTime);
 	virtual void Render();
+	virtual void LoadAll();
 
 	void GetScore(int score);
 };

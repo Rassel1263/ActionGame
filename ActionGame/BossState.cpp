@@ -35,6 +35,13 @@ void BossIdle::UpdateState(Boss* obj, float deltaTime)
 				pattern = 1;
 		}
 	}
+	
+	if (obj->enemyRange->findTarget)
+	{
+		BossLAttack::instance->EnterState(obj);
+		return;
+	}
+
 
 	if (obj->bHit)
 	{
@@ -61,14 +68,18 @@ void BossBack::EnterState(Boss* obj)
 	obj->spr[obj->renderer].Reset();
 
 	obj->velocity.y = 100;
-	obj->velocity.x = 800 * obj->ri.scale.x;
+	obj->velocity.x = 800 * nowScene->player->ri.scale.x;
+	obj->ri.scale.x = nowScene->player->ri.scale.x;
 }
 
 void BossBack::UpdateState(Boss* obj, float deltaTime)
 {
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
-		BossIdle::instance->EnterState(obj);
+		if (obj->bossIndex == 1)
+			BossIdle::instance->EnterState(obj);
+		else
+			BossSLAttack::instance->EnterState(obj);
 		return;
 	}
 
@@ -166,7 +177,11 @@ void BossLAttack::EnterState(Boss* obj)
 	obj->renderer = UnitState::LATTACK;
 	obj->spr[obj->renderer].Reset();
 
-	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 500 ,5, 3);
+	float dir = obj->pos.x - nowScene->player->pos.x;
+	obj->ri.scale.x = dir > 0 ? 1 : -1;
+
+	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(-1, 0.3), 500, 5, 3);
+
 }
 
 void BossLAttack::UpdateState(Boss* obj, float deltaTime)
@@ -229,6 +244,71 @@ void BossHAttack::ExitState(Boss* obj)
 {
 }
 
+
+void BossSLAttack::EnterState(Boss* obj)
+{
+	if (obj->nowState)
+		obj->nowState->ExitState(obj);
+
+	obj->nowState = this;
+	obj->renderer = UnitState::LSATTACK1;
+	obj->spr[obj->renderer].Reset();
+
+	obj->SetAttackInfo(D3DXVECTOR2(60 * -obj->ri.scale.x, 30), D3DXVECTOR2(0, 0.0), 0, 20, 5);
+	aniMaxTime = obj->aniTimer;
+	obj->fireBall = rand() % 2 + 3;
+}
+
+void BossSLAttack::UpdateState(Boss* obj, float deltaTime)
+{
+	if (obj->aniTimer <= 0.0f)
+	{
+		nowScene->obm.AddObject(new FireBall(L"Enemy", obj->pos + obj->offset, -obj->ri.scale, obj->ability.atkDamage, obj->z));
+		obj->fireBall--;
+
+		obj->aniTimer = 999;
+	}
+
+	if (!obj->spr[obj->renderer].bAnimation)
+	{
+		if (obj->fireBall <= 0)
+		{
+			BossIdle::instance->EnterState(obj);
+			return;
+		}
+		else
+		{
+			obj->aniTimer = aniMaxTime;
+			obj->spr[obj->renderer].Reset();
+		}
+	}
+
+	if (obj->bHit)
+	{
+		BossHit::instance->EnterState(obj);
+		return;
+	}
+
+	obj->aniTimer -= deltaTime;
+}
+
+void BossSLAttack::ExitState(Boss* obj)
+{
+}
+
+void BossSHAttack::EnterState(Boss* obj)
+{
+}
+
+void BossSHAttack::UpdateState(Boss* obj, float deltaTime)
+{
+}
+
+void BossSHAttack::ExitState(Boss* obj)
+{
+}
+
+
 void BossHit::EnterState(Boss* obj)
 {
 	if (obj->nowState)
@@ -241,7 +321,10 @@ void BossHit::EnterState(Boss* obj)
 	obj->renderer = UnitState::HIT;
 	obj->spr[obj->renderer].Reset();
 
-	obj->ability.hp -= obj->damage;
+	nowScene->player->PlusSpecialGaze(10);
+
+	if(miss > 0)
+		obj->ability.hp -= obj->damage;
 }
 
 void BossHit::UpdateState(Boss* obj, float deltaTime)
@@ -252,7 +335,7 @@ void BossHit::UpdateState(Boss* obj, float deltaTime)
 		return;
 	}
 
-	if (miss)
+	if (miss == 0)
 	{
 		BossBack::instance->EnterState(obj);
 		return;
@@ -286,6 +369,8 @@ void BossDie::UpdateState(Boss* obj, float deltaTime)
 	if (!obj->spr[obj->renderer].bAnimation)
 	{
 		nowScene->wave = 0;
+
+		obj->enemyRange->destroy = true;
 		//obj->destroy = true;
 
 		return;
@@ -295,4 +380,3 @@ void BossDie::UpdateState(Boss* obj, float deltaTime)
 void BossDie::ExitState(Boss* obj)
 {
 }
-

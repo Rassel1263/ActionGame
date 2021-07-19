@@ -90,6 +90,8 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		PlayerHit::instance->EnterState(obj);
 		return;
 	}
+
+	
 }
 
 void PlayerIdle::ExitState(Player* obj)
@@ -108,7 +110,7 @@ void PlayerDown::EnterState(Player* obj)
 
 	if (obj->boom)
 	{
-		nowScene->obm.AddObject(new Boom(obj, obj->pos, obj->ri.scale, 3.0f));
+		nowScene->obm.AddObject(new Boom(obj, obj->pos, obj->ri.scale, 1.5f));
 		obj->boom = false;
 	}
 }
@@ -196,7 +198,6 @@ void PlayerWalk::UpdateState(Player* obj, float deltaTime)
 		PlayerHit::instance->EnterState(obj);
 		return;
 	}
-
 
 }
 
@@ -385,7 +386,10 @@ void PlayerLSAttack::UpdateState(Player* obj, float deltaTime)
 	if (obj->aniTimer <= 0.0f)
 	{
 		if (obj->renderer == UnitState::LSATTACK2)
+		{
+			SoundManager::GetInstance().Play(L"Assets/Sound/FireBall.mp3");
 			nowScene->obm.AddObject(new FireBall(L"Light", obj->pos + D3DXVECTOR2(40 * obj->ri.scale.x, 20), obj->ri.scale, 20, obj->z));
+		}
 		else
 			obj->Attack();
 		obj->aniTimer = 999.0f;
@@ -445,7 +449,10 @@ void PlayerHSAttack::UpdateState(Player* obj, float deltaTime)
 	if (obj->aniTimer <= 0.0f)
 	{
 		if (obj->renderer == UnitState::HSATTACK2)
-			nowScene->obm.AddObject(new FireBall(L"Heavy", obj->pos + D3DXVECTOR2(40 * obj->ri.scale.x, 20), obj->ri.scale, 30, obj->z ));
+		{
+			SoundManager::GetInstance().Play(L"Assets/Sound/FireBall.mp3");
+			nowScene->obm.AddObject(new FireBall(L"Heavy", obj->pos + D3DXVECTOR2(40 * obj->ri.scale.x, 20), obj->ri.scale, 30, obj->z));
+		}
 		else
 			obj->Attack();
 
@@ -539,6 +546,8 @@ void PlayerHit::ExitState(Player* obj)
 
 void PlayerDie::EnterState(Player* obj)
 {
+	end = false;
+
 	if (obj->nowState)
 		obj->nowState->ExitState(obj);
 
@@ -550,21 +559,23 @@ void PlayerDie::EnterState(Player* obj)
 
 void PlayerDie::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->spr[obj->renderer].bAnimation)
+	if (!obj->spr[obj->renderer].bAnimation && !end)
 	{
-		PlayerIdle::instance->EnterState(obj);
+		end = true;
+		nowScene->obm.AddObject(new DiePage());
+
 		return;
 	}
 }
 
 void PlayerDie::ExitState(Player* obj)
 {
-	obj->ability.hp = 5;
-	obj->bHit = false;
 }
 
 void PlayerCereMony::EnterState(Player* obj)
 {
+	end = false;
+
 	if (obj->nowState)
 		obj->nowState->ExitState(obj);
 

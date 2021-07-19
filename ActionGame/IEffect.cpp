@@ -24,7 +24,6 @@ void IEffect::Update(float deltaTime)
 	}
 	else
 	{
-		std::cout << spr.scene << std::endl;
 
 		if (!spr.bAnimation)
 			destroy = true;

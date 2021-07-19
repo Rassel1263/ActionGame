@@ -16,6 +16,7 @@ Enemy::Enemy(D3DXVECTOR2 pos, EnemyType type) : Units(pos)
 	tag = L"enemy";
 
 	SetInfo();
+	nowScene->obm.AddObject(new EGaze(this));
 
 	EnemyIdle::instance->EnterState(this);
 	renderer = UnitState::IDLE;
@@ -25,6 +26,15 @@ Enemy::Enemy(D3DXVECTOR2 pos, EnemyType type) : Units(pos)
 
 void Enemy::Update(float deltaTime)
 {
+	if (Input::GetInstance().KeyDown(VK_F3))
+	{
+		if (pos.x > Game::GetInstance().destCameraPos.x - 360 && pos.x < Game::GetInstance().destCameraPos.x + 360)
+		{
+			bHit = true;
+			ability.hp = 0;
+		}
+	}
+
 	if (nowState)
 		nowState->UpdateState(this, deltaTime);
 
@@ -70,12 +80,12 @@ void Enemy::SetInfo()
 	switch (type)
 	{
 	case EnemyType::Speedy:
-		SetAbility(50, 200, 10, 0.5f);
+		SetAbility(40, 200, 10, 0.2f);
 		SetCollider(-30, -50, 30, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
 		break;
 	case EnemyType::Power:
-		SetAbility(100, 100, 20, 0.2f);
+		SetAbility(70, 100, 20, 0.2f);
 		SetCollider(-50, -50, 50, 50);
 		SetAttackRange({ -50, -50 }, { 50, 50 });
 		break;

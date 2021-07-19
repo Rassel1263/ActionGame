@@ -1,9 +1,11 @@
 #pragma once
 
-
 class Boss : public Units
 {
 public:
+	int bossIndex = 1;
+	int fireBall = 0;
+	
 	CState<Boss>* nowState = NULL;
 	EnemyRange* enemyRange = NULL;
 

@@ -6,7 +6,9 @@ BossBack* BossBack::instance = new BossBack;
 BossWalk* BossWalk::instance = new BossWalk;
 BossDash* BossDash::instance = new BossDash;
 BossLAttack* BossLAttack::instance = new BossLAttack;
+BossSLAttack* BossSLAttack::instance = new BossSLAttack;
 BossHAttack* BossHAttack::instance = new BossHAttack;
+BossSHAttack* BossSHAttack::instance = new BossSHAttack;
 BossHit* BossHit::instance = new BossHit;
 BossDie* BossDie::instance = new BossDie;
 
@@ -27,7 +29,7 @@ Boss::Boss(D3DXVECTOR2 pos) : Units(pos)
 
 	tag = L"boss";
 
-	SetAbility(5, 100, 10, 1);
+	SetAbility(100, 100, 10, 1);
 	SetCollider(-30, -50, 30, 50);
 
 	enemyRange = new EnemyRange(this, D3DXVECTOR2(-50, -50), D3DXVECTOR2(50, 50));
@@ -63,7 +65,11 @@ bool Boss::Move(float deltaTime)
 	{
 		pos.x += distanceVec.x * ability.speed * deltaTime;
 		pos.y += distanceVec.y * ability.speed * deltaTime / 2;
-		z += distanceVec.y * ability.speed * deltaTime / 2;
+		
+		if (distanceVec.y > 0)
+			z += 2;
+		else if(distanceVec.y < 0)
+			z -= 2;
 
 		return true;
 	}

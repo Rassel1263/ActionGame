@@ -5,7 +5,9 @@ FireBall::FireBall(std::wstring name, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float da
 {
 	this->name = name;
 	spr.LoadAll(L"Assets/Sprites/Units/FireBall/" + name);
+
 	this->z = z;
+	std::cout << z << std::endl;
 
 	this->pos = pos;
 	ri.scale = dir;
@@ -21,6 +23,9 @@ FireBall::FireBall(std::wstring name, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float da
 void FireBall::Update(float deltaTime)
 {
 	pos.x += ri.scale.x * 200 * deltaTime;
+
+	if (pos.x < Game::GetInstance().destCameraPos.x - 360 || pos.x > Game::GetInstance().destCameraPos.x + 360)
+		destroy = true;
 
 	spr.Update(deltaTime);
 }
@@ -47,13 +52,14 @@ void FireBall::OnCollision(Collider& other)
 	}
 	else
 	{
-		if (other.tag == L"enemy" && abs(other.obj->z - z) < 10)
+		if (other.tag == L"enemy" || other.tag == L"boss" && abs(other.obj->z - z) < 10)
 		{
 			destroy = true;
 
 			static_cast<Enemy*>(other.obj)->bHit = true;
 			static_cast<Enemy*>(other.obj)->damage = damage;
 
+			SoundManager::GetInstance().Play(L"Assets/Sound/Explosion.mp3");
 			nowScene->obm.AddObject(new Effect(L"FireBall/" + name, pos, ri.scale, 0.05f));
 		}
 	}
