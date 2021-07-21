@@ -40,6 +40,7 @@ bool CALLBACK ModifyDeviceSettings( DXUTDeviceSettings* pDeviceSettings, void* p
 HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                      void* pUserContext )
 {
+    Game::GetInstance().Init();
     return S_OK;
 }
 
@@ -51,6 +52,8 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
 HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                     void* pUserContext )
 {
+    Game::GetInstance().pLine->OnResetDevice();
+    TextureManager::GetInstance().Reset();
     return S_OK;
 }
 
@@ -60,6 +63,9 @@ HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFA
 //--------------------------------------------------------------------------------------
 void CALLBACK OnFrameMove( double fTime, float fElapsedTime, void* pUserContext )
 {
+    Game::GetInstance().unscaleTime = fElapsedTime;
+
+    Game::GetInstance().Update(fElapsedTime);
 }
 
 
@@ -71,11 +77,12 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
     HRESULT hr;
 
     // Clear the render target and the zbuffer 
-    V( pd3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB( 0, 45, 50, 170 ), 1.0f, 0 ) );
+    V( pd3dDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB( 0, 0, 0, 0 ), 1.0f, 0 ) );
 
     // Render the scene
     if( SUCCEEDED( pd3dDevice->BeginScene() ) )
     {
+        Game::GetInstance().Render();
         V( pd3dDevice->EndScene() );
     }
 }
@@ -87,6 +94,18 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
                           bool* pbNoFurtherProcessing, void* pUserContext )
 {
+    switch (uMsg)
+    {
+    case WM_MOUSEMOVE:
+        Input::GetInstance().mousePos = D3DXVECTOR2(LOWORD(lParam), HIWORD(lParam));
+        break;
+    case WM_MOUSEWHEEL:
+        if ((SHORT)HIWORD(wParam) > 0)
+            Input::GetInstance().wheelCount += 1000 * Game::GetInstance().unscaleTime;
+        else
+            Input::GetInstance().wheelCount -= 1000 * Game::GetInstance().unscaleTime;
+        return 0;
+    }
     return 0;
 }
 
@@ -135,7 +154,12 @@ INT main( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTSetHotkeyHandling( true, true, true );  // handle the default hotkeys
     DXUTSetCursorSettings( true, true ); // Show the cursor and clip it when in full screen
     DXUTCreateWindow( L"ActionGame" );
-    DXUTCreateDevice( true, 640, 480 );
+
+#ifdef _DEBUG
+    DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+#else
+    DXUTCreateDevice(false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight);
+#endif
 
     // Start the render loop
     DXUTMainLoop();

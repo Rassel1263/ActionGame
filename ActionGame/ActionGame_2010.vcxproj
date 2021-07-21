@@ -141,7 +141,7 @@
       <FloatingPointModel>Fast</FloatingPointModel>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);Src;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -182,7 +182,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FloatingPointModel>Fast</FloatingPointModel>
       <ExceptionHandling>Sync</ExceptionHandling>
-      <AdditionalIncludeDirectories>$(SolutionDir);Src;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);Src;$(SolutionDir);Src;DXUT\Core;DXUT\Optional;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions> %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>WIN32;_DEBUG;DEBUG;PROFILE;_WINDOWS;D3DXFX_LARGEADDRESS_HANDLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -387,6 +387,100 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackCollider.cpp" />
+    <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Boom.cpp" />
+    <ClCompile Include="Boss.cpp" />
+    <ClCompile Include="Boss2.cpp" />
+    <ClCompile Include="BossState.cpp" />
+    <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="CollisionEffect.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EGaze.cpp" />
+    <ClCompile Include="EndPage.cpp" />
+    <ClCompile Include="EnemySpawner.cpp" />
+    <ClCompile Include="Fade.cpp" />
+    <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="Font.cpp" />
+    <ClCompile Include="GameScene2.cpp" />
+    <ClCompile Include="GameScene3.cpp" />
+    <ClCompile Include="HelpPage.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="MainBackground.cpp" />
+    <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="RankingScene.cpp" />
+    <ClCompile Include="RankPage.cpp" />
+    <ClCompile Include="ResultScreen.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="SimpleShader.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="Spectrum.cpp" />
+    <ClCompile Include="IEffect.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyRange.cpp" />
+    <ClCompile Include="EnemyState.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PGaze.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerState.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="UnitHp.cpp" />
+    <ClCompile Include="Units.cpp" />
+    <ClInclude Include="AttackCollider.h" />
+    <ClInclude Include="Background.h" />
+    <ClInclude Include="Boom.h" />
+    <ClInclude Include="Boss.h" />
+    <ClInclude Include="Boss2.h" />
+    <ClInclude Include="BossState.h" />
+    <ClInclude Include="Chest.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="CollisionEffect.h" />
+    <ClInclude Include="CState.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EGaze.h" />
+    <ClInclude Include="EndPage.h" />
+    <ClInclude Include="EnemySpawner.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="FireBall.h" />
+    <ClInclude Include="Font.h" />
+    <ClInclude Include="GameScene2.h" />
+    <ClInclude Include="GameScene3.h" />
+    <ClInclude Include="HelpPage.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="MainBackground.h" />
+    <ClInclude Include="MainScene.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="RankingScene.h" />
+    <ClInclude Include="RankPage.h" />
+    <ClInclude Include="ResultScreen.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="SimpleShader.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="Spectrum.h" />
+    <ClInclude Include="IEffect.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyRange.h" />
+    <ClInclude Include="EnemyState.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="PGaze.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerState.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="UnitHp.h" />
+    <ClInclude Include="Units.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
@@ -413,8 +507,13 @@
     <ClCompile Include="ActionGame.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shader\SimpleShader.fx">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Header.h" />
     <CLInclude Include="resource.h" />
     <ResourceCompile Include="ActionGame.rc" />
   </ItemGroup>

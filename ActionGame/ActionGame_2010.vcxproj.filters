@@ -1,90 +1,407 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns:atg="http://atg.xbox.com" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-<ItemGroup>
-<Filter Include="Resource Files">
-<UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
-<Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
-</Filter>
-<Filter Include="DXUT">
-<UniqueIdentifier>{a43c5c25-0e86-4a20-b64a-883785ff74fd}</UniqueIdentifier>
-</Filter>
-<Filter Include="Shaders">
-<UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
-<Extensions>fx;fxh;hlsl</Extensions>
-</Filter>
-</ItemGroup>
-<ItemGroup>
-<None Include="DXUT\Optional\directx.ico">
-<Filter>Resource Files</Filter>
-</None>
-<ClInclude Include="DXUT\Core\DXUT.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Core\DXUTenum.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Core\DXUTmisc.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClCompile Include="DXUT\Core\DXUT.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Core\DXUTenum.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Core\DXUTmisc.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClInclude Include="DXUT\Optional\DXUTcamera.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTgui.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTres.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\DXUTsettingsdlg.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\SDKmesh.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClInclude Include="DXUT\Optional\SDKmisc.h">
-<Filter>DXUT</Filter>
-</ClInclude>
-<ClCompile Include="DXUT\Optional\DXUTcamera.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTgui.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTres.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\DXUTsettingsdlg.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\SDKmesh.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-<ClCompile Include="DXUT\Optional\SDKmisc.cpp">
-<Filter>DXUT</Filter>
-</ClCompile>
-</ItemGroup>
-<ItemGroup>
-      <ClCompile Include="ActionGame.cpp" />
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{8e114980-c1a3-4ada-ad7c-83caadf5daeb}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="DXUT">
+      <UniqueIdentifier>{a43c5c25-0e86-4a20-b64a-883785ff74fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2c3d4c8c-5d1a-459a-a05a-a4e4b608a44e}</UniqueIdentifier>
+      <Extensions>fx;fxh;hlsl</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{f4420c49-9c53-4b83-a2b9-5b175b045e65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{062b7ab9-c634-4c41-8634-137ffb856a9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{56f5e57f-ba2e-4cbb-9c7c-9e5fd829a704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit">
+      <UniqueIdentifier>{61bacbc9-9833-4ba9-8d95-23f914b02469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit\State">
+      <UniqueIdentifier>{41067389-f969-4691-b9ca-3dda7e36b9d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{5789a36d-58e9-4a77-861c-13cefebb4b55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{281f871a-8ac4-4cf0-9743-470ae4dff288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Item">
+      <UniqueIdentifier>{bf1c0641-1ef7-4642-b431-555ae6d08690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Rank">
+      <UniqueIdentifier>{a84335af-9c5c-4d3f-a327-d3ae47eb4445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Background">
+      <UniqueIdentifier>{df1adad2-dd2a-4dd9-934a-b1a67f41b36d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Screen">
+      <UniqueIdentifier>{39d27d3b-be08-4984-b000-159632495b75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
-<ItemGroup>
+  <ItemGroup>
+    <None Include="DXUT\Optional\directx.ico">
+      <Filter>Resource Files</Filter>
+    </None>
+    <ClInclude Include="DXUT\Core\DXUT.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Core\DXUTenum.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Core\DXUTmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Core\DXUT.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Core\DXUTenum.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Core\DXUTmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClInclude Include="DXUT\Optional\DXUTcamera.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTgui.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTres.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\DXUTsettingsdlg.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmesh.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClInclude Include="DXUT\Optional\SDKmisc.h">
+      <Filter>DXUT</Filter>
+    </ClInclude>
+    <ClCompile Include="DXUT\Optional\DXUTcamera.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTgui.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTres.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\DXUTsettingsdlg.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmesh.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <ClCompile Include="DXUT\Optional\SDKmisc.cpp">
+      <Filter>DXUT</Filter>
+    </ClCompile>
+    <None Include="Assets\Shader\SimpleShader.fx">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
-<ItemGroup>
-      <CLInclude Include="resource.h">
-<Filter>Resource Files</Filter>
-</CLInclude>
-      <ResourceCompile Include="ActionGame.rc">
-<Filter>Resource Files</Filter>
-</ResourceCompile>
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionGame.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Collider.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Object\Unit\State</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Object\Unit\State</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackCollider.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyRange.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="PGaze.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitHp.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Units.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Spectrum.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="IEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Chest.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Boom.cpp">
+      <Filter>Object\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionEffect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene3.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Object\Unit\State</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="RankingScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MainBackground.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="Background.cpp">
+      <Filter>Object\Background</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultScreen.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RankPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Ranking.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HelpPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss2.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="EndPage.cpp">
+      <Filter>Object\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="EGaze.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
-<ItemGroup>
-</ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Singleton.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Header.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Collider.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyRange.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="PGaze.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitHp.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Spectrum.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="IEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Chest.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Boom.h">
+      <Filter>Object\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEffect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene3.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Object\Unit\State</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="RankingScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainBackground.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Object\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultScreen.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RankPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Ranking.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HelpPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="Fade.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss2.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="EndPage.h">
+      <Filter>Object\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="EGaze.h">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CLInclude Include="resource.h">
+      <Filter>Resource Files</Filter>
+    </CLInclude>
+    <ResourceCompile Include="ActionGame.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
 </Project>
