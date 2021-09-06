@@ -14,6 +14,8 @@ Item::Item(D3DXVECTOR2 pos, int index)
 	aabb.max = { 5,  5 };
 
 	bodies.push_back(Collider(this, L"item", &aabb, 0));
+
+	layer = 10;
 }
 
 void Item::Update(float deltaTime)
