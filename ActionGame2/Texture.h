@@ -12,5 +12,6 @@ class TextureManager : public Singleton<TextureManager>
 public:
 	~TextureManager();
 	const Texture* GetTexture(std::wstring filePath);
+	void ResetDevice();
 };
 

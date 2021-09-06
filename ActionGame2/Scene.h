@@ -3,6 +3,8 @@
 class Scene
 {
 public:
+	Player* player = NULL;
+
 	ObjectManager obm;
 
 	virtual void Init();

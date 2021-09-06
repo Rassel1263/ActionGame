@@ -16,9 +16,32 @@ inline bool CheckUI(ObjectUI* obj)
 	else
 		return false;
 }
-
+      
 void Object::Update(float deltaTime)
 {
+	if (bRigid)
+	{
+		if (!bGround)
+			force.y -= gravity * 2;
+
+		velocity += force * 10;
+		force = { 0, 0 };
+		fixedPos = pos;
+		pos += velocity * deltaTime;
+
+		if (abs(velocity.x) >= 100)
+			velocity.x -= (bGround ? 100 : 10) * velocity.x / abs(velocity.x) * min(abs(velocity.x), 100) * deltaTime;
+		else
+			velocity.x = 0;
+
+		if (pos.y <= groundPos)
+		{
+			bGround = true;
+			pos.y = groundPos;
+		}
+		else
+			bGround = false;
+	}
 }
 
 void Object::Render()

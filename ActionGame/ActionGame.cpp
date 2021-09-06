@@ -123,6 +123,7 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
 {
+    TextureManager::GetInstance().OnDestroy();
 }
 
 
@@ -156,7 +157,7 @@ INT main( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTCreateWindow( L"ActionGame" );
 
 #ifdef _DEBUG
-    DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+    DXUTCreateDevice( false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
 #else
     DXUTCreateDevice(false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight);
 #endif

@@ -3,7 +3,8 @@
 
 void GameScene::Init()
 {
-	obm.AddObject(new Player());
+	obm.AddObject(new Map());
+	obm.AddObject(player = new Player());
 }
 
 void GameScene::Update(float deltaTime)

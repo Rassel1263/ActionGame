@@ -10,6 +10,14 @@ public:
 	int layer = 0;
 	std::vector<Collider> bodies;
 
+	bool bRigid = true;
+	bool bGround = true;
+	float gravity = 1;
+	float groundPos = 0.0f;
+	D3DXVECTOR2 velocity = { 0, 0 };
+	D3DXVECTOR2 force = { 0, 0 };
+	D3DXVECTOR2 fixedPos = { 0,0 };
+
 	virtual ~Object() {};
 
 	virtual void Update(float deltaTime);

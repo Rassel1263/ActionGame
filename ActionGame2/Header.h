@@ -1,7 +1,7 @@
 #pragma once
 
-#define SAFE_RELEASE(p) { if (p) { p->Release(); p = NULL; }}
-#define SAFE_DELETE(p) { if (p) {delete p; p = NULL; } }
+#define IntEnum(p) static_cast<int>(p)
+
 
 #include <map>
 #include <vector>
@@ -27,7 +27,15 @@
 #include "Collider.h"
 #include "Object.h"
 
+#include "CState.h"
+
+#include "Unit.h"
 #include "Player.h"
+#include "PlayerState.h"
+
+#include "AfterImage.h"
+
+#include "Map.h"
 
 #include "Scene.h"
 extern Scene* nowScene;

@@ -15,11 +15,17 @@
     <Filter Include="Core">
       <UniqueIdentifier>{1b738584-46ef-475d-81a1-072eded119de}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameScene">
-      <UniqueIdentifier>{a57a4e46-1958-429b-ab24-97c98ecdbdce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{17551e3c-9949-4761-96c7-8bbaed688b10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit">
+      <UniqueIdentifier>{51b26314-b337-4b6f-909b-412333e0c362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{a57a4e46-1958-429b-ab24-97c98ecdbdce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Effect">
+      <UniqueIdentifier>{423a9b2f-f8db-463e-b1da-8259d2a00822}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,9 +106,6 @@
     <ClCompile Include="Practice0906D.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -110,10 +113,23 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>GameScene</Filter>
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>Object\Unit</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="AfterImage.cpp">
+      <Filter>Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +151,6 @@
     <ClInclude Include="Object.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -148,10 +161,24 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
-      <Filter>GameScene</Filter>
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h" />
+    <ClInclude Include="Unit.h">
+      <Filter>Object\Unit</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Object</Filter>
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="AfterImage.h">
+      <Filter>Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

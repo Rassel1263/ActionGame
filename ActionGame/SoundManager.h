@@ -28,4 +28,5 @@ public:
     void StopAll();
 
     void SetVolume(std::wstring _pathWithName, int _volume);
+    void Reset();
 };

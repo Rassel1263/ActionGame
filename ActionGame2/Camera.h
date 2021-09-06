@@ -3,7 +3,7 @@
 class Camera : public Singleton<Camera>
 {
 public:
-	float divideProj = 2.5;
+	float divideProj = 1;
 	float destDivideProj = divideProj;
 
 	D3DXMATRIX matView;

@@ -41,9 +41,17 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
     return textures.insert({filePath, texture}).first->second;
 }
 
+void TextureManager::OnDestroy()
+{
+    /*for (auto texture : textures)
+    {
+        SAFE_RELEASE(texture.second->src);
+    }*/
+}
+
 void TextureManager::Reset()
 {
-    for (auto texture : textures)
+   /* for (auto texture : textures)
     {
         SAFE_RELEASE(texture.second->src);
         if (FAILED(D3DXCreateTextureFromFileExW(DXUTGetD3D9Device(),
@@ -63,5 +71,5 @@ void TextureManager::Reset()
         {
             texture.second->src = nullptr;
         }
-    }
+    }*/
 }

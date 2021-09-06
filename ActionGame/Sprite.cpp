@@ -51,6 +51,7 @@ void Sprite::Update(float deltaTime)
 void Sprite::Render(const RenderInfo& ri)
 {
 	VOID* data;
+
 	Game::GetInstance().pVB->Lock(0, 0, &data, 0);
 
 	CUSTOMVERTEX v[4];
