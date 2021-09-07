@@ -27,6 +27,15 @@
     <Filter Include="Object\Effect">
       <UniqueIdentifier>{423a9b2f-f8db-463e-b1da-8259d2a00822}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\fx">
+      <UniqueIdentifier>{2be3ca38-4d14-4a44-a49e-833ef760b961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit\Player">
+      <UniqueIdentifier>{a07196f6-2560-4aed-8ce9-0ece3a3b6a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Unit\Enemy">
+      <UniqueIdentifier>{b06deea0-cb07-40af-843e-758ca1d5b047}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -118,18 +127,39 @@
     <ClCompile Include="Unit.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Object\Unit</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Object\Unit</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="AfterImage.cpp">
       <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Object\Unit\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerState.cpp">
+      <Filter>Object\Unit\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyState.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy1.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>Object\Unit\Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,18 +197,39 @@
     <ClInclude Include="Unit.h">
       <Filter>Object\Unit</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Object\Unit</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>Object\Unit</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="Map.h" />
     <ClInclude Include="AfterImage.h">
       <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Object\Unit\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerState.h">
+      <Filter>Object\Unit\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyState.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy1.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>Object\Unit\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,7 +239,5 @@
     <ResourceCompile Include="Practice0906D.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
   </ItemGroup>
 </Project>

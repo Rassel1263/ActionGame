@@ -17,12 +17,14 @@ public:
 	float screenWidth = 1920;
 	float screenHeight = 1080;
 
+	float timeScale = 1.0f;
+	float unscaleTime = 0.0f;
+
 	LPDIRECT3DVERTEXBUFFER9 pVB = NULL; // Buffer to hold vertices
 
 	LPD3DXLINE pLine;
 
 	Scene* nextScene = NULL;
-
 
 	void Check();
 

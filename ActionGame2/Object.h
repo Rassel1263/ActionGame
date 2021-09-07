@@ -10,8 +10,9 @@ public:
 	int layer = 0;
 	std::vector<Collider> bodies;
 
-	bool bRigid = true;
-	bool bGround = true;
+	bool bRigid = false;
+	bool bGround = false;
+	float mass = 0.0f;
 	float gravity = 1;
 	float groundPos = 0.0f;
 	D3DXVECTOR2 velocity = { 0, 0 };
@@ -20,6 +21,7 @@ public:
 
 	virtual ~Object() {};
 
+	void SetRigid(float mass);
 	virtual void Update(float deltaTime);
 	virtual void Render();
 	virtual void OnCollision(Collider& coll);

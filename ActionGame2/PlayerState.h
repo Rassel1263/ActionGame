@@ -42,6 +42,16 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
+class PlayerLanding : public CState<Player>
+{
+public:
+	static PlayerLanding* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
 class PlayerSliding : public CState<Player>
 {
 public:
@@ -52,14 +62,52 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
-class PlayerGunkata : public CState<Player>
+class PlayerWeakAttack : public CState<Player>
 {
 public:
-	float afterImageTime = 0.0f;
+	bool onAttack = false;
+	float timer = 0.0f;
+	int combo = 0;
+	int comboInput = 0;
 
-	static PlayerGunkata* GetInstance();
+	static PlayerWeakAttack* GetInstance();
 
 	virtual void EnterState(Player* obj) override;
 	virtual void UpdateState(Player* obj, float deltaTime) override;
 	virtual void ExitState(Player* obj) override;
 };
+
+class PlayerStopWeakAttack : public CState<Player>
+{
+public:
+	static PlayerStopWeakAttack* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
+class PlayerSpecialAttack : public CState<Player>
+{
+public:
+	bool afterImage = false;
+
+	float timer = 0.0f;
+	float afterImageTime = 0.0f;
+	float attackTimer = 0.0f;
+
+	static PlayerSpecialAttack* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+
+	void SetAfterImage(float time)
+	{
+		afterImage = true;
+		afterImageTime = time;
+	}
+	
+	
+};
+

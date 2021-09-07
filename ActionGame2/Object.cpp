@@ -17,14 +17,21 @@ inline bool CheckUI(ObjectUI* obj)
 		return false;
 }
       
+void Object::SetRigid(float mass)
+{
+	gravity = 9.8f;
+	this->bRigid = true;
+	this->mass = mass;
+}
+
 void Object::Update(float deltaTime)
 {
 	if (bRigid)
 	{
 		if (!bGround)
-			force.y -= gravity * 2;
+			force.y -= gravity * 20 * mass * deltaTime;
 
-		velocity += force * 10;
+		velocity += force * (1/ mass) * 10;
 		force = { 0, 0 };
 		fixedPos = pos;
 		pos += velocity * deltaTime;

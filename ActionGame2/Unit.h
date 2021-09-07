@@ -22,13 +22,26 @@ public:
 
 	Ability ability;
 
+	bool hit = false;
+	float hitDamage = 0.0f;
 	int renderNum = 0;
 
 	Unit();
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
+	virtual void SetImages() = 0;
+	virtual void Hit(float damage);
+
+	void SetCollider(float left, float bottom, float right, float top, std::wstring tag);
 
 	Sprite& GetNowSprite();
+
+	template <typename T>
+	void SetAni(T n)
+	{
+		renderNum = IntEnum(n);
+		GetNowSprite().Reset();
+	}
 
 	template <typename T>
 	void Resize(T n)
