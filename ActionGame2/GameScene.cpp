@@ -3,11 +3,13 @@
 
 void GameScene::Init()
 {
+	Game::GetInstance().timeScale = 0.0f;
+	ShaderManager::GetInstance().CreateEffect("Color", L"Assets/Shader/ColorShader.fx", 1);
+
 	obm.AddObject(new Map());
 	obm.AddObject(player = new Player());
 	obm.AddObject(new Enemy1(D3DXVECTOR2(400, 0)));
-
-	ShaderManager::GetInstance().CreateEffect("Color", L"Assets/Shader/ColorShader.fx", 1);
+	obm.AddObject(new Enemy2(D3DXVECTOR2(800, 0)));
 }
 
 void GameScene::Update(float deltaTime)

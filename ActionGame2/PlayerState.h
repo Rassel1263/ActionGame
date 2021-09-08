@@ -87,27 +87,34 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
+class PlayerStrongAttack : public CState<Player>
+{
+public:
+	static PlayerStrongAttack* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
 class PlayerSpecialAttack : public CState<Player>
 {
 public:
-	bool afterImage = false;
-
 	float timer = 0.0f;
-	float afterImageTime = 0.0f;
-	float attackTimer = 0.0f;
 
 	static PlayerSpecialAttack* GetInstance();
 
 	virtual void EnterState(Player* obj) override;
 	virtual void UpdateState(Player* obj, float deltaTime) override;
 	virtual void ExitState(Player* obj) override;
-
-	void SetAfterImage(float time)
-	{
-		afterImage = true;
-		afterImageTime = time;
-	}
-	
-	
 };
 
+class PlayerHit : public CState<Player>
+{
+public:
+	static PlayerHit* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};

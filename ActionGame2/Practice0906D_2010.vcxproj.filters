@@ -158,8 +158,14 @@
     <ClCompile Include="Enemy1.cpp">
       <Filter>Object\Unit\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
-      <Filter>Object\Unit\Player</Filter>
+    <ClCompile Include="AttackCollider.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy2.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Object\Unit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,8 +234,14 @@
     <ClInclude Include="Enemy1.h">
       <Filter>Object\Unit\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>Object\Unit\Player</Filter>
+    <ClInclude Include="AttackCollider.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy2.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Object\Unit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

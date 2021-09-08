@@ -31,15 +31,18 @@
 
 #include "CState.h"
 
+#include "AttackCollider.h"
+
 #include "Unit.h"
 #include "Player.h"
 #include "PlayerState.h"
 
 #include "CEnemy.h"
 #include "Enemy1.h"
+#include "Enemy2.h"
 #include "EnemyState.h"
 
-#include "PlayerBullet.h"
+#include "Bullet.h"
 
 #include "Effect.h"
 #include "AfterImage.h"

@@ -20,10 +20,30 @@ public:
 
 };
 
+class EnemyAttack : public CState<CEnemy>
+{
+public:
+	static EnemyAttack* GetInstance();
+
+	virtual void EnterState(CEnemy* obj) override;
+	virtual void UpdateState(CEnemy* obj, float deltaTime) override;
+	virtual void ExitState(CEnemy* obj) override;
+};
+
 class EnemyHit : public CState<CEnemy>
 {
 public:
 	static EnemyHit* GetInstance();
+
+	virtual void EnterState(CEnemy* obj) override;
+	virtual void UpdateState(CEnemy* obj, float deltaTime) override;
+	virtual void ExitState(CEnemy* obj) override;
+};
+
+class EnemyDie : public CState<CEnemy>
+{
+public:
+	static EnemyDie* GetInstance();
 
 	virtual void EnterState(CEnemy* obj) override;
 	virtual void UpdateState(CEnemy* obj, float deltaTime) override;

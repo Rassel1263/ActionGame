@@ -24,6 +24,12 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
+	if (obj->hit)
+	{
+		obj->SetState(PlayerHit::GetInstance());
+		return;
+	}
+
 	if (Input::GetInstance().KeyDown('C'))
 	{
 		obj->SetState(PlayerJump::GetInstance());
@@ -33,6 +39,12 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 	if (Input::GetInstance().KeyDown('X'))
 	{
 		obj->SetState(PlayerWeakAttack::GetInstance());
+		return;
+	}
+
+	if (Input::GetInstance().KeyDown('S'))
+	{
+		obj->SetState(PlayerStrongAttack::GetInstance());
 		return;
 	}
 }
@@ -64,6 +76,12 @@ void PlayerMove::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
+	if (obj->hit)
+	{
+		obj->SetState(PlayerHit::GetInstance());
+		return;
+	}
+
 	if (Input::GetInstance().KeyDown('C'))
 	{
 		obj->SetState(PlayerJump::GetInstance());
@@ -73,6 +91,12 @@ void PlayerMove::UpdateState(Player* obj, float deltaTime)
 	if (Input::GetInstance().KeyDown('X'))
 	{
 		obj->SetState(PlayerWeakAttack::GetInstance());
+		return;
+	}
+
+	if (Input::GetInstance().KeyDown('S'))
+	{
+		obj->SetState(PlayerStrongAttack::GetInstance());
 		return;
 	}
 }
@@ -219,14 +243,12 @@ void PlayerWeakAttack::UpdateState(Player* obj, float deltaTime)
 	if (obj->GetSprite(Player::Images::WEAKATTACK1).scene == 4 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new Effect(L"Player/fire1", obj->pos + D3DXVECTOR2(200 * obj->ri.scale.x, 240), obj->ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
-		nowScene->obm.AddObject(new PlayerBullet(obj->pos + D3DXVECTOR2(200 * obj->ri.scale.x, 260), D3DXVECTOR2(obj->ri.scale.x, 0), 1000, 5));
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, false);
 	}
 	else if (obj->renderNum != IntEnum(Player::Images::WEAKATTACK1) && obj->GetNowSprite().scene == 1 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new Effect(L"Player/fire1", obj->pos + D3DXVECTOR2(200 * obj->ri.scale.x, 240), obj->ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
-		nowScene->obm.AddObject(new PlayerBullet(obj->pos + D3DXVECTOR2(200 * obj->ri.scale.x, 260), D3DXVECTOR2(obj->ri.scale.x, 0), 1000, 5));
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, false);
 	}
 
 	if (Input::GetInstance().KeyDown('X'))
@@ -290,6 +312,38 @@ void PlayerStopWeakAttack::ExitState(Player* obj)
 {
 }
 
+///////////////////////////
+// StrongAttack
+///////////////////////////
+
+PlayerStrongAttack* PlayerStrongAttack::GetInstance()
+{
+	static PlayerStrongAttack instance;
+	return &instance;
+}
+
+void PlayerStrongAttack::EnterState(Player* obj)
+{
+	obj->SetAni(Player::Images::STRONGATTACK);
+}
+
+void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
+{
+	obj->CreateAttackCollider(3, D3DXVECTOR2(100, 0), D3DXVECTOR2(-50, 0), D3DXVECTOR2(50, 50), 10, 100, 1.0f, 0.1f);
+
+	if (!obj->GetNowSprite().bAnimation)
+	{
+		obj->SetState(PlayerIdle::GetInstance());
+		return;
+	}
+}
+
+void PlayerStrongAttack::ExitState(Player* obj)
+{
+	obj->onAttack = false;
+}
+
+
 PlayerSpecialAttack* PlayerSpecialAttack::GetInstance()
 {
 	static PlayerSpecialAttack instance;
@@ -299,29 +353,11 @@ PlayerSpecialAttack* PlayerSpecialAttack::GetInstance()
 void PlayerSpecialAttack::EnterState(Player* obj)
 {
 	timer = 0.0f;
-	afterImage = false;
 
-	switch (obj->attackNum)
-	{
-	case 0:
-		obj->SetAni(Player::Images::WEAKATTACK4);
-		break;
-	case 1:
-		obj->SetAni(Player::Images::SLIDE);
-		obj->velocity.x += obj->ri.scale.x * 3000;
-		break;
-	case 2:
-		obj->SetAni(Player::Images::GUNKATA);
-		nowScene->obm.AddObject(new Effect(L"Player/fire_gunkata", obj->pos + D3DXVECTOR2(0, 240), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5f, 0.5f), 0.04f));
-		obj->CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
-		SetAfterImage(0.1f);
-		break;
-	case 3:
-		obj->SetAni(Player::Images::MOVESHOOT);
-		obj->CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
-		SetAfterImage(0.15f);
-		break;
-	}
+	if(obj->attackNum == 0)		 obj->SetSpecialAttack(Player::Images::WEAKATTACK4, 8, 0.0f);
+	else if(obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f);
+	else if(obj->attackNum == 2) obj->SetSpecialAttack(Player::Images::GUNKATA, 23, 0.1f);
+	else if(obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3  , 0.15f);
 }
 
 void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
@@ -332,40 +368,41 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
-	if (obj->attackNum == 0)
+	obj->attackTimer -= deltaTime;
+
+	if (obj->attackNum == 0) // 기본 공격 끝났을 때
 	{
+		if (obj->attackTimer <= 0.0f)
+		{
+			obj->CreateBullet(D3DXVECTOR2(250, 210), 1000, 5, true);
+			obj->attackTimer = 100.0f;
+		}
 	}
 	else if (obj->attackNum == 3) // MoveShot 중일 때
 	{
-		obj->Move(deltaTime);
+		obj->Move(deltaTime, true);
 
 		static bool change = false;
-		attackTimer += deltaTime;
 
 		if ((obj->GetNowSprite().scene >= 2 && obj->GetNowSprite().scene <= 13) || 
 			obj->GetNowSprite().scene >= 18 && obj->GetNowSprite().scene <= 29)
 		{
 
-			if (attackTimer >= 0.08f)
+			if (obj->attackTimer <= 0.0f)
 			{
-				D3DXVECTOR2 fixedPos = obj->pos + D3DXVECTOR2(250 * obj->ri.scale.x, 240);
-
-				(change) ? fixedPos.y += 10 : fixedPos.y -= 10;
-
-				nowScene->obm.AddObject(new Effect(L"Player/fire1", fixedPos, obj->ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
-				fixedPos.y += 20;
-				nowScene->obm.AddObject(new PlayerBullet(fixedPos, D3DXVECTOR2(obj->ri.scale.x, 0), 1000, 5));
-
+				D3DXVECTOR2 offset = D3DXVECTOR2(250, 240);
+				(change) ? offset.y += 10 : offset.y -= 10;
+				obj->CreateBullet(offset, 1000, 5, false);
 				change = !change;
 
-				attackTimer = 0.0f;
+				obj->attackTimer = 0.08f;
 			}
 		}
 	}
 
-	if (afterImage)
+	if (obj->afterImage)
 	{
-		if (timer >= afterImageTime)
+		if (timer >= obj->afterImageTime)
 		{
 			obj->CreateAfterImage(0, 0.5f, D3DCOLOR_ARGB(70, 70, 0, 0));
 			timer = 0.0f;
@@ -376,5 +413,32 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 
 void PlayerSpecialAttack::ExitState(Player* obj)
 {
+	obj->afterImage = false;
+	obj->attackTimer = 0.0f;
+}
+
+PlayerHit* PlayerHit::GetInstance()
+{
+	static PlayerHit instance;
+	return &instance;
+}
+
+void PlayerHit::EnterState(Player* obj)
+{
+	obj->SetAni(Player::Images::HIT);
+}
+
+void PlayerHit::UpdateState(Player* obj, float deltaTime)
+{
+	if (!obj->GetNowSprite().bAnimation)
+	{
+		obj->SetState(PlayerIdle::GetInstance());
+		return;
+	}
+}
+
+void PlayerHit::ExitState(Player* obj)
+{
+	obj->hit = false;
 }
 

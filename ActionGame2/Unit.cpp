@@ -1,6 +1,11 @@
 #include "DXUT.h"
 #include "Unit.h"
 
+D3DXVECTOR2 Unit::GetDistanceFromTarget(D3DXVECTOR2 targetPos)
+{
+	return targetPos - pos;
+}
+
 Unit::Unit()
 {
 	ri.pivot = { 0.5, 0.0f };
@@ -10,9 +15,9 @@ Unit::Unit()
 
 void Unit::Update(float deltaTime)
 {
-	Object::Update(deltaTime);
-
 	GetNowSprite().Update(deltaTime);
+
+	Object::Update(deltaTime);
 }
 
 void Unit::Render()
@@ -23,10 +28,14 @@ void Unit::Render()
 	Object::Render();
 }
 
-void Unit::Hit(float damage)
+void Unit::Hit(float damage, D3DXVECTOR2 addForce)
 {
+	if (hit) return;
+
 	hit = true;
 	this->hitDamage = damage;
+	this->force.x += addForce.x;
+	this->velocity.y = addForce.y * 100;
 }
 
 void Unit::SetCollider(float left, float bottom, float right, float top, std::wstring tag)

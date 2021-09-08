@@ -22,15 +22,22 @@ public:
 
 	Ability ability;
 
+	std::wstring team = L"";
+
 	bool hit = false;
 	float hitDamage = 0.0f;
 	int renderNum = 0;
+
+	bool onAttack = false;
+	float attackTimer = 0.0f;
+
+	D3DXVECTOR2 GetDistanceFromTarget(D3DXVECTOR2 targetPos);
 
 	Unit();
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
 	virtual void SetImages() = 0;
-	virtual void Hit(float damage);
+	virtual void Hit(float damage, D3DXVECTOR2 addForce);
 
 	void SetCollider(float left, float bottom, float right, float top, std::wstring tag);
 
