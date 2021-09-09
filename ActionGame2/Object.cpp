@@ -1,22 +1,6 @@
 #include "DXUT.h"
 #include "Object.h"
 
-inline bool Check(Object* obj)
-{
-	if (obj->destroy)
-		return true;
-	else
-		return false;
-}
-
-inline bool CheckUI(ObjectUI* obj)
-{
-	if (obj->destroy)
-		return true;
-	else
-		return false;
-}
-      
 void Object::SetRigid(float mass)
 {
 	gravity = 9.8f;
@@ -147,9 +131,27 @@ void ObjectManager::Update(float deltaTime)
 	for (auto& object : uiObjects)
 		object->Update(deltaTime);
 
-	objects.erase(std::remove_if(objects.begin(), objects.end(), Check), objects.end());
-	uiObjects.erase(std::remove_if(uiObjects.begin(), uiObjects.end(), CheckUI), uiObjects.end());
+	for (auto it = objects.begin(); it != objects.end();)
+	{
+		if ((*it)->destroy)
+		{
+			delete* it;
+			it = objects.erase(it);
+		}
+		else
+			++it;
+	}
 
+	for (auto it = uiObjects.begin(); it != uiObjects.end();)
+	{
+		if ((*it)->destroy)
+		{
+			delete* it;
+			it = uiObjects.erase(it);
+		}
+		else
+			++it;
+	}
 }
 
 void ObjectManager::Render()

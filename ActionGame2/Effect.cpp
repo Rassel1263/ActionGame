@@ -1,12 +1,13 @@
 #include "DXUT.h"
 #include "Effect.h"
 
-Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVECTOR2 pivot, float aniTime, std::function<void()> func)
+Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVECTOR2 pivot, float aniTime, int atkScene, std::function<void()> func)
 {
 	spr.LoadAll(L"Assets/Sprites/effect/" + eftName, aniTime, false);
 	this->pos = pos;
 	ri.scale = scale;
 	ri.pivot = pivot;
+	this->atkScene = atkScene;
 	this->func = func;
 	
 	effectNum = 0;
@@ -34,7 +35,12 @@ void Effect::Update(float deltaTime)
 {
 	if (effectNum == 0)
 	{
-		if (!spr.bAnimation)
+		if (atkScene > 0 && spr.scene == atkScene)
+		{
+			if (func) func();
+			destroy = true;
+		}
+		else if (!spr.bAnimation)
 		{
 			if (func) func();
 			destroy = true;

@@ -1,4 +1,5 @@
 #pragma once
+
 class AfterImage : public Object
 {
 public:

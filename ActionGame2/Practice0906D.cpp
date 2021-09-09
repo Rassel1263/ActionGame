@@ -139,7 +139,12 @@ INT main( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTSetCursorSettings( true, true ); // Show the cursor and clip it when in full screen
     DXUTCreateWindow( L"Practice0906D" );
     Game::GetInstance().Check();
+
+#ifdef _DEBUG
     DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+#else 
+    DXUTCreateDevice( false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+#endif
 
     // Start the render loop
     DXUTMainLoop();

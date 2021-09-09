@@ -240,15 +240,21 @@ void PlayerWeakAttack::EnterState(Player* obj)
 
 void PlayerWeakAttack::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->hit)
+	{
+		obj->SetState(PlayerHit::GetInstance());
+		return;
+	}
+
 	if (obj->GetSprite(Player::Images::WEAKATTACK1).scene == 4 && !onAttack)
 	{
 		onAttack = true;
-		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, false);
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, Bullet::Type::BASIC);
 	}
 	else if (obj->renderNum != IntEnum(Player::Images::WEAKATTACK1) && obj->GetNowSprite().scene == 1 && !onAttack)
 	{
 		onAttack = true;
-		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, false);
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, Bullet::Type::BASIC);
 	}
 
 	if (Input::GetInstance().KeyDown('X'))
@@ -329,7 +335,7 @@ void PlayerStrongAttack::EnterState(Player* obj)
 
 void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
 {
-	obj->CreateAttackCollider(3, D3DXVECTOR2(100, 0), D3DXVECTOR2(-50, 0), D3DXVECTOR2(50, 50), 10, 100, 1.0f, 0.1f);
+	obj->CreateAttackCollider(3, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), 10, D3DXVECTOR2(100, 0), 0.05f, 0.1f);
 
 	if (!obj->GetNowSprite().bAnimation)
 	{
@@ -353,11 +359,17 @@ PlayerSpecialAttack* PlayerSpecialAttack::GetInstance()
 void PlayerSpecialAttack::EnterState(Player* obj)
 {
 	timer = 0.0f;
+	obj->superArmor = true;
 
-	if(obj->attackNum == 0)		 obj->SetSpecialAttack(Player::Images::WEAKATTACK4, 8, 0.0f);
-	else if(obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f);
-	else if(obj->attackNum == 2) obj->SetSpecialAttack(Player::Images::GUNKATA, 23, 0.1f);
-	else if(obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3  , 0.15f);
+	if (obj->renderNum == IntEnum(Player::Images::GUNKATA))
+		nowScene->obm.AddObject(new Spectrum(obj->GetNowSprite(), obj->ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0)));
+
+	if (obj->attackNum == 0)	  obj->SetSpecialAttack(Player::Images::WEAKATTACK4, 8, 0.0f, 0);
+	else if (obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f, 1);
+	else if (obj->attackNum == 2) obj->SetSpecialAttack(Player::Images::GUNKATA, 23, 0.1f, 1);
+	else if (obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3, 0.15f, 1);
+	else if (obj->attackNum == 4) obj->SetSpecialAttack(Player::Images::MACHINEGUN, 7, 0.0f, 1);
+	else if (obj->attackNum == 5) obj->SetSpecialAttack(Player::Images::SNIPER, 10, 0.1f, 1);
 }
 
 void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
@@ -372,19 +384,21 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 
 	if (obj->attackNum == 0) // 기본 공격 끝났을 때
 	{
-		if (obj->attackTimer <= 0.0f)
+		if (obj->attackTimer <= 0.0f && !obj->onAttack)
 		{
-			obj->CreateBullet(D3DXVECTOR2(250, 210), 1000, 5, true);
-			obj->attackTimer = 100.0f;
+			obj->onAttack = true;
+			obj->CreateBullet(D3DXVECTOR2(250, 210), 1000, 5, Bullet::Type::AIRSHOT);
 		}
 	}
-	else if (obj->attackNum == 3) // MoveShot 중일 때
+	if (obj->attackNum == 1)
+		obj->CreateAttackCollider(0, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 100), 10, D3DXVECTOR2(100, 0), 0.1f, 0.1f, true);
+	else if (obj->attackNum == 3)
 	{
 		obj->Move(deltaTime, true);
 
 		static bool change = false;
 
-		if ((obj->GetNowSprite().scene >= 2 && obj->GetNowSprite().scene <= 13) || 
+		if ((obj->GetNowSprite().scene >= 2 && obj->GetNowSprite().scene <= 13) ||
 			obj->GetNowSprite().scene >= 18 && obj->GetNowSprite().scene <= 29)
 		{
 
@@ -392,15 +406,31 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			{
 				D3DXVECTOR2 offset = D3DXVECTOR2(250, 240);
 				(change) ? offset.y += 10 : offset.y -= 10;
-				obj->CreateBullet(offset, 1000, 5, false);
+				obj->CreateBullet(offset, 1000, 5, Bullet::Type::BASIC);
 				change = !change;
 
-				obj->attackTimer = 0.08f;
+				obj->attackTimer = obj->GetNowSprite().aniMaxtime * 2;
 			}
 		}
 	}
+	else if (obj->attackNum == 4)
+	{
+		if ((obj->GetNowSprite().scene <= 23))
+			if (obj->attackTimer <= 0.0f)
+			{
+				obj->CreateBullet(D3DXVECTOR2(230, 200), 1500, 5, Bullet::Type::MACHINEGUN);
+				obj->attackTimer = obj->GetNowSprite().aniMaxtime * 3;
+			}
+	}
+	else if (obj->attackNum == 5)
+	{
+		if (obj->attackTimer <= 0.0f && !obj->onAttack)
+		{
+			obj->onAttack = true;
+			obj->CreateBullet(D3DXVECTOR2(250, 150), 2500, 5, Bullet::Type::SNIPER);
 
-	if (obj->afterImage)
+		}
+	}	if(obj->afterImage)
 	{
 		if (timer >= obj->afterImageTime)
 		{
@@ -415,6 +445,8 @@ void PlayerSpecialAttack::ExitState(Player* obj)
 {
 	obj->afterImage = false;
 	obj->attackTimer = 0.0f;
+	obj->superArmor = false;
+	obj->onAttack = false;
 }
 
 PlayerHit* PlayerHit::GetInstance()

@@ -121,9 +121,6 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
@@ -167,6 +164,30 @@
     <ClCompile Include="Bullet.cpp">
       <Filter>Object\Unit</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyUI.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerUI.cpp">
+      <Filter>Object\Unit\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene3.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy3.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy4.cpp">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Spectrum.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -195,9 +216,6 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="CState.h" />
     <ClInclude Include="Unit.h">
@@ -242,6 +260,30 @@
     </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyUI.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerUI.h">
+      <Filter>Object\Unit\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene3.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy3.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy4.h">
+      <Filter>Object\Unit\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Spectrum.h">
+      <Filter>Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

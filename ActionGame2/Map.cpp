@@ -3,9 +3,9 @@
 
 Map::Map()
 {
-	layer1.LoadAll(L"Assets/Sprites/map/stage1/layer1");
-	layer2.LoadAll(L"Assets/Sprites/map/stage1/layer2_1.png");
-	layer3.LoadAll(L"Assets/Sprites/map/stage1/layer3_1.png");
+	layer1.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer1");
+	layer2.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer2");
+	layer3.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer3");
 
 	layer2.bCamera = false;
 	layer2.widthRatio = 7.0f;

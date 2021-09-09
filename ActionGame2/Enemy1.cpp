@@ -3,6 +3,9 @@
 
 Enemy1::Enemy1(D3DXVECTOR2 pos) : CEnemy(pos)
 {
+	enemyType = 1;
+	hitTime = 0.1f;
+
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
 	ability.SetAbility(50, 100);
@@ -44,6 +47,6 @@ void Enemy1::Attack(float deltaTime)
 		Collider::AABB aabb;
 		aabb.min = { -100, 0 };
 		aabb.max = { 100, 400 };
-		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(100 * ri.scale.x, 0), aabb, 5, 50, 0, 0.05f));
+		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(100 * ri.scale.x, 0), aabb, 5, D3DXVECTOR2(100, 0), 0, 0.05f));
 	}
 }

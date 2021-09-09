@@ -33,6 +33,9 @@
 
 #include "AttackCollider.h"
 
+#include "EnemyUI.h"
+#include "PlayerUI.h"
+
 #include "Unit.h"
 #include "Player.h"
 #include "PlayerState.h"
@@ -40,17 +43,22 @@
 #include "CEnemy.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
+#include "Enemy3.h"
+#include "Enemy4.h"
 #include "EnemyState.h"
 
 #include "Bullet.h"
 
 #include "Effect.h"
 #include "AfterImage.h"
+#include "Spectrum.h"
 
 #include "Map.h"
 
 #include "Scene.h"
 extern Scene* nowScene;
 #include "GameScene.h"
+#include "GameScene2.h"
+#include "GameScene3.h"
 
 #include "Game.h"

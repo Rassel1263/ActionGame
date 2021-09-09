@@ -15,6 +15,16 @@ Unit::Unit()
 
 void Unit::Update(float deltaTime)
 {
+	if (hit)
+	{
+		hitTimer += deltaTime;
+
+		if (hitTimer >= hitTime)
+			hit = false;
+
+		if (!hit) hitTimer = 0.0f;
+	}
+
 	GetNowSprite().Update(deltaTime);
 
 	Object::Update(deltaTime);
@@ -32,10 +42,14 @@ void Unit::Hit(float damage, D3DXVECTOR2 addForce)
 {
 	if (hit) return;
 
+	if (!superArmor)
+	{
+		this->force.x += addForce.x;
+		this->velocity.y = addForce.y;
+	}
+
 	hit = true;
-	this->hitDamage = damage;
-	this->force.x += addForce.x;
-	this->velocity.y = addForce.y * 100;
+	this->ability.hp -= damage;
 }
 
 void Unit::SetCollider(float left, float bottom, float right, float top, std::wstring tag)

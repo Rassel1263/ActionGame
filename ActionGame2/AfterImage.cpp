@@ -12,7 +12,6 @@ AfterImage::AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR c
 
 	colorShader = new ColorShader();
 
-
 	layer = 1;
 
 	effectNum = 1;
@@ -47,6 +46,7 @@ void AfterImage::Update(float deltaTime)
 		if (abs(ri.scale.x) <= 1.0f || ri.scale.y <= 1.0f)
 			destroy = true;
 	}
+	
 }
 
 void AfterImage::Render()

@@ -5,6 +5,7 @@ Player::Player()
 {
 	SetImages();
 
+	hitTime = 0.1f;
 	team = L"player";
 	groundPos = -100;
 	ability.SetAbility(100, 50);
@@ -13,11 +14,14 @@ Player::Player()
 	SetCollider(-60, 0, 60, 300, team);
 	SetRigid(1);
 
+	mp = 100;
+
+	nowScene->obm.AddObject(new PlayerUI(this));
 }
 
 void Player::Update(float deltaTime)
 {
-	Camera::GetInstance().destCameraPos.x = pos.x + 600 * ri.scale.x;
+	Camera::GetInstance().destCameraPos.x = pos.x;
 
 	Combo(deltaTime);
 
@@ -48,6 +52,7 @@ void Player::SetImages()
 
 	std::wstring filePath = L"Assets/Sprites/Unit/Player/";
 
+
 	GetSprite(Images::IDLE).LoadAll(filePath + L"stay", 0.05f);
 	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.05f);
 	GetSprite(Images::JUMP).LoadAll(filePath + L"jump", 0.05f, false);
@@ -64,12 +69,26 @@ void Player::SetImages()
 	GetSprite(Images::WEAKTATCKEND).LoadAll(filePath + L"weakAttackend", 0.1f, false);
 
 	GetSprite(Images::STRONGATTACK).LoadAll(filePath + L"strongAttack", 0.05f, false);
-	GetSprite(Images::MACHINEGUN).LoadAll(filePath + L"Skillmachinegun", 0.05f, false);
+	GetSprite(Images::MACHINEGUN).LoadAll(filePath + L"Skillmachinegun", 0.03f, false);
 	GetSprite(Images::SNIPER).LoadAll(filePath + L"Skillsniper", 0.05f, false);
 
 
 	GetSprite(Images::GUNKATA).LoadAll(filePath + L"Skillgunkata", 0.04f, false);
 	GetSprite(Images::MOVESHOOT).LoadAll(filePath + L"SkillmoveShoot", 0.02f, false);
+}
+
+void Player::Hit(float damage, D3DXVECTOR2 addForce)
+{
+	if (invincible || hit) return;
+	if (!superArmor)
+	{
+		this->force.x += addForce.x;
+		this->velocity.y = addForce.y * 100;
+	}
+
+	hit = true;
+	this->ability.hp -= damage;
+
 }
 
 void Player::SetState(CState<Player>* nextState)
@@ -147,6 +166,12 @@ void Player::ComboCheck()
 	ComboChecking(3, 3, "DO", "RI", "X");
 	ComboChecking(3, 3, "DO", "LE", "X");
 
+	ComboChecking(4, 3, "LE", "LE", "S");
+	ComboChecking(4, 3, "RI", "RI", "S");
+
+	ComboChecking(5, 4, "RI", "DO", "LE", "S");
+	ComboChecking(5, 4, "LE", "DO", "RI", "S");
+
 
 	if (specialAttack)
 	{
@@ -163,6 +188,7 @@ void Player::ComboInputCheck()
 	ComboInput(VK_DOWN, "DO");
 	ComboInput('X', "X");
 	ComboInput('C', "C");
+	ComboInput('S', "S");
 }
 
 void Player::ComboInput(unsigned char u, std::string name)
@@ -208,26 +234,53 @@ void Player::ComboChecking(int skillNum, int inputAmount, ...)
 
 }
 
-void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, bool airShoot)
+void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet::Type type)
 {
 	offset.x *= ri.scale.x;
-	nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+
+	if (type == Bullet::Type::BASIC)
+	{
+		Camera::GetInstance().cameraQuaken = { 3, 3 };
+		nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+	}
+	else if (type == Bullet::Type::AIRSHOT || type == Bullet::Type::MACHINEGUN)
+	{
+		Camera::GetInstance().cameraQuaken = { 8, 8 };
+		nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+	}
+	else
+	{
+		Camera::GetInstance().cameraQuaken = { 15, 15 };
+		nowScene->obm.AddObject(new Effect(L"Player/fire_sniper", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+	}
+
 	offset.y += 20;
-	nowScene->obm.AddObject(new Bullet(team, pos + offset, D3DXVECTOR2(ri.scale.x, 0), 1000, 5, airShoot));
+	nowScene->obm.AddObject(new Bullet(team, pos + offset, D3DXVECTOR2(ri.scale.x, 0), speed, 5, type));
 }
 
-void Player::CreateAttackCollider(int scene, D3DXVECTOR2 offset, D3DXVECTOR2 min, D3DXVECTOR2 max, float damage, float atkPower, float yVec, float time)
+void Player::CreateAttackCollider(int scene, D3DXVECTOR2 offset, D3DXVECTOR2 min, D3DXVECTOR2 max, float damage, D3DXVECTOR2 atkPower, float yVec, float time, bool fallow)
 {
 	if (GetNowSprite().scene == scene && !onAttack)
 	{
 		onAttack = true;
 		Collider::AABB aabb = { min, max };
-		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(offset.x * ri.scale.x, offset.y), aabb, damage, atkPower, yVec, time));
+		if(fallow)
+			nowScene->obm.AddObject(new AttackCollider(team, &pos, D3DXVECTOR2(offset.x * ri.scale.x, offset.y), aabb, damage, atkPower, yVec, time));
+		else
+			nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(offset.x * ri.scale.x, offset.y), aabb, damage, atkPower, yVec, time));
 	}
 }
 
-void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTime)
+void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTime, float mp)
 {
+	if (this->mp < mp)
+	{
+		SetState(PlayerIdle::GetInstance());
+		return;
+	}
+
+	this->mp -= mp;
+
 	SetAni(image);
 	attackTimer = GetNowSprite().aniMaxtime * attackScene;
 
@@ -236,7 +289,7 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	else if (image == Images::GUNKATA)
 	{
 		nowScene->obm.AddObject(new Effect(L"Player/fire_gunkata", pos + D3DXVECTOR2(0, 240), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5f, 0.5f), 0.04f));
-		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2( -300, 0), D3DXVECTOR2( 300, 400) }, 5, 20, 0.2f, attackTimer));
+		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2( -300, 0), D3DXVECTOR2( 300, 400) }, 5, D3DXVECTOR2(20, 0), 0.2f, attackTimer));
 		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 	else if (image == Images::MOVESHOOT)
@@ -247,4 +300,4 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		afterImage = true;
 		this->afterImageTime = afterImageTime;
 	}
-}
+}  

@@ -1,5 +1,5 @@
 #pragma once
-class Enemy2: public CEnemy
+	class Enemy2: public CEnemy
 {
 public:
 	Enemy2(D3DXVECTOR2 pos);

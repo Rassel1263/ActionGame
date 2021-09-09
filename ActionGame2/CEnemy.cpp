@@ -11,6 +11,8 @@ CEnemy::CEnemy(D3DXVECTOR2 pos)
 	groundPos = -100;
 
 	colorShader = new ColorShader();
+
+	nowScene->obm.AddObject(ui = new EnemyUI(this));
 }
 
 void CEnemy::Update(float deltaTime)
@@ -38,6 +40,8 @@ void CEnemy::OnCollision(Collider& coli)
 	if (coli.tag == L"playerbullet")
 	{
 		auto pBullet = static_cast<Bullet*>(coli.obj);
+		if (pBullet->type == Bullet::Type::SNIPER)
+			if(!hit) nowScene->obm.AddObject(new Effect(L"Player/Explode_sniper", pBullet->pos, D3DXVECTOR2(1.0, 1.0), D3DXVECTOR2(0.5, 0.5), 0.05f));
 		Hit(pBullet->damage, pBullet->attackVector);
 	}
 }
@@ -60,6 +64,12 @@ bool CEnemy::Move(float deltaTime)
 	pos += dir * ability.speed * deltaTime;
 
 	return true;
+}
+
+void CEnemy::Destroy()
+{
+	ui->destroy = true;
+	destroy = true;
 }
 
 void CEnemy::SetRange(float detectRange, float stopRange)

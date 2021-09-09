@@ -101,6 +101,7 @@ class PlayerSpecialAttack : public CState<Player>
 {
 public:
 	float timer = 0.0f;
+	bool canAttack = false;
 
 	static PlayerSpecialAttack* GetInstance();
 

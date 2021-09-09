@@ -25,10 +25,14 @@ public:
 	std::wstring team = L"";
 
 	bool hit = false;
+	float hitTimer = 0.0f;
+	float hitTime = 0.0f;
+
 	float hitDamage = 0.0f;
 	int renderNum = 0;
 
 	bool onAttack = false;
+	bool superArmor = false;
 	float attackTimer = 0.0f;
 
 	D3DXVECTOR2 GetDistanceFromTarget(D3DXVECTOR2 targetPos);

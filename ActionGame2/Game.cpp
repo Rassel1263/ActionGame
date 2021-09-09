@@ -83,7 +83,7 @@ void Game::Render()
         nowScene->Render();
 
     D3DXMATRIX matProj;
-    D3DXMatrixOrthoLH(&matProj, Game::GetInstance().screenWidth / 2.5f, Game::GetInstance().screenHeight / 2.5f, 0.01f, 1000.0f);
+    D3DXMatrixOrthoLH(&matProj, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight, 0.01f, 1000.0f);
     DXUTGetD3D9Device()->SetTransform(D3DTS_PROJECTION, &matProj);
 
     if (nowScene)

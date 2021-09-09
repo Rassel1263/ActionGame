@@ -3,6 +3,9 @@
 
 Enemy2::Enemy2(D3DXVECTOR2 pos) : CEnemy(pos)
 {
+	enemyType = 2;
+	hitTime = 0.1f;
+
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
 	ability.SetAbility(50, 100);
@@ -42,6 +45,6 @@ void Enemy2::Attack(float deltaTime)
 	if (GetSprite(Images::ATTACK).scene == 13 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new Bullet(team, pos + D3DXVECTOR2(ri.scale.x * 50, 150), D3DXVECTOR2(ri.scale.x, 0), 500, 5, false));
+		nowScene->obm.AddObject(new Bullet(team, pos + D3DXVECTOR2(ri.scale.x * 50, 150), D3DXVECTOR2(ri.scale.x, 0), 500, 5, Bullet::Type::ROCK));
 	}
 }
