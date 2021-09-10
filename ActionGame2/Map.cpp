@@ -4,6 +4,7 @@
 Map::Map()
 {
 	layer1.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer1");
+
 	layer2.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer2");
 	layer3.LoadAll(L"Assets/Sprites/map/" + std::to_wstring(nowScene->curStage) + L"/layer3");
 
@@ -12,6 +13,8 @@ Map::Map()
 
 	layer3.bCamera = false;
 	layer3.widthRatio = 7.0f;
+
+	layer = -10;
 }
 
 void Map::Update(float deltaTime)

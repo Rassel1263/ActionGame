@@ -15,6 +15,8 @@ Unit::Unit()
 
 void Unit::Update(float deltaTime)
 {
+	layer = 1080 - (groundPos + 540);
+
 	if (hit)
 	{
 		hitTimer += deltaTime;
@@ -40,8 +42,6 @@ void Unit::Render()
 
 void Unit::Hit(float damage, D3DXVECTOR2 addForce)
 {
-	if (hit) return;
-
 	if (!superArmor)
 	{
 		this->force.x += addForce.x;
@@ -50,6 +50,8 @@ void Unit::Hit(float damage, D3DXVECTOR2 addForce)
 
 	hit = true;
 	this->ability.hp -= damage;
+
+	if (ability.hp <= 0) ability.hp = 0;
 }
 
 void Unit::SetCollider(float left, float bottom, float right, float top, std::wstring tag)

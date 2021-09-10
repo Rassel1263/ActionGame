@@ -17,6 +17,8 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
     if (tf != textures.end())
         return tf->second;
 
+    std::wcout << filePath << std::endl;
+
     Texture* texture = new Texture;
 
     if (FAILED(D3DXCreateTextureFromFileExW(DXUTGetD3D9Device(),

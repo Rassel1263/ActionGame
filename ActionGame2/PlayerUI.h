@@ -16,12 +16,19 @@ public:
 	Sprite mpBck;
 	RenderInfo mpRI;
 
-	Sprite combo;
+	Sprite comboFont;
+
+	Sprite comboBck;
+	Sprite comboGauge;
+	RenderInfo comboRI;
+
+	std::vector<Sprite> combo;
 
 	PlayerUI(Player* player);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
+	void UpdateCombo();
 	void Load(std::wstring image, Sprite& spr);
 };
 

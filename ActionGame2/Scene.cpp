@@ -38,3 +38,11 @@ int Scene::GetRandomNum(int min, int max)
 
 	return dis(rnd);
 }
+
+D3DXVECTOR2 Scene::GetRandomVector(int xMin, int xMax, int yMin, int yMax)
+{
+	std::default_random_engine rnd(rd());
+	std::uniform_int_distribution<int> x(xMin, xMax);
+	std::uniform_int_distribution<int> y(yMin, yMax);
+	return D3DXVECTOR2(x(rnd), y(rnd));
+}

@@ -130,6 +130,12 @@ void PlayerJump::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
+	if (Input::GetInstance().KeyDown('X') && !obj->jumpAttack)
+	{
+		obj->SetState(PlayerJumpAttack::GetInstance());
+		return;
+	}
+
 	obj->Move(deltaTime);
 }
 
@@ -159,6 +165,15 @@ void PlayerFall::UpdateState(Player* obj, float deltaTime)
 		obj->SetState(PlayerLanding::GetInstance());
 		return;
 	}
+
+	if (Input::GetInstance().KeyDown('X') && !obj->jumpAttack)
+	{
+		obj->SetState(PlayerJumpAttack::GetInstance());
+		return;
+	}
+
+	if (Input::GetInstance().KeyPress('C'))
+		obj->velocity.y -= 200;
 
 	obj->Move(deltaTime);
 }
@@ -193,29 +208,84 @@ void PlayerLanding::UpdateState(Player* obj, float deltaTime)
 
 void PlayerLanding::ExitState(Player* obj)
 {
+	obj->jumpAttack = false;
+
 }
 
 ///////////////////////////
-// Slide
+// WeakAttack
 ///////////////////////////
 
-PlayerSliding* PlayerSliding::GetInstance()
+PlayerJumpAttack* PlayerJumpAttack::GetInstance()
 {
-	static PlayerSliding instance;
+	static PlayerJumpAttack instance;
 	return &instance;
 }
 
-void PlayerSliding::EnterState(Player* obj)
+void PlayerJumpAttack::EnterState(Player* obj)
 {
+	obj->SetAni(Player::Images::JUMPATTACK1);
+	
+	obj->jumpAttack = true;
+
+	combo = 0;
+	comboInput = 0;
+	timer = 0;
+
+	obj->velocity.y = 0.0f;
+	obj->gravity = 3.0f;
 }
 
-void PlayerSliding::UpdateState(Player* obj, float deltaTime)
+void PlayerJumpAttack::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->bGround)
+	{
+		obj->SetState(PlayerLanding::GetInstance());
+		return;
+	}
+
+	if (Input::GetInstance().KeyDown('X'))
+		if (comboInput < 3) comboInput++;
+
+	if (obj->GetNowSprite().scene == 0 && !obj->onAttack)
+	{
+		obj->onAttack = true;
+		obj->CreateBullet(D3DXVECTOR2(170, 100), 1000, 5, Bullet::Type::BASIC, true);
+	}
+
+	if (!obj->GetNowSprite().bAnimation && combo < comboInput)
+	{
+		combo++;
+		obj->onAttack = false;
+		timer = 0;
+
+		if (combo == 3)
+		{
+			obj->attackNum = 0;
+			obj->SetState(PlayerFall::GetInstance());
+			return;
+		}
+		else
+			obj->SetAni(PluseEnum(Player::Images, Player::Images::JUMPATTACK1, combo));
+	}
+
+	if (timer > 0.2f && !obj->GetNowSprite().bAnimation)
+	{
+		obj->SetState(PlayerFall::GetInstance());
+		return;
+	}
+
+	obj->Move(deltaTime, true);
+
+	timer += deltaTime;
 }
 
-void PlayerSliding::ExitState(Player* obj)
+void PlayerJumpAttack::ExitState(Player* obj)
 {
+	obj->gravity = 9.8f;
+	obj->onAttack = false;
 }
+
 
 ///////////////////////////
 // WeakAttack
@@ -362,14 +432,14 @@ void PlayerSpecialAttack::EnterState(Player* obj)
 	obj->superArmor = true;
 
 	if (obj->renderNum == IntEnum(Player::Images::GUNKATA))
-		nowScene->obm.AddObject(new Spectrum(obj->GetNowSprite(), obj->ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0)));
+		nowScene->obm.AddObject(new Spectrum(obj->GetNowSprite(), obj->ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), obj->layer));
 
 	if (obj->attackNum == 0)	  obj->SetSpecialAttack(Player::Images::WEAKATTACK4, 8, 0.0f, 0);
-	else if (obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f, 1);
-	else if (obj->attackNum == 2) obj->SetSpecialAttack(Player::Images::GUNKATA, 23, 0.1f, 1);
-	else if (obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3, 0.15f, 1);
-	else if (obj->attackNum == 4) obj->SetSpecialAttack(Player::Images::MACHINEGUN, 7, 0.0f, 1);
-	else if (obj->attackNum == 5) obj->SetSpecialAttack(Player::Images::SNIPER, 10, 0.1f, 1);
+	else if (obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f, 10);
+	else if (obj->attackNum == 2) obj->SetSpecialAttack(Player::Images::GUNKATA, 23, 0.1f, 20);
+	else if (obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3, 0.15f, 20);
+	else if (obj->attackNum == 4) obj->SetSpecialAttack(Player::Images::MACHINEGUN, 7, 0.0f, 10);
+	else if (obj->attackNum == 5) obj->SetSpecialAttack(Player::Images::SNIPER, 10, 0.1f, 30);
 }
 
 void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
@@ -377,6 +447,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 	if (!obj->GetNowSprite().bAnimation)
 	{
 		obj->SetState(PlayerIdle::GetInstance());
+		obj->attackNum = 0;
 		return;
 	}
 
@@ -390,8 +461,10 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			obj->CreateBullet(D3DXVECTOR2(250, 210), 1000, 5, Bullet::Type::AIRSHOT);
 		}
 	}
-	if (obj->attackNum == 1)
+	else if (obj->attackNum == 1)
 		obj->CreateAttackCollider(0, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 100), 10, D3DXVECTOR2(100, 0), 0.1f, 0.1f, true);
+	else if (obj->attackNum == 2)
+		Camera::GetInstance().cameraQuaken = { 2, 2 };
 	else if (obj->attackNum == 3)
 	{
 		obj->Move(deltaTime, true);
@@ -418,7 +491,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if ((obj->GetNowSprite().scene <= 23))
 			if (obj->attackTimer <= 0.0f)
 			{
-				obj->CreateBullet(D3DXVECTOR2(230, 200), 1500, 5, Bullet::Type::MACHINEGUN);
+				obj->CreateBullet(D3DXVECTOR2(230, 200), 1500, 10, Bullet::Type::MACHINEGUN);
 				obj->attackTimer = obj->GetNowSprite().aniMaxtime * 3;
 			}
 	}
@@ -427,7 +500,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if (obj->attackTimer <= 0.0f && !obj->onAttack)
 		{
 			obj->onAttack = true;
-			obj->CreateBullet(D3DXVECTOR2(250, 150), 2500, 5, Bullet::Type::SNIPER);
+			obj->CreateBullet(D3DXVECTOR2(250, 150), 2500, 30, Bullet::Type::SNIPER);
 
 		}
 	}	if(obj->afterImage)
@@ -473,4 +546,3 @@ void PlayerHit::ExitState(Player* obj)
 {
 	obj->hit = false;
 }
-

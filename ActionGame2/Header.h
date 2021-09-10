@@ -40,6 +40,8 @@
 #include "Player.h"
 #include "PlayerState.h"
 
+#include "Range.h"
+
 #include "CEnemy.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
@@ -47,11 +49,17 @@
 #include "Enemy4.h"
 #include "EnemyState.h"
 
+#include "Boss1.h"
+
 #include "Bullet.h"
 
 #include "Effect.h"
+#include "BossIntro.h"
 #include "AfterImage.h"
 #include "Spectrum.h"
+#include "SkillDirecting.h"
+#include "Warning.h"
+#include "Mp.h"
 
 #include "Map.h"
 

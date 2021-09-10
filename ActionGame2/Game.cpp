@@ -69,10 +69,10 @@ void Game::Update(float deltaTime)
     if (Input::GetInstance().KeyUp(VK_CONTROL))
         timeScale = 1.0f;
 
+    unscaleTime = deltaTime;
+
     if (nowScene)
         nowScene->Update(deltaTime * timeScale);
-
-    unscaleTime = deltaTime;
 
     Camera::GetInstance().Update(deltaTime);
 }

@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "AttackCollider.h"
 
-AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime)
+AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime, float groundPos)
 {
 	this->tag = team;
 
@@ -11,11 +11,12 @@ AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 o
 	this->damage = damage;
 	this->attackPower = attackPower;
 	this->collisionTime = collisionTime;
-	
+	this->groundPos = groundPos;
+
 	bodies.push_back(Collider(this, tag + L"atkCollider", &aabb));
 }
 
-AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2* pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime)
+AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2* pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime, float groundPos)
 {
 	this->tag = team;
 
@@ -27,6 +28,7 @@ AttackCollider::AttackCollider(std::wstring team, D3DXVECTOR2* pos, D3DXVECTOR2 
 	this->damage = damage;
 	this->attackPower = attackPower;
 	this->collisionTime = collisionTime;
+	this->groundPos = groundPos;
 
 	bodies.push_back(Collider(this, tag + L"atkCollider", &aabb));
 }
@@ -53,6 +55,8 @@ void AttackCollider::OnCollision(Collider& coli)
 
 	if (coli.tag == L"enemy" || coli.tag == L"player")
 	{
+		if (abs(groundPos - coli.obj->groundPos) >= 100) return;
+
 		D3DXVECTOR2 dir = { (ownerPos.x - coli.obj->pos.x > 0) ? -1.0f: 1.0f, yVec };
 		D3DXVec2Normalize(&dir, &dir);
 		if (coli.obj->bGround)

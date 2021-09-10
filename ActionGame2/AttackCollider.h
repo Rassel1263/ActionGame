@@ -14,8 +14,8 @@ public:
 
 	std::wstring tag = L"";
 
-	AttackCollider(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime);
-	AttackCollider(std::wstring team, D3DXVECTOR2* pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime);
+	AttackCollider(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime, float groundPos);
+	AttackCollider(std::wstring team, D3DXVECTOR2* pos, D3DXVECTOR2 offset, Collider::AABB aabb, float damage, D3DXVECTOR2 attackPower, float yVec, float collisionTime, float groundPos);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

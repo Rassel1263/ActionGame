@@ -17,13 +17,13 @@ public:
 
 	std::wstring team = L"";
 
-	float damage = 5.0f;
+	float damage = 0.0f;
 	float speed = 0.0f;
 	D3DXVECTOR2 attackVector = { 0, 0 };
 
 	D3DXVECTOR2 dir = { 0, 0 };
 
-	Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed, float damage, Type type);
+	Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed, float damage, float groundPos, Type type);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

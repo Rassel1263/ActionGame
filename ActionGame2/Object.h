@@ -22,6 +22,7 @@ public:
 	virtual ~Object() {};
 
 	void SetRigid(float mass);
+	void CreateCollider(D3DXVECTOR2 min, D3DXVECTOR2 max, std::wstring tag, D3DXCOLOR color = D3DCOLOR_ARGB(255, 255, 0, 0));
 	virtual void Update(float deltaTime);
 	virtual void Render();
 	virtual void OnCollision(Collider& coll);

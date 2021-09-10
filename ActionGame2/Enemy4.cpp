@@ -4,13 +4,14 @@
 Enemy4::Enemy4(D3DXVECTOR2 pos) : CEnemy(pos)
 {
 	enemyType = 4;
+	hitTime = 0.1f;
 
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
-	ability.SetAbility(50, 100);
-	SetRange(500, 500);
+	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
+	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
+	ability.SetAbility(200, 100);
 
-	hitTime = 0.1f;
 
 	SetState(EnemyIdle::GetInstance());
 }
@@ -46,7 +47,7 @@ void Enemy4::Attack(float deltaTime)
 {
 	if (!onAttack)
 	{
-		nowScene->obm.AddObject(new AttackCollider(L"enemy", &pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(200, 100), 0.1f, 1.5f));
+		nowScene->obm.AddObject(new AttackCollider(L"enemy", &pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(200, 100), 0.1f, 1.5f, groundPos));
 		onAttack = true;
 	}
 

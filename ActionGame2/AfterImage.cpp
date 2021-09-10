@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "AfterImage.h"
 
-AfterImage::AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR color)
+AfterImage::AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR color, int layer)
 {
 	this->spr = spr;
 	this->ri = ri;
@@ -12,21 +12,22 @@ AfterImage::AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR c
 
 	colorShader = new ColorShader();
 
-	layer = 1;
+	this->layer = layer - 1;
 
 	effectNum = 1;
 }
 
-AfterImage::AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color)
+AfterImage::AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color, int layer, bool skill)
 {
 	this->spr = spr;
 	this->ri = ri;
 	this->ri.scale = destScale;
 	this->spr.color = color;
+	this->skill = skill;
 
 	colorShader = new ColorShader();
 
-	layer = 1;
+	this->layer = layer - 1;
 	effectNum = 2;
 }
 
@@ -51,7 +52,7 @@ void AfterImage::Update(float deltaTime)
 
 void AfterImage::Render()
 {
-	if(effectNum == 2)
+	if(skill)
 		ri.pos = nowScene->player->pos;
 
 	colorShader->Render(colorShader, spr, ri, D3DXVECTOR4(spr.color.r, spr.color.g, spr.color.b, spr.color.a));

@@ -10,6 +10,8 @@ EnemyIdle* EnemyIdle::GetInstance()
 void EnemyIdle::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::IDLE);
+
+	restTime = 1.0f;
 }
 
 void EnemyIdle::UpdateState(CEnemy* obj, float deltaTime)
@@ -26,7 +28,7 @@ void EnemyIdle::UpdateState(CEnemy* obj, float deltaTime)
 		return;
 	}
 
-	if (obj->CheckRange(obj->detectionRange, obj->GetDistanceFromTarget(nowScene->player->pos)))
+	if (obj->AttackColliderTarget())
 	{
 		if (obj->enemyType != 4)
 			obj->SetState(EnemyAttack::GetInstance());
@@ -65,7 +67,7 @@ void EnemyMove::UpdateState(CEnemy* obj, float deltaTime)
 		return;
 	}
 
-	if (obj->CheckRange(obj->detectionRange, obj->GetDistanceFromTarget(nowScene->player->pos)))
+	if (obj->AttackColliderTarget())
 	{
 		if (obj->enemyType != 4)
 			obj->SetState(EnemyAttack::GetInstance());
@@ -88,6 +90,7 @@ EnemyAttackReady* EnemyAttackReady::GetInstance()
 void EnemyAttackReady::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::ATTACKREADY);
+	nowScene->obm.AddObject(new Warning(L"Warning", obj->pos, D3DXVECTOR2(obj->ri.scale.x, 1), D3DXVECTOR2(0, 0.5), obj->GetNowSprite().aniMaxtime * 68));
 	obj->superArmor = true;
 }
 
@@ -154,6 +157,8 @@ void EnemyAttack::ExitState(CEnemy* obj)
 	obj->attackTimer = 0.0f;
 	obj->superArmor = false;
 	obj->onAttack = false;
+	obj->attackRange->bHit = false;
+	obj->detectRange->bHit = false;
 }
 
 EnemyAttackEnd* EnemyAttackEnd::GetInstance()
@@ -184,6 +189,7 @@ void EnemyAttackEnd::UpdateState(CEnemy* obj, float deltaTime)
 
 void EnemyAttackEnd::ExitState(CEnemy* obj)
 {
+
 }
 
 

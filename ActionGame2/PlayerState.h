@@ -52,14 +52,19 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
-class PlayerSliding : public CState<Player>
+class PlayerJumpAttack : public CState<Player>
 {
 public:
-	static PlayerSliding* GetInstance();
+	float timer = 0.0f;
+	int combo = 0;
+	int comboInput = 0;
+
+	static PlayerJumpAttack* GetInstance();
 
 	virtual void EnterState(Player* obj) override;
 	virtual void UpdateState(Player* obj, float deltaTime) override;
 	virtual void ExitState(Player* obj) override;
+
 };
 
 class PlayerWeakAttack : public CState<Player>

@@ -2,6 +2,8 @@
 class EnemyIdle : public CState<CEnemy>
 {
 public:
+	float restTime = 0.0f;
+
 	static EnemyIdle* GetInstance();
 
 	virtual void EnterState(CEnemy* obj) override;

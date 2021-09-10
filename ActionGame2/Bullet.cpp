@@ -1,20 +1,25 @@
 #include "DXUT.h"
 #include "Bullet.h"
 
-Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed, float damage, Type type)
+Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed, float damage, float groundPos, Type type)
 {
 	this->team = team;
 	this->pos = pos;
 	this->speed = speed;
 	this->type = type;
+	this->groundPos = groundPos;
+	this->damage = damage;
+	this->layer = 1080 - (groundPos + 540);
 
-	ri.scale.x = dir.x;
+	ri.rotate = D3DXToDegree(-atan2(dir.y, dir.x));
 	D3DXVec2Normalize(&this->dir, &dir);
 
 	Collider::AABB aabb;
 
 	if (team == L"player")
 	{
+		dir.y = 0.0f;
+
 		if (type == Type::BASIC)
 			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet");
 		else if (type == Type::AIRSHOT)
@@ -47,6 +52,12 @@ Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed,
 
 void Bullet::Update(float deltaTime)
 {
+	if (pos.y <= groundPos)
+	{
+		nowScene->obm.AddObject(new Effect(L"Player/Hit1", pos, D3DXVECTOR2(0.7, 0.7), D3DXVECTOR2(0.5, 0.5), 0.05f));
+		destroy = true;
+	}
+
 	if (pos.x < Camera::GetInstance().cameraPos.x - 960 || pos.x > Camera::GetInstance().cameraPos.x + 960)
 		destroy = true;
 
@@ -67,6 +78,8 @@ void Bullet::OnCollision(Collider& coli)
 
 	if (coli.tag == L"enemy" || coli.tag == L"player")
 	{
+		if (abs(groundPos - coli.obj->groundPos) >= 100) return;
+
 		if (type != Type::SNIPER)
 		{
 			D3DXVECTOR2 randPos = D3DXVECTOR2(nowScene->GetRandomNum(-50, 50), nowScene->GetRandomNum(-50, 50));

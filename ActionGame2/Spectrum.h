@@ -8,7 +8,7 @@ public:
 
 	ColorShader* colorShader = NULL;
 
-	Spectrum(Sprite spr, RenderInfo ri, float time, D3DXCOLOR color);
+	Spectrum(Sprite spr, RenderInfo ri, float time, D3DXCOLOR color, int layer);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

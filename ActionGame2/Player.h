@@ -23,6 +23,10 @@ public:
 		HIT,
 		DIE,
 
+		JUMPATTACK1,
+		JUMPATTACK2,
+		JUMPATTACK3,
+
 		WEAKATTACK1,
 		WEAKATTACK2,
 		WEAKATTACK3,
@@ -58,6 +62,13 @@ public:
 	bool afterImage = false;
 	float afterImageTime = 0.0f;
 
+	bool jumpAttack = false;
+
+	bool fallowCamera = true;
+
+	int combo = 0;
+	int prevCombo = 0;
+	float comboInterval = 0.0f;
 
 public:
 	virtual void Update(float deltaTime) override;
@@ -68,6 +79,8 @@ public:
 	
 	void SetState(CState<Player>* nextState);
 	void CreateAfterImage(int scene, float visibleTime, D3DXCOLOR color);
+	void PlusMp(float value);
+	void PlusCombo(int value);
 	bool Move(float deltaTime, bool moveShot = false);
 
 	void Combo(float deltaTime);
@@ -76,7 +89,8 @@ public:
 	void ComboInput(unsigned char u, std::string name);
 	void ComboChecking(int skillNum, int inputAmount, ...);
 
-	void CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet::Type type);
+
+	void CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet::Type type, bool jumpShot = false);
 	void CreateAttackCollider(int scene, D3DXVECTOR2 offset, D3DXVECTOR2 min, D3DXVECTOR2 max, float damage, D3DXVECTOR2 atkPower, float yVec, float time, bool fallow = false);
 	void SetSpecialAttack(Images image,int attackScene, float afterImageTime, float mp);
 };

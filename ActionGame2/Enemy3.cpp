@@ -8,17 +8,15 @@ Enemy3::Enemy3(D3DXVECTOR2 pos) : CEnemy(pos)
 
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
-	ability.SetAbility(50, 100);
-	SetRange(500, 500);
+	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
+	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
+	ability.SetAbility(80, 100);
 
 	SetState(EnemyIdle::GetInstance());
 }
 
 void Enemy3::Update(float deltaTime)
 {
-	if (nowState)
-		nowState->UpdateState(this, deltaTime);
-
 	CEnemy::Update(deltaTime);
 }
 
@@ -46,8 +44,8 @@ void Enemy3::Attack(float deltaTime)
 	{
 		onAttack = true;
 		D3DXVECTOR2 playerPos = nowScene->player->pos;
-		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f)); };
+		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, groundPos)); };
 
-		nowScene->obm.AddObject(new Effect(L"enemy/", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, lambda));
+		nowScene->obm.AddObject(new Effect(L"enemy/magic", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, lambda));
 	};
 }

@@ -8,6 +8,12 @@ void Object::SetRigid(float mass)
 	this->mass = mass;
 }
 
+void Object::CreateCollider(D3DXVECTOR2 min, D3DXVECTOR2 max, std::wstring tag, D3DXCOLOR color )
+{
+	Collider::AABB aabb = { min, max };
+	bodies.push_back(Collider(this, tag, &aabb));
+}
+
 void Object::Update(float deltaTime)
 {
 	if (bRigid)

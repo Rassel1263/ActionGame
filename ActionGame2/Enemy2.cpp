@@ -8,17 +8,15 @@ Enemy2::Enemy2(D3DXVECTOR2 pos) : CEnemy(pos)
 
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
-	ability.SetAbility(50, 100);
-	SetRange(500, 500);
+	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
+	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
+	ability.SetAbility(120, 100);
 
 	SetState(EnemyIdle::GetInstance());
 }
 
 void Enemy2::Update(float deltaTime)
 {
-	if (nowState)
-		nowState->UpdateState(this, deltaTime);
-
 	CEnemy::Update(deltaTime);
 }
 
@@ -45,6 +43,6 @@ void Enemy2::Attack(float deltaTime)
 	if (GetSprite(Images::ATTACK).scene == 13 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new Bullet(team, pos + D3DXVECTOR2(ri.scale.x * 50, 150), D3DXVECTOR2(ri.scale.x, 0), 500, 5, Bullet::Type::ROCK));
+		nowScene->obm.AddObject(new Bullet(team, pos + D3DXVECTOR2(ri.scale.x * 50, 150), D3DXVECTOR2(ri.scale.x, 0), 500, 5, groundPos, Bullet::Type::ROCK));
 	}
 }
