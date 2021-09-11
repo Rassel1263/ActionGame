@@ -10,8 +10,6 @@ EnemyIdle* EnemyIdle::GetInstance()
 void EnemyIdle::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::IDLE);
-
-	restTime = 1.0f;
 }
 
 void EnemyIdle::UpdateState(CEnemy* obj, float deltaTime)
@@ -90,7 +88,7 @@ EnemyAttackReady* EnemyAttackReady::GetInstance()
 void EnemyAttackReady::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::ATTACKREADY);
-	nowScene->obm.AddObject(new Warning(L"Warning", obj->pos, D3DXVECTOR2(obj->ri.scale.x, 1), D3DXVECTOR2(0, 0.5), obj->GetNowSprite().aniMaxtime * 68));
+	nowScene->obm.AddObject(new Effect(L"Enemy/Warning", D3DXVECTOR2(obj->pos.x, obj->groundPos), D3DXVECTOR2(obj->ri.scale.x, 1), D3DXVECTOR2(0, 0.5), 0.062f));
 	obj->superArmor = true;
 }
 

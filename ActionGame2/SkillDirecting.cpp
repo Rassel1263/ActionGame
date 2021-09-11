@@ -12,6 +12,7 @@ SkillDirecting::SkillDirecting(float timer)
 	spr.color.a = 0.0f;
 
 	layer = -5;
+
 }
 
 void SkillDirecting::Update(float deltaTime)

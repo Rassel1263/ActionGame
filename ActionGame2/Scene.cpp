@@ -1,6 +1,8 @@
 #include "DXUT.h"
 #include "Scene.h"
 
+float Scene::score = 0.0f;
+
 void Scene::Init()
 {
 }

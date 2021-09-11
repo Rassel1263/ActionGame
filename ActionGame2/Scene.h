@@ -5,13 +5,17 @@ class Scene
 public:
 	Scene* nextScene = NULL;
 
+	static float score;
+	float destScore = 0.0f;
+
+	float gameTime = 180.0f;
+
 	std::random_device rd;
 	int curStage = 0;
 
 	Player* player = NULL;
 	Boss1* boss = NULL;
-
-	std::vector<CEnemy*> enemyVec;
+	EnemyManager enemyManager;
 
 	ObjectManager obm;
 

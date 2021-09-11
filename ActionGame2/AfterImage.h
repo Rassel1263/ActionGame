@@ -10,15 +10,17 @@ public:
 
 	D3DXVECTOR2 destScale = { 0, 0 };
 
-	bool skill = false;
+	bool fallow = false;
 
 	float visibleTime = 0.0f;
 	float maxVisibleTime = 0.0f;
 
+	float timer = 0.0f;
+
 	int effectNum = 0;
 
 	AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR color, int layer);
-	AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color, int layer, bool skill = true);
+	AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color, int layer, bool fallow = true);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

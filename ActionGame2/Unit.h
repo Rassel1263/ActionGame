@@ -34,6 +34,7 @@ public:
 	bool onAttack = false;
 	bool superArmor = false;
 	float attackTimer = 0.0f;
+	float maxAttackTimer = 0.0f;
 
 	D3DXVECTOR2 GetDistanceFromTarget(D3DXVECTOR2 targetPos);
 

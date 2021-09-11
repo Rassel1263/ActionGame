@@ -199,7 +199,7 @@ void PlayerLanding::EnterState(Player* obj)
 
 void PlayerLanding::UpdateState(Player* obj, float deltaTime)
 {
-	if (!obj->GetNowSprite().bAnimation)
+	if (!obj->GetNowSprite().bAnimation || Input::GetInstance().KeyPress('C'))
 	{
 		obj->SetState(PlayerIdle::GetInstance());
 		return;
@@ -431,8 +431,7 @@ void PlayerSpecialAttack::EnterState(Player* obj)
 	timer = 0.0f;
 	obj->superArmor = true;
 
-	if (obj->renderNum == IntEnum(Player::Images::GUNKATA))
-		nowScene->obm.AddObject(new Spectrum(obj->GetNowSprite(), obj->ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), obj->layer));
+	obj->SpecialAttackCancel();
 
 	if (obj->attackNum == 0)	  obj->SetSpecialAttack(Player::Images::WEAKATTACK4, 8, 0.0f, 0);
 	else if (obj->attackNum == 1) obj->SetSpecialAttack(Player::Images::SLIDE, 0, 0.0f, 10);
@@ -440,6 +439,7 @@ void PlayerSpecialAttack::EnterState(Player* obj)
 	else if (obj->attackNum == 3) obj->SetSpecialAttack(Player::Images::MOVESHOOT, 3, 0.15f, 20);
 	else if (obj->attackNum == 4) obj->SetSpecialAttack(Player::Images::MACHINEGUN, 7, 0.0f, 10);
 	else if (obj->attackNum == 5) obj->SetSpecialAttack(Player::Images::SNIPER, 10, 0.1f, 30);
+	else if (obj->attackNum == 6) obj->SetSpecialAttack(Player::Images::NUCLEAR, 0, 0.1f, 30);
 }
 
 void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
@@ -482,7 +482,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 				obj->CreateBullet(offset, 1000, 5, Bullet::Type::BASIC);
 				change = !change;
 
-				obj->attackTimer = obj->GetNowSprite().aniMaxtime * 2;
+				obj->attackTimer = obj->maxAttackTimer;
 			}
 		}
 	}
@@ -492,7 +492,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			if (obj->attackTimer <= 0.0f)
 			{
 				obj->CreateBullet(D3DXVECTOR2(230, 200), 1500, 10, Bullet::Type::MACHINEGUN);
-				obj->attackTimer = obj->GetNowSprite().aniMaxtime * 3;
+				obj->attackTimer = obj->maxAttackTimer;
 			}
 	}
 	else if (obj->attackNum == 5)
@@ -507,7 +507,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 	{
 		if (timer >= obj->afterImageTime)
 		{
-			obj->CreateAfterImage(0, 0.5f, D3DCOLOR_ARGB(70, 70, 0, 0));
+			obj->CreateAfterImage(0, 0.5f, D3DCOLOR_ARGB(70, 0, 0, 0));
 			timer = 0.0f;
 		}
 		timer += deltaTime;
@@ -517,7 +517,6 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 void PlayerSpecialAttack::ExitState(Player* obj)
 {
 	obj->afterImage = false;
-	obj->attackTimer = 0.0f;
 	obj->superArmor = false;
 	obj->onAttack = false;
 }

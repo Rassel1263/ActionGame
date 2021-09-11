@@ -39,6 +39,9 @@
     <Filter Include="Object\Unit\Boss">
       <UniqueIdentifier>{eda22be0-ebbb-4cb7-85db-6380ab63ddba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Font">
+      <UniqueIdentifier>{08b200c9-de5b-4b60-adda-5eb31ce1dd55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -212,6 +215,7 @@
     <ClCompile Include="Combo.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -330,6 +334,10 @@
     <ClInclude Include="Combo.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Object\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

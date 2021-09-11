@@ -58,16 +58,16 @@ void Sound::SetVolume(int _volume)
 
 void SoundManager::Create(std::wstring _pathWithName, int _szSound)
 {
-    //auto sf = sounds.find(_pathWithName);
-    //if (sf != sounds.end()) return;
-    //sounds.insert({ _pathWithName, new Sound({_pathWithName, _szSound }) });
+    auto sf = sounds.find(_pathWithName);
+    if (sf != sounds.end()) return;
+    sounds.insert({ _pathWithName, new Sound({_pathWithName, _szSound }) });
 }
 
 void SoundManager::Play(std::wstring _pathWithName, bool _loop)
 {
-    //auto sf = sounds.find(_pathWithName);
-    //if (sf == sounds.end()) return;
-    //sf->second->Play(_loop);
+    auto sf = sounds.find(_pathWithName);
+    if (sf == sounds.end()) return;
+    sf->second->Play(_loop);
 }
 
 void SoundManager::Stop(std::wstring _pathWithName)

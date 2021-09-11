@@ -10,8 +10,7 @@ void GameScene3::Init()
 
 	obm.AddObject(new Map());
 	obm.AddObject(player = new Player());
-	obm.AddObject(new Enemy1(D3DXVECTOR2(400, 0)));
-	obm.AddObject(new Enemy2(D3DXVECTOR2(800, 0)));
+	enemyManager.SpawnEnemy(D3DXVECTOR2(400, 0), 4);
 }
 
 void GameScene3::Update(float deltaTime)

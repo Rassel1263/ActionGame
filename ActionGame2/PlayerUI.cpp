@@ -48,13 +48,13 @@ void PlayerUI::Render()
 	{
 		comboBck.Render(comboRI);
 		comboGauge.Render(RenderInfo{ D3DXVECTOR2(comboRI.pos.x - 5, comboRI.pos.y - 4) });
-	}
 
-	int i = 0;
-	for (auto& c : combo)
-	{
-		c.Render(RenderInfo{ D3DXVECTOR2(800 + i * 50, 120) });
-		i++;
+		int i = 0;
+		for (auto& c : combo)
+		{
+			c.Render(RenderInfo{ D3DXVECTOR2(800 + i * 50, 100) });
+			i++;
+		}
 	}
 }
 
@@ -69,11 +69,11 @@ void PlayerUI::UpdateCombo()
 		int i = 0;
 		for (auto& c : combo)
 		{
-			c.LoadAll(L"Assets/Sprites/UI/Font/Word/" + str.substr(i, 1) + L".png");
+			c.LoadAll(L"Assets/Sprites/UI/Font/Combo/" + str.substr(i, 1) + L".png");
 			c.bCamera = false;
 
 			if(player->combo != 0)
-				nowScene->obm.AddObject(new AfterImage(c, RenderInfo{ D3DXVECTOR2(800 + i * 50, 120) }, D3DXVECTOR2(1.5, 1.5), D3DCOLOR_ARGB(70, 255, 255, 255), 1100, false));
+				nowScene->obm.AddObject(new AfterImage(c, RenderInfo{ D3DXVECTOR2(800 + i * 50, 100) }, D3DXVECTOR2(1.5, 1.5), D3DCOLOR_ARGB(70, 255, 255, 255), 1100, false));
 
 			i++;
 		}

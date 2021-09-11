@@ -17,13 +17,14 @@ AfterImage::AfterImage(Sprite spr, RenderInfo ri, float visibleTime, D3DXCOLOR c
 	effectNum = 1;
 }
 
-AfterImage::AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color, int layer, bool skill)
+AfterImage::AfterImage(Sprite spr, RenderInfo ri, D3DXVECTOR2 destScale, D3DXCOLOR color, int layer, bool fallow)
 {
 	this->spr = spr;
 	this->ri = ri;
 	this->ri.scale = destScale;
 	this->spr.color = color;
-	this->skill = skill;
+	this->fallow = fallow;
+
 
 	colorShader = new ColorShader();
 
@@ -45,14 +46,16 @@ void AfterImage::Update(float deltaTime)
 		D3DXVec2Lerp(&ri.scale, &ri.scale, &destScale, 0.05f);
 
 		if (abs(ri.scale.x) <= 1.0f || ri.scale.y <= 1.0f)
+		{
 			destroy = true;
+		}
 	}
 	
 }
 
 void AfterImage::Render()
 {
-	if(skill)
+	if(fallow)
 		ri.pos = nowScene->player->pos;
 
 	colorShader->Render(colorShader, spr, ri, D3DXVECTOR4(spr.color.r, spr.color.g, spr.color.b, spr.color.a));

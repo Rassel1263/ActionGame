@@ -15,6 +15,7 @@ Player::Player()
 	SetRigid(1);
 
 	maxMp = 100;
+	mp = 100;
 
 	nowScene->obm.AddObject(new PlayerUI(this));
 }
@@ -79,6 +80,7 @@ void Player::SetImages()
 	GetSprite(Images::STRONGATTACK).LoadAll(filePath + L"strongAttack", 0.05f, false);
 	GetSprite(Images::MACHINEGUN).LoadAll(filePath + L"Skillmachinegun", 0.03f, false);
 	GetSprite(Images::SNIPER).LoadAll(filePath + L"Skillsniper", 0.05f, false);
+	GetSprite(Images::NUCLEAR).LoadAll(filePath + L"Skillnuclear", 0.05f, false);
 
 
 	GetSprite(Images::GUNKATA).LoadAll(filePath + L"Skillgunkata", 0.04f, false);
@@ -100,13 +102,13 @@ void Player::SetState(CState<Player>* nextState)
 	nowState->EnterState(this);
 }
 
-void Player::CreateAfterImage(int scene, float visibleTime, D3DXCOLOR color)
+void Player::CreateAfterImage(int scene, float visibleTime, D3DXCOLOR color, bool fallow)
 {
 	if (visibleTime <= 0.0f)
 	{
 		Sprite spr = GetNowSprite();
 		spr.scene = scene;
-		nowScene->obm.AddObject(new AfterImage(spr, ri, D3DXVECTOR2(ri.scale.x * 2, 2), color, layer));
+		nowScene->obm.AddObject(new AfterImage(spr, ri, D3DXVECTOR2(ri.scale.x * 2, 2), color, layer, fallow));
 	}
 	else
 		nowScene->obm.AddObject(new AfterImage(GetNowSprite(), ri, visibleTime, color, layer));
@@ -191,9 +193,10 @@ void Player::ComboCheck()
 	ComboChecking(4, 3, "LE", "LE", "S");
 	ComboChecking(4, 3, "RI", "RI", "S");
 
-	ComboChecking(5, 4, "RI", "DO", "LE", "S");
-	ComboChecking(5, 4, "LE", "DO", "RI", "S");
+	ComboChecking(5, 4, "RI", "DO", "LE", "X");
+	ComboChecking(5, 4, "LE", "DO", "RI", "X");
 
+	ComboChecking(6, 4, "DO", "DO", "UP", "S");
 
 	if (specialAttack && !jumpAttack)
 	{
@@ -306,6 +309,8 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	}
 
 	this->mp -= mp;
+	attackTimer = 0.0f;
+	maxAttackTimer = 0.0f;
 
 	SetAni(image);
 	attackTimer = GetNowSprite().aniMaxtime * attackScene;
@@ -320,19 +325,32 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 	else if (image == Images::MOVESHOOT)
+	{
+		maxAttackTimer =  GetNowSprite().aniMaxtime * 2;
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
+	}
+	else if (image == Images::MACHINEGUN)
+	{
+		maxAttackTimer = GetNowSprite().aniMaxtime * 3;
+	}
+
 	else if (image == Images::SNIPER)
 	{
-		for (auto& enemy : nowScene->enemyVec)
+		for (auto& enemy : nowScene->enemyManager.enemyVec)
 		{
 			if (abs(enemy->groundPos - groundPos) <= 100)
 			{
 				if((ri.scale.x >=  1) ? (enemy->pos.x > pos.x) : (enemy->pos.x < pos.x))
-				nowScene->obm.AddObject(new Effect(L"Player/scope.png", &enemy->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0, 150), 1.0f));
+				nowScene->obm.AddObject(new Effect(L"Player/Sniper", &enemy->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0, 150), 0.3f));
 			}
 		}
 
 		nowScene->obm.AddObject(new SkillDirecting(attackTimer));
+	}
+	else if (image == Images::NUCLEAR)
+	{
+		nowScene->obm.AddObject(new Effect(L"Player/NuClear", D3DXVECTOR2(0, 0), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.05f, 34));
+		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 
 	nowScene->obm.AddObject(new Effect(L"Player/command", pos + D3DXVECTOR2(0, 300), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.5f, true));
@@ -342,4 +360,26 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		afterImage = true;
 		this->afterImageTime = afterImageTime;
 	}
-}  
+}
+
+void Player::SpecialAttackCancel()
+{
+	bool cancel = false;
+
+	if (renderNum == IntEnum(Player::Images::GUNKATA))
+	{
+		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer));
+		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+	}
+	else if (renderNum == IntEnum(Player::Images::MACHINEGUN))
+	{
+		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer, attackTimer, maxAttackTimer, 4));
+		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+	}
+	else if (renderNum == IntEnum(Player::Images::SNIPER))
+	{
+		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer, attackTimer, 99, 5));
+		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+	}
+
+}

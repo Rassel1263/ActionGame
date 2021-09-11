@@ -38,7 +38,7 @@ Effect::Effect(std::wstring eftName, D3DXVECTOR2* pos, D3DXVECTOR2 scale, D3DXVE
 	this->visibleTime = visibleTime;
 	this->offset = offset;
 	this->maxVisibleTime = visibleTime;
-	this->func = func;
+	this->func = func;	
 
 	effectNum = 2;
 

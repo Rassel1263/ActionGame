@@ -36,6 +36,7 @@ public:
 		STRONGATTACK,
 		MACHINEGUN,
 		SNIPER,
+		NUCLEAR,
 
 		GUNKATA,
 		MOVESHOOT,
@@ -78,7 +79,6 @@ public:
 	virtual void Hit(float damage, D3DXVECTOR2 addForce);
 	
 	void SetState(CState<Player>* nextState);
-	void CreateAfterImage(int scene, float visibleTime, D3DXCOLOR color);
 	void PlusMp(float value);
 	void PlusCombo(int value);
 	bool Move(float deltaTime, bool moveShot = false);
@@ -89,9 +89,10 @@ public:
 	void ComboInput(unsigned char u, std::string name);
 	void ComboChecking(int skillNum, int inputAmount, ...);
 
-
 	void CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet::Type type, bool jumpShot = false);
 	void CreateAttackCollider(int scene, D3DXVECTOR2 offset, D3DXVECTOR2 min, D3DXVECTOR2 max, float damage, D3DXVECTOR2 atkPower, float yVec, float time, bool fallow = false);
+	void CreateAfterImage(int scene, float visibleTime, D3DXCOLOR color, bool fallow = true);
 	void SetSpecialAttack(Images image,int attackScene, float afterImageTime, float mp);
+	void SpecialAttackCancel();
 };
 

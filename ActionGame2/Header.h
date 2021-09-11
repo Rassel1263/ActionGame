@@ -35,6 +35,7 @@
 
 #include "EnemyUI.h"
 #include "PlayerUI.h"
+#include "Font.h"
 
 #include "Unit.h"
 #include "Player.h"
@@ -42,6 +43,7 @@
 
 #include "Range.h"
 
+#include "EnemyManager.h"
 #include "CEnemy.h"
 #include "Enemy1.h"
 #include "Enemy2.h"

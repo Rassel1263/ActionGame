@@ -10,7 +10,7 @@ Enemy4::Enemy4(D3DXVECTOR2 pos) : CEnemy(pos)
 	SetCollider(-60, 0, 60, 300, team);
 	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
 	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
-	ability.SetAbility(200, 100);
+	ability.SetAbility(300, 100);
 
 
 	SetState(EnemyIdle::GetInstance());
@@ -18,6 +18,9 @@ Enemy4::Enemy4(D3DXVECTOR2 pos) : CEnemy(pos)
 
 void Enemy4::Update(float deltaTime)
 {
+	if (Input::GetInstance().KeyDown('H'))
+		ability.hp = ability.maxHp;
+
 	CEnemy::Update(deltaTime);
 }
 
