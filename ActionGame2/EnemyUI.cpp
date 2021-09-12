@@ -8,6 +8,8 @@ EnemyUI::EnemyUI(CEnemy* enemy)
 	hpBck.LoadAll(filePath + L"enemyHpBck.png");
 	hp.LoadAll(filePath + L"enemyHp.png");
 
+	layer = enemy->layer;
+
 	this->enemy = enemy;
 }
 

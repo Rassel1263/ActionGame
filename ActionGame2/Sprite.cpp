@@ -29,7 +29,7 @@ void Sprite::LoadAll(std::wstring filePath, float aniMaxTime, bool aniLoop)
 
 void Sprite::Update(float deltaTime)
 {
-	if (!bAnimation)
+	if (!bAnimation || !bAniStop)
 		return;
 
 	aniTime += deltaTime;

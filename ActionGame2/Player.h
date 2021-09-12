@@ -33,6 +33,7 @@ public:
 		WEAKATTACK4,
 		WEAKTATCKEND,
 
+		GRENADE,
 		STRONGATTACK,
 		MACHINEGUN,
 		SNIPER,
@@ -51,9 +52,11 @@ public:
 
 	// ÄÞº¸ ½Ã½ºÅÛ
 	std::vector<std::string> comboInputs;
+	bool attackCancel = false;
 	bool specialAttack = false;
 	bool invincible = false;
 	float comboTimer = 0.0f;
+	float cancelTimer = 0.0f;
 
 	// specialAttack
 	float mp = 0.0f;
@@ -62,9 +65,10 @@ public:
 	int attackNum = 0;
 	bool afterImage = false;
 	float afterImageTime = 0.0f;
+	float nuclearTime = 0.0f;
 
+	bool nuclear = false;
 	bool jumpAttack = false;
-
 	bool fallowCamera = true;
 
 	int combo = 0;

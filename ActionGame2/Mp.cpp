@@ -14,7 +14,7 @@ Mp::Mp(D3DXVECTOR2 pos, float startAngle, float amount)
 
 	CreateCollider(D3DXVECTOR2(-5, -5), D3DXVECTOR2(5, 5), L"mp");
 
-	layer = 2000;
+	layer = 1090;
 }
 
 void Mp::Update(float deltaTime)

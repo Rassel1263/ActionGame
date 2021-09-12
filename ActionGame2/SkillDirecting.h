@@ -9,7 +9,9 @@ public:
 	float visibleTime = 0.0f;
 	float maxVisibleTime = 0.0f;
 
-	SkillDirecting(float timer);
+	int skillNum = 0;
+
+	SkillDirecting(float timer, int skillNum = 0);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

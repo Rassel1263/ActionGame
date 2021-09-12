@@ -16,6 +16,8 @@ public:
 		HIT,
 		DIE,
 
+		SHADOW,
+
 		END,
 	};
 

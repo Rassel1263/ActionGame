@@ -39,6 +39,8 @@ Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed,
 	{
 		if(type == Type::ROCK)
 			spr.LoadAll(L"Assets/Sprites/bullet/enemyBullet");
+		else if (type == Type::GOLDROCK)
+			spr.LoadAll(L"Assets/Sprites/bullet/EnemybossRock");
 
 		aabb.min = { -10, -10 };
 		aabb.max= { 10, 10 };

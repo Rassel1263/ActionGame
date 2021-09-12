@@ -10,6 +10,7 @@ public:
 	RenderInfo ri;
 
 	std::function<void()> func = NULL;
+	bool onAttack = false;
 	int atkScene = 0;
 	int effectNum = 0;
 	float visibleTime = 0.0f;

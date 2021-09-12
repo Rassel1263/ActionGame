@@ -10,6 +10,7 @@ public:
 		SNIPER,
 
 		ROCK,
+		GOLDROCK,
 	} type;
 
 	Sprite spr;

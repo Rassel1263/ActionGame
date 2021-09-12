@@ -36,6 +36,8 @@ void Enemy3::SetImages()
 	GetSprite(Images::ATTACK).LoadAll(filePath + L"Attack", 0.05f, false);
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.025f, false);
 	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
+
+	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 }
 
 void Enemy3::Attack(float deltaTime)

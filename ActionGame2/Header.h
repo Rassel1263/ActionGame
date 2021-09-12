@@ -35,6 +35,7 @@
 
 #include "EnemyUI.h"
 #include "PlayerUI.h"
+#include "BossUI.h"
 #include "Font.h"
 
 #include "Unit.h"
@@ -52,8 +53,11 @@
 #include "EnemyState.h"
 
 #include "Boss1.h"
+#include "BossState.h"
+
 
 #include "Bullet.h"
+#include "Nuclear.h"
 
 #include "Effect.h"
 #include "BossIntro.h"

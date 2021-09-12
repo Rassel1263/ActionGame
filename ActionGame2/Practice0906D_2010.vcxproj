@@ -394,6 +394,8 @@
     <ClCompile Include="AttackCollider.cpp" />
     <ClCompile Include="Boss1.cpp" />
     <ClCompile Include="BossIntro.cpp" />
+    <ClCompile Include="BossState.cpp" />
+    <ClCompile Include="BossUI.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="Collider.cpp" />
@@ -410,10 +412,13 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameScene2.cpp" />
     <ClCompile Include="GameScene3.cpp" />
+    <ClCompile Include="Grenade.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Mp.cpp" />
+    <ClCompile Include="Nuclear.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OutlineShader.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="PlayerState.cpp" />
@@ -431,6 +436,8 @@
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Boss1.h" />
     <ClInclude Include="BossIntro.h" />
+    <ClInclude Include="BossState.h" />
+    <ClInclude Include="BossUI.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="Collider.h" />
@@ -449,11 +456,14 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameScene2.h" />
     <ClInclude Include="GameScene3.h" />
+    <ClInclude Include="Grenade.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Mp.h" />
+    <ClInclude Include="Nuclear.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="OutlineShader.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="PlayerState.h" />
@@ -500,6 +510,9 @@
     <ResourceCompile Include="Practice0906D.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Shader\OutlineShader.fx">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />

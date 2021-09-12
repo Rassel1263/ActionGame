@@ -18,9 +18,6 @@ Enemy4::Enemy4(D3DXVECTOR2 pos) : CEnemy(pos)
 
 void Enemy4::Update(float deltaTime)
 {
-	if (Input::GetInstance().KeyDown('H'))
-		ability.hp = ability.maxHp;
-
 	CEnemy::Update(deltaTime);
 }
 
@@ -44,6 +41,8 @@ void Enemy4::SetImages()
 
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.025f, false);
 	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
+
+	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 }
 
 void Enemy4::Attack(float deltaTime)

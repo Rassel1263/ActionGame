@@ -26,6 +26,7 @@ void CEnemy::Update(float deltaTime)
 void CEnemy::Render()
 {
 	ri.pos = pos;
+	GetSprite(Images::SHADOW).Render(RenderInfo{ D3DXVECTOR2(ri.pos.x, groundPos) });
 
 	if (hit)
 		colorShader->Render(colorShader, GetNowSprite(), ri, D3DXVECTOR4(1.0, 1.0, 1.0, 0.8f));

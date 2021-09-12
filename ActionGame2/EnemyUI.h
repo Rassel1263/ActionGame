@@ -1,7 +1,7 @@
 #pragma once
 
 class CEnemy;
-class EnemyUI : public ObjectUI
+class EnemyUI : public Object
 {
 public:
 	Sprite hp;

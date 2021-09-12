@@ -462,7 +462,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		}
 	}
 	else if (obj->attackNum == 1)
-		obj->CreateAttackCollider(0, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 100), 10, D3DXVECTOR2(100, 0), 0.1f, 0.1f, true);
+		obj->CreateAttackCollider(0, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 100), 10, D3DXVECTOR2(100, 1000), 1.0f, 0.1f, true);
 	else if (obj->attackNum == 2)
 		Camera::GetInstance().cameraQuaken = { 2, 2 };
 	else if (obj->attackNum == 3)
@@ -503,7 +503,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			obj->CreateBullet(D3DXVECTOR2(250, 150), 2500, 30, Bullet::Type::SNIPER);
 
 		}
-	}	if(obj->afterImage)
+	}	else if (obj->attackNum == 6)	{		if (obj->nuclear)		{			obj->nuclearTime -= deltaTime;			if (Input::GetInstance().KeyPress('S') && obj->GetNowSprite().scene >= 8)				obj->GetNowSprite().bAniStop = false;			if (Input::GetInstance().KeyUp('S') || obj->nuclearTime <= 0.0f)			{				obj->nuclear = false;				obj->bCollider = true;				obj->GetNowSprite().bAniStop = true;			}		}	}	if(obj->afterImage)
 	{
 		if (timer >= obj->afterImageTime)
 		{

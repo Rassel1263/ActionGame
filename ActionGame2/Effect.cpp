@@ -12,7 +12,7 @@ Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVEC
 	
 	effectNum = 0;
 
-	layer = 1100;
+	layer = 1090;
 }
 
 Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVECTOR2 pivot, float visibleTime, bool bCamera, std::function<void()> func)
@@ -28,7 +28,7 @@ Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVEC
 
 	effectNum = 1;
 
-	layer = 1100;
+	layer = 1090;
 }
 Effect::Effect(std::wstring eftName, D3DXVECTOR2* pos, D3DXVECTOR2 scale, D3DXVECTOR2 offset, float visibleTime, std::function<void()> func)
 {
@@ -42,7 +42,7 @@ Effect::Effect(std::wstring eftName, D3DXVECTOR2* pos, D3DXVECTOR2 scale, D3DXVE
 
 	effectNum = 2;
 
-	layer = 1100;
+	layer = 1090;
 }
 
 
@@ -51,11 +51,21 @@ void Effect::Update(float deltaTime)
 	if (effectNum == 0)
 	{
 		if (atkScene > 0 && spr.scene == atkScene)
-			if (func) func();
+		{
+			if (func && !onAttack)
+			{
+				onAttack = true;
+				func();
+			}
+		}
 
 		if (!spr.bAnimation)
 		{
-			if (func) func();
+			if (func && !onAttack)
+			{
+				onAttack = true;
+				func();
+			}
 			destroy = true;
 		}
 	}

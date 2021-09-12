@@ -115,6 +115,12 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
+class PlayerNuclear : public CState<Player>
+{
+public:
+
+};
+
 class PlayerHit : public CState<Player>
 {
 public:

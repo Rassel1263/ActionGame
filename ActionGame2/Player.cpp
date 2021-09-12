@@ -23,6 +23,16 @@ Player::Player()
 void Player::Update(float deltaTime)
 {
 	if(fallowCamera) Camera::GetInstance().destCameraPos.x = pos.x;
+	if (attackCancel)
+	{
+		cancelTimer -= deltaTime;
+
+		if (cancelTimer <= 0.0f)
+		{
+			Game::GetInstance().timeScale = 1.0f;
+			attackCancel = false;
+		}
+	}
 
 	PlusMp(deltaTime * 3);
 
@@ -64,7 +74,7 @@ void Player::SetImages()
 	GetSprite(Images::FALL).LoadAll(filePath + L"fall", 0.05f, false);
 	GetSprite(Images::LANDING).LoadAll(filePath + L"landing", 0.05f, false);
 	GetSprite(Images::SLIDE).LoadAll(filePath + L"slide", 0.05f, false);
-	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/Player/shadow");
+	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.05f, false);
 
 	GetSprite(Images::JUMPATTACK1).LoadAll(filePath + L"jumpAttack1", 0.05f, false);
@@ -77,6 +87,7 @@ void Player::SetImages()
 	GetSprite(Images::WEAKATTACK4).LoadAll(filePath + L"weakAttack4", 0.015f, false);
 	GetSprite(Images::WEAKTATCKEND).LoadAll(filePath + L"weakAttackend", 0.1f, false);
 
+	GetSprite(Images::GRENADE).LoadAll(filePath + L"grenade", 0.05f, false);
 	GetSprite(Images::STRONGATTACK).LoadAll(filePath + L"strongAttack", 0.05f, false);
 	GetSprite(Images::MACHINEGUN).LoadAll(filePath + L"Skillmachinegun", 0.03f, false);
 	GetSprite(Images::SNIPER).LoadAll(filePath + L"Skillsniper", 0.05f, false);
@@ -349,7 +360,11 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	}
 	else if (image == Images::NUCLEAR)
 	{
-		nowScene->obm.AddObject(new Effect(L"Player/NuClear", D3DXVECTOR2(0, 0), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.05f, 34));
+		nuclear = true;
+		nuclearTime = 1.0f;
+		bCollider = false;
+		nowScene->obm.AddObject(new SkillDirecting(0.0f, 1));
+		nowScene->obm.AddObject(new Nuclear(D3DXVECTOR2(pos.x + 500 * ri.scale.x, pos.y)));
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 
@@ -364,22 +379,34 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 
 void Player::SpecialAttackCancel()
 {
-	bool cancel = false;
-
 	if (renderNum == IntEnum(Player::Images::GUNKATA))
 	{
 		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer));
 		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+		attackCancel = true;
 	}
 	else if (renderNum == IntEnum(Player::Images::MACHINEGUN))
 	{
 		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer, attackTimer, maxAttackTimer, 4));
 		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+		attackCancel = true;
 	}
 	else if (renderNum == IntEnum(Player::Images::SNIPER))
 	{
 		nowScene->obm.AddObject(new Spectrum(GetNowSprite(), ri, 1.0f, D3DCOLOR_ARGB(200, 0, 0, 0), layer, attackTimer, 99, 5));
 		CreateAfterImage(GetNowSprite().scene, 0.0f, D3DCOLOR_ARGB(125, 125, 225, 255), false);
+		attackCancel = true;
+	}
+	else if (renderNum == IntEnum(Player::Images::NUCLEAR))
+	{
+		nuclear = false;
+		attackCancel = true;
+		bCollider = true;
 	}
 
+	if (attackCancel)
+	{
+		Game::GetInstance().timeScale = 0.3f;
+		cancelTimer = 0.2f;
+	}
 }

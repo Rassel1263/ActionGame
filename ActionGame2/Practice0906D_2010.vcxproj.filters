@@ -101,6 +101,9 @@
     <ClCompile Include="DXUT\Optional\SDKmisc.cpp">
       <Filter>DXUT</Filter>
     </ClCompile>
+    <None Include="Assets\Shader\OutlineShader.fx">
+      <Filter>Shaders\fx</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -216,6 +219,21 @@
       <Filter>Object\Effect</Filter>
     </ClCompile>
     <ClCompile Include="EnemyManager.cpp" />
+    <ClCompile Include="Nuclear.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Grenade.cpp">
+      <Filter>Object\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="BossState.cpp">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="BossUI.cpp">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="OutlineShader.cpp">
+      <Filter>Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -338,6 +356,21 @@
       <Filter>Object\Font</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h" />
+    <ClInclude Include="Nuclear.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Grenade.h">
+      <Filter>Object\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="BossState.h">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="BossUI.h">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="OutlineShader.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
