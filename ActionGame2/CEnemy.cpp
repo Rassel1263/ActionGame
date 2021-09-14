@@ -47,6 +47,7 @@ void CEnemy::OnCollision(Collider& coli)
 			if(!hit) nowScene->obm.AddObject(new Effect(L"Player/Explode_sniper", pBullet->pos, D3DXVECTOR2(1.0, 1.0), D3DXVECTOR2(0.5, 0.5), 0.05f));
 		Hit(pBullet->damage, pBullet->attackVector);
 	}
+
 }
 
 void CEnemy::Hit(float damage, D3DXVECTOR2 addForce)
@@ -55,9 +56,14 @@ void CEnemy::Hit(float damage, D3DXVECTOR2 addForce)
 
 	Unit::Hit(damage, addForce);
 
+	if (nowScene->player->attackNum == -1)
+	{
+		nowScene->obm.AddObject(new Effect(L"Player/Hit1", pos + D3DXVECTOR2(0, 150) + nowScene->GetRandomVector(-70, 70, -100, 100), D3DXVECTOR2(1.0, 1.0), D3DXVECTOR2(0.5, 0.5), 0.5f, true));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(6, 10) * 0.1f));
+	}
 	if (nowScene->player->attackNum == 0)
 	{
-		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(10, 15) * 0.1f));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(3, 5) * 0.1f));
 	}
 	else if (nowScene->player->attackNum == 2)
 	{

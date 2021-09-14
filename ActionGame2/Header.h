@@ -13,6 +13,10 @@
 #include <random>
 #include <functional>
 #include <algorithm>
+#include <thread>
+#include <mutex>
+#include <cwctype>
+#include <queue>
 #include <limits>
 
 #include "Singleton.h"
@@ -52,14 +56,18 @@
 #include "Enemy4.h"
 #include "EnemyState.h"
 
+#include "CBoss.h"
 #include "Boss1.h"
 #include "BossState.h"
 
+#include "Box.h"
+#include "Item.h"
 
 #include "Bullet.h"
 #include "Nuclear.h"
 
 #include "Effect.h"
+#include "StageFont.h"
 #include "BossIntro.h"
 #include "AfterImage.h"
 #include "Spectrum.h"
@@ -69,8 +77,12 @@
 
 #include "Map.h"
 
+#include "LoadSprite.h"
+#include "Main.h"
+
 #include "Scene.h"
 extern Scene* nowScene;
+#include "MainScene.h"
 #include "GameScene.h"
 #include "GameScene2.h"
 #include "GameScene3.h"

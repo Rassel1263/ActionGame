@@ -17,6 +17,8 @@ void GameScene::Init()
 	obm.AddObject(player = new Player());
 	enemyManager.SpawnEnemy(D3DXVECTOR2(400, 0), 4);
 	enemyManager.SpawnEnemy(D3DXVECTOR2(400, 0), 2);
+	obm.AddObject(new Box(D3DXVECTOR2(200, 0)));
+	nowScene->obm.AddObject(new StageFont(StageFont::Type::START));
 	/*obm.AddObject(enemy = new Enemy1(D3DXVECTOR2(800, 0)));
 	enemyVec.push_back(enemy);
 	obm.AddObject(enemy = new Enemy1(D3DXVECTOR2(500, 0)));

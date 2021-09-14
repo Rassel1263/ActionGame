@@ -1,9 +1,10 @@
 #include "DXUT.h"
 #include "Effect.h"
 
-Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVECTOR2 pivot, float aniTime, int atkScene, std::function<void()> func)
+Effect::Effect(std::wstring eftName, D3DXVECTOR2 pos, D3DXVECTOR2 scale, D3DXVECTOR2 pivot, float aniTime, int atkScene, bool bCaemra, std::function<void()> func)
 {
 	spr.LoadAll(L"Assets/Sprites/effect/" + eftName, aniTime, false);
+	spr.bCamera = bCamera;
 	this->pos = pos;
 	ri.scale = scale;
 	ri.pivot = pivot;
@@ -39,7 +40,7 @@ Effect::Effect(std::wstring eftName, D3DXVECTOR2* pos, D3DXVECTOR2 scale, D3DXVE
 	this->offset = offset;
 	this->maxVisibleTime = visibleTime;
 	this->func = func;	
-
+	   
 	effectNum = 2;
 
 	layer = 1090;

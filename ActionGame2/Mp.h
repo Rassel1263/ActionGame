@@ -10,6 +10,8 @@ public:
 	float turnTime = 0.0f;
 
 	float amount = 0.0f;
+
+	bool hit = false;
 	Sprite spr;
 	RenderInfo ri;
 

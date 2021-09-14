@@ -13,6 +13,9 @@ PlayerUI::PlayerUI(Player* player)
 	Load(L"mpBck.png", mpBck);
 	Load(L"mp.png", mp);
 
+	Load(L"healBck.png", healBck);
+	Load(L"heal.png", heal);
+
 	Load(L"comboFont.png", comboFont);
 
 	Load(L"comboBck.png", comboBck);

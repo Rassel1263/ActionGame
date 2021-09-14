@@ -234,6 +234,20 @@
     <ClCompile Include="OutlineShader.cpp">
       <Filter>Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="StageFont.cpp" />
+    <ClCompile Include="Boss2.cpp">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoss.cpp">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -371,6 +385,20 @@
     <ClInclude Include="OutlineShader.h">
       <Filter>Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="StageFont.h" />
+    <ClInclude Include="Boss2.h">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoss.h">
+      <Filter>Object\Unit\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="MainScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadSprite.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

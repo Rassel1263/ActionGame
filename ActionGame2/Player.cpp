@@ -22,6 +22,11 @@ Player::Player()
 
 void Player::Update(float deltaTime)
 {
+	if (Input::GetInstance().KeyDown('F'))
+	{
+		Hit(20, D3DXVECTOR2(10, 10));
+	}
+
 	if(fallowCamera) Camera::GetInstance().destCameraPos.x = pos.x;
 	if (attackCancel)
 	{
@@ -76,6 +81,7 @@ void Player::SetImages()
 	GetSprite(Images::SLIDE).LoadAll(filePath + L"slide", 0.05f, false);
 	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.05f, false);
+	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
 
 	GetSprite(Images::JUMPATTACK1).LoadAll(filePath + L"jumpAttack1", 0.05f, false);
 	GetSprite(Images::JUMPATTACK2).LoadAll(filePath + L"jumpAttack2", 0.05f, false);
@@ -100,6 +106,12 @@ void Player::SetImages()
 
 void Player::Hit(float damage, D3DXVECTOR2 addForce)
 {
+	if (ability.hp <= 0)
+	{
+		SetState(PlayerDie::GetInstance());
+		return;
+	}
+
 	if (invincible || hit) return;
 	Unit::Hit(damage, addForce);
 }

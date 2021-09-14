@@ -14,7 +14,7 @@ public:
 	int curStage = 0;
 
 	Player* player = NULL;
-	Boss1* boss = NULL;
+	CBoss* boss = NULL;
 	EnemyManager enemyManager;
 
 	ObjectManager obm;

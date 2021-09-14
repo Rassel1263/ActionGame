@@ -6,7 +6,10 @@ Mp::Mp(D3DXVECTOR2 pos, float startAngle, float amount)
 	this->pos = pos;
 	this->amount = amount;
 
-	spr.LoadAll(L"Assets/Sprites/effect/Player/mp.png");
+	if(amount < 0.6f)
+		spr.LoadAll(L"Assets/Sprites/effect/Player/Mp/1", 0.05f, false);
+	else
+		spr.LoadAll(L"Assets/Sprites/effect/Player/Mp/2", 0.05f, false);
 
 	this->turnSpeed = D3DXToRadian(10);
 	startTime = 1.0f;
@@ -19,6 +22,13 @@ Mp::Mp(D3DXVECTOR2 pos, float startAngle, float amount)
 
 void Mp::Update(float deltaTime)
 {
+	if (hit)
+	{
+		spr.Update(deltaTime);
+		if (!spr.bAnimation) destroy = true;
+		return;
+	}
+
 	if (startTime < 0.0f)
 		startTime -= deltaTime;
 	else
@@ -63,7 +73,10 @@ void Mp::OnCollision(Collider& coli)
 {
 	if (coli.tag == L"player")
 	{
-		nowScene->player->PlusMp(amount);
-		destroy = true;
+		if (!hit)
+		{
+			nowScene->player->PlusMp(amount);
+			hit = true;
+		}
 	}
 }

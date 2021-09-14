@@ -48,6 +48,6 @@ void Enemy3::Attack(float deltaTime)
 		D3DXVECTOR2 playerPos = nowScene->player->pos;
 		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, groundPos)); };
 
-		nowScene->obm.AddObject(new Effect(L"enemy/magic", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, lambda));
+		nowScene->obm.AddObject(new Effect(L"enemy/magic", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, true, lambda));
 	};
 }

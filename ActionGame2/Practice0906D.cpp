@@ -52,6 +52,9 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
 HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                     void* pUserContext )
 {
+    DXUTGetD3D9Device()->Reset(&DXUTGetD3D9PresentParameters());
+    Game::GetInstance().pLine->OnResetDevice();
+  
     return S_OK;
 }
 

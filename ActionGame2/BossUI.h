@@ -1,6 +1,6 @@
 #pragma once
 
-class Boss1;
+class CBoss;
 class BossUI : public ObjectUI
 {
 public:
@@ -8,10 +8,10 @@ public:
 	Sprite hpBck;
 	RenderInfo hpRI;
 
-	Boss1* boss = NULL;
+	CBoss* boss = NULL;
 
 	bool start = false;
-	BossUI(Boss1* boss);
+	BossUI(CBoss* boss);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

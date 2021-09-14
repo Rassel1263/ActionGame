@@ -115,16 +115,23 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
-class PlayerNuclear : public CState<Player>
-{
-public:
-
-};
-
 class PlayerHit : public CState<Player>
 {
 public:
 	static PlayerHit* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
+class PlayerDie : public CState<Player>
+{
+public:
+	bool draw = false;
+	float time = 2.0f;
+
+	static PlayerDie* GetInstance();
 
 	virtual void EnterState(Player* obj) override;
 	virtual void UpdateState(Player* obj, float deltaTime) override;

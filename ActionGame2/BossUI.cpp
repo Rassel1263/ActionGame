@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "BossUI.h"
 
-BossUI::BossUI(Boss1* boss)
+BossUI::BossUI(CBoss* boss)
 {
 	this->boss = boss;
 

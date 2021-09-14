@@ -6,12 +6,12 @@ BossIdle* BossIdle::GetInstance()
 	return &instance;
 }
 
-void BossIdle::EnterState(Boss1* obj)
+void BossIdle::EnterState(CBoss* obj)
 {
-	obj->SetAni(Boss1::Images::IDLE);
+	obj->SetAni(CBoss::Images::IDLE);
 }
 
-void BossIdle::UpdateState(Boss1* obj, float deltaTime)
+void BossIdle::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (obj->hit && !obj->superArmor)
 	{
@@ -44,7 +44,7 @@ void BossIdle::UpdateState(Boss1* obj, float deltaTime)
 	}
 }
 
-void BossIdle::ExitState(Boss1* obj)
+void BossIdle::ExitState(CBoss* obj)
 {
 }
 
@@ -54,12 +54,12 @@ BossMove* BossMove::GetInstance()
 	return &instance;
 }
 
-void BossMove::EnterState(Boss1* obj)
+void BossMove::EnterState(CBoss* obj)
 {
-	obj->SetAni(Boss1::Images::MOVE);
+	obj->SetAni(CBoss::Images::MOVE);
 }
 
-void BossMove::UpdateState(Boss1* obj, float deltaTime)
+void BossMove::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (obj->hit && !obj->superArmor)
 	{
@@ -84,15 +84,15 @@ void BossMove::UpdateState(Boss1* obj, float deltaTime)
 		obj->SetState(BossPattern3::GetInstance());
 		return;
 	}
+
 	if (!obj->Move(deltaTime))
 	{
 		obj->SetState(BossIdle::GetInstance());
 		return;
 	}
-
 }
 
-void BossMove::ExitState(Boss1* obj)
+void BossMove::ExitState(CBoss* obj)
 {
 }
 
@@ -102,12 +102,12 @@ BossHit* BossHit::GetInstance()
 	return &instance;
 }
 
-void BossHit::EnterState(Boss1* obj)
+void BossHit::EnterState(CBoss* obj)
 {
-	obj->SetAni(Boss1::Images::HIT);
+	obj->SetAni(CBoss::Images::HIT);
 }
 
-void BossHit::UpdateState(Boss1* obj, float deltaTime)
+void BossHit::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (!obj->GetNowSprite().bAnimation)
 	{
@@ -116,7 +116,7 @@ void BossHit::UpdateState(Boss1* obj, float deltaTime)
 	}
 }
 
-void BossHit::ExitState(Boss1* obj)
+void BossHit::ExitState(CBoss* obj)
 {
 	obj->hit = false;
 }
@@ -127,12 +127,12 @@ BossPattern1* BossPattern1::GetInstance()
 	return &instance;
 }
 
-void BossPattern1::EnterState(Boss1* obj)
+void BossPattern1::EnterState(CBoss* obj)
 {
-	obj->SetAni(Boss1::Images::ATTACK1);
+	obj->SetAni(CBoss::Images::ATTACK1);
 }
 
-void BossPattern1::UpdateState(Boss1* obj, float deltaTime)
+void BossPattern1::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (!obj->Pattern1(deltaTime))
 	{
@@ -141,7 +141,7 @@ void BossPattern1::UpdateState(Boss1* obj, float deltaTime)
 	}
 }
 
-void BossPattern1::ExitState(Boss1* obj)
+void BossPattern1::ExitState(CBoss* obj)
 {
 	obj->ResetPattern();
 }
@@ -152,12 +152,12 @@ BossPattern2* BossPattern2::GetInstance()
 	return &instance;
 }
 
-void BossPattern2::EnterState(Boss1* obj)
+void BossPattern2::EnterState(CBoss* obj)
 {
-	obj->SetAni(Boss1::Images::ATTACK2);
+	obj->SetAni(CBoss::Images::ATTACK2);
 }
 
-void BossPattern2::UpdateState(Boss1* obj, float deltaTime)
+void BossPattern2::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (!obj->Pattern2(deltaTime))
 	{
@@ -166,7 +166,7 @@ void BossPattern2::UpdateState(Boss1* obj, float deltaTime)
 	}
 }
 
-void BossPattern2::ExitState(Boss1* obj)
+void BossPattern2::ExitState(CBoss* obj)
 {
 	obj->ResetPattern();
 }
@@ -177,11 +177,11 @@ BossPattern3* BossPattern3::GetInstance()
 	return &instance;
 }
 
-void BossPattern3::EnterState(Boss1* obj)
+void BossPattern3::EnterState(CBoss* obj)
 {
 }
 
-void BossPattern3::UpdateState(Boss1* obj, float deltaTime)
+void BossPattern3::UpdateState(CBoss* obj, float deltaTime)
 {
 	if (!obj->Pattern3(deltaTime))
 	{
@@ -190,7 +190,7 @@ void BossPattern3::UpdateState(Boss1* obj, float deltaTime)
 	}
 }
 
-void BossPattern3::ExitState(Boss1* obj)
+void BossPattern3::ExitState(CBoss* obj)
 {
 	obj->ResetPattern();
 }
@@ -201,15 +201,15 @@ BossDie* BossDie::GetInstance()
 	return &instance;
 }
 
-void BossDie::EnterState(Boss1* obj)
+void BossDie::EnterState(CBoss* obj)
 {
 }
 
-void BossDie::UpdateState(Boss1* obj, float deltaTime)
+void BossDie::UpdateState(CBoss* obj, float deltaTime)
 {
 }
 
-void BossDie::ExitState(Boss1* obj)
+void BossDie::ExitState(CBoss* obj)
 {
 }
 

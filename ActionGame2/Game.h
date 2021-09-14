@@ -14,6 +14,9 @@ struct CUSTOMVERTEX
 class Game : public Singleton<Game>
 {
 public:
+	std::vector<std::thread> threads;
+	LoadSprite spr;
+
 	float screenWidth = 1920;
 	float screenHeight = 1080;
 
@@ -34,5 +37,8 @@ public:
 	void Render();
 	void ChangeScene(Scene* nextScene);
 	void DrawLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DXMATRIX matrix, D3DCOLOR color);
+
+	void Reset();
+
 };
 

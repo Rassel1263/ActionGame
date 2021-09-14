@@ -16,6 +16,10 @@ public:
 	Sprite mpBck;
 	RenderInfo mpRI;
 
+	Sprite heal;
+	Sprite healBck;
+	RenderInfo healRI;
+
 	Sprite comboFont;
 
 	Sprite comboBck;

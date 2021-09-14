@@ -89,4 +89,17 @@ void Bullet::OnCollision(Collider& coli)
 			destroy = true;
 		}
 	}
+
+	if (coli.tag == L"box")
+	{
+		if (team == L"player")
+		{
+			if (type != Type::SNIPER)
+			{
+				D3DXVECTOR2 randPos = D3DXVECTOR2(nowScene->GetRandomNum(-50, 50), nowScene->GetRandomNum(-50, 50));
+				nowScene->obm.AddObject(new Effect(L"Player/Hit1", coli.obj->pos + randPos + D3DXVECTOR2(0, 120), D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0.5, 0.5), 0.05f));
+				destroy = true;
+			}
+		}
+	}
 }

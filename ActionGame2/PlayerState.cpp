@@ -250,7 +250,7 @@ void PlayerJumpAttack::UpdateState(Player* obj, float deltaTime)
 	if (obj->GetNowSprite().scene == 0 && !obj->onAttack)
 	{
 		obj->onAttack = true;
-		obj->CreateBullet(D3DXVECTOR2(170, 100), 1000, 5, Bullet::Type::BASIC, true);
+		obj->CreateBullet(D3DXVECTOR2(170, 100), 1500, 5, Bullet::Type::BASIC, true);
 	}
 
 	if (!obj->GetNowSprite().bAnimation && combo < comboInput)
@@ -319,12 +319,12 @@ void PlayerWeakAttack::UpdateState(Player* obj, float deltaTime)
 	if (obj->GetSprite(Player::Images::WEAKATTACK1).scene == 4 && !onAttack)
 	{
 		onAttack = true;
-		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, Bullet::Type::BASIC);
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1500, 5, Bullet::Type::BASIC);
 	}
 	else if (obj->renderNum != IntEnum(Player::Images::WEAKATTACK1) && obj->GetNowSprite().scene == 1 && !onAttack)
 	{
 		onAttack = true;
-		obj->CreateBullet(D3DXVECTOR2(200, 240), 1000, 5, Bullet::Type::BASIC);
+		obj->CreateBullet(D3DXVECTOR2(200, 240), 1500, 5, Bullet::Type::BASIC);
 	}
 
 	if (Input::GetInstance().KeyDown('X'))
@@ -401,6 +401,7 @@ PlayerStrongAttack* PlayerStrongAttack::GetInstance()
 void PlayerStrongAttack::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::STRONGATTACK);
+	obj->attackNum = -1;
 }
 
 void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
@@ -458,7 +459,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if (obj->attackTimer <= 0.0f && !obj->onAttack)
 		{
 			obj->onAttack = true;
-			obj->CreateBullet(D3DXVECTOR2(250, 210), 1000, 5, Bullet::Type::AIRSHOT);
+			obj->CreateBullet(D3DXVECTOR2(250, 210), 1500, 5, Bullet::Type::AIRSHOT);
 		}
 	}
 	else if (obj->attackNum == 1)
@@ -479,7 +480,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			{
 				D3DXVECTOR2 offset = D3DXVECTOR2(250, 240);
 				(change) ? offset.y += 10 : offset.y -= 10;
-				obj->CreateBullet(offset, 1000, 5, Bullet::Type::BASIC);
+				obj->CreateBullet(offset, 1500, 5, Bullet::Type::BASIC);
 				change = !change;
 
 				obj->attackTimer = obj->maxAttackTimer;
@@ -491,7 +492,7 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if ((obj->GetNowSprite().scene <= 23))
 			if (obj->attackTimer <= 0.0f)
 			{
-				obj->CreateBullet(D3DXVECTOR2(230, 200), 1500, 10, Bullet::Type::MACHINEGUN);
+				obj->CreateBullet(D3DXVECTOR2(230, 200), 2200, 10, Bullet::Type::MACHINEGUN);
 				obj->attackTimer = obj->maxAttackTimer;
 			}
 	}
@@ -500,10 +501,29 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if (obj->attackTimer <= 0.0f && !obj->onAttack)
 		{
 			obj->onAttack = true;
-			obj->CreateBullet(D3DXVECTOR2(250, 150), 2500, 30, Bullet::Type::SNIPER);
+			obj->CreateBullet(D3DXVECTOR2(250, 150), 3000, 30, Bullet::Type::SNIPER);
 
 		}
-	}	else if (obj->attackNum == 6)	{		if (obj->nuclear)		{			obj->nuclearTime -= deltaTime;			if (Input::GetInstance().KeyPress('S') && obj->GetNowSprite().scene >= 8)				obj->GetNowSprite().bAniStop = false;			if (Input::GetInstance().KeyUp('S') || obj->nuclearTime <= 0.0f)			{				obj->nuclear = false;				obj->bCollider = true;				obj->GetNowSprite().bAniStop = true;			}		}	}	if(obj->afterImage)
+	}
+	else if (obj->attackNum == 6)
+	{
+		if (obj->nuclear)
+		{
+			obj->nuclearTime -= deltaTime;
+
+			if (Input::GetInstance().KeyPress('S') && obj->GetNowSprite().scene >= 8)
+				obj->GetNowSprite().bAniStop = false;
+
+			if (Input::GetInstance().KeyUp('S') || obj->nuclearTime <= 0.0f)
+			{
+				obj->nuclear = false;
+				obj->bCollider = true;
+				obj->GetNowSprite().bAniStop = true;
+			}
+		}
+	}
+
+	if(obj->afterImage)
 	{
 		if (timer >= obj->afterImageTime)
 		{
@@ -544,4 +564,38 @@ void PlayerHit::UpdateState(Player* obj, float deltaTime)
 void PlayerHit::ExitState(Player* obj)
 {
 	obj->hit = false;
+}
+
+PlayerDie* PlayerDie::GetInstance()
+{
+	static PlayerDie instance;
+	return &instance;
+}
+
+void PlayerDie::EnterState(Player* obj)
+{
+	Game::GetInstance().timeScale =0.3f;
+	time = 2.0f;
+	draw = false;
+
+	obj->velocity.y = 300;
+	obj->force.x += -obj->ri.scale.x * 50;
+	obj->bCollider = false;
+	obj->SetAni(Player::Images::DIE);
+}
+
+void PlayerDie::UpdateState(Player* obj, float deltaTime)
+{
+	time -= Game::GetInstance().unscaleTime;
+
+	if (time <= 0.0f && !draw)
+	{
+		draw = true;
+		nowScene->obm.AddObject(new StageFont(StageFont::Type::FAIL));
+		Game::GetInstance().timeScale = 1.0f;
+	}
+}
+
+void PlayerDie::ExitState(Player* obj)
+{
 }
