@@ -14,6 +14,8 @@ public:
 		ATTACKEND,
 
 		HIT,
+		STUN,
+		STANDUP,
 		DIE,
 
 		SHADOW,
@@ -25,7 +27,7 @@ public:
 	int enemyType = 0;
 	  
 	CState<CEnemy>* nowState = NULL;
-	ColorShader* colorShader = NULL;
+
 
 	Range* attackRange = NULL;
 	Range* detectRange = NULL;

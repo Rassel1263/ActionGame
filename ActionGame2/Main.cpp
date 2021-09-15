@@ -3,6 +3,11 @@
 
 Main::Main()
 {
+	Camera::GetInstance().destCameraPos = { 0, 0 };
+	Camera::GetInstance().cameraPos = { 0, 0 };
+
+	nowScene->obm.AddObject(new Effect(L"bck.png", D3DXVECTOR2(0, 0), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 2.0f, false));
+
 	ui.resize(7);
 
 	std::wstring filePath = L"Assets/Sprites/UI/main/";
@@ -30,16 +35,20 @@ void Main::Update(float deltaTime)
 {
 	ChoiceBtn();
 
-	if (Input::GetInstance().KeyDown(VK_RETURN))
+	if (Input::GetInstance().KeyDown(VK_RETURN) && !static_cast<MainScene*>(nowScene)->input)
 	{
+		static_cast<MainScene*>(nowScene)->input = true;
+
 		switch (cNum)
 		{
 		case 0:
 			Game::GetInstance().ChangeScene(new GameScene());
 			break;
 		case 1:
+			nowScene->obm.AddObject(new RankPage());
 			break;
 		case 2:
+			nowScene->obm.AddObject(new Help());
 			break;
 		case 3:
 			PostQuitMessage(0);

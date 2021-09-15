@@ -102,6 +102,16 @@ public:
 	virtual void ExitState(Player* obj) override;
 };
 
+class PlayerGrenade : public CState<Player>
+{
+public:
+	static PlayerGrenade* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
 class PlayerSpecialAttack : public CState<Player>
 {
 public:
@@ -119,6 +129,27 @@ class PlayerHit : public CState<Player>
 {
 public:
 	static PlayerHit* GetInstance();
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
+class PlayerStun : public CState<Player>
+{
+public:
+	static PlayerStun* GetInstance();
+	float timer = 0.0f;
+
+	virtual void EnterState(Player* obj) override;
+	virtual void UpdateState(Player* obj, float deltaTime) override;
+	virtual void ExitState(Player* obj) override;
+};
+
+class PlayerStandUp : public CState<Player>
+{
+public:
+	static PlayerStandUp* GetInstance();
 
 	virtual void EnterState(Player* obj) override;
 	virtual void UpdateState(Player* obj, float deltaTime) override;

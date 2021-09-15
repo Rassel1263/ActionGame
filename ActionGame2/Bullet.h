@@ -8,6 +8,7 @@ public:
 		AIRSHOT,
 		MACHINEGUN,
 		SNIPER,
+		GRENADE,
 
 		ROCK,
 		GOLDROCK,

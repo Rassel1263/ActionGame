@@ -3,6 +3,7 @@
 
 void MainScene::Init()
 {
+	score = 0.0f;
 	nowScene->obm.AddObject(new Main());
 }
 

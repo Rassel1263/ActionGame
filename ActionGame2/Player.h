@@ -21,6 +21,8 @@ public:
 		LANDING,
 		SLIDE,
 		HIT,
+		STUN,
+		STANDUP,
 		DIE,
 
 		JUMPATTACK1,
@@ -58,10 +60,18 @@ public:
 	float comboTimer = 0.0f;
 	float cancelTimer = 0.0f;
 
-	// specialAttack
 	float mp = 0.0f;
 	float maxMp = 100.0f;
 
+	float healTimer = 0.0f;
+	float healTime = 20.0f;
+
+	bool powerUp = false;
+	float powerUpTimer = 0.0f;
+
+	bool grenade = false;
+
+	// specialAttack
 	int attackNum = 0;
 	bool afterImage = false;
 	float afterImageTime = 0.0f;
@@ -84,8 +94,14 @@ public:
 	
 	void SetState(CState<Player>* nextState);
 	void PlusMp(float value);
+	void PlusHp(float value);
 	void PlusCombo(int value);
+	void ItemEffective(int index);
+	void UpdateItem(float deltaTime);
 	bool Move(float deltaTime, bool moveShot = false);
+
+	void CancelUpdate(float deltaTime);
+	void HealUpdate(float deltaTime);
 
 	void Combo(float deltaTime);
 	void ComboCheck();

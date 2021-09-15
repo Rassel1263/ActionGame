@@ -31,6 +31,8 @@ Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed,
 			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet3");
 		else if (type == Type::SNIPER)
 			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet4");
+		else if (type == Type::GRENADE)
+			spr.LoadAll(L"Assets/Sprites/bullet/grenade.png");
 
 		aabb.min = { -50, -15 };
 		aabb.max = { 80, 15 };
@@ -56,8 +58,25 @@ void Bullet::Update(float deltaTime)
 {
 	if (pos.y <= groundPos)
 	{
-		nowScene->obm.AddObject(new Effect(L"Player/Hit1", pos, D3DXVECTOR2(0.7, 0.7), D3DXVECTOR2(0.5, 0.5), 0.05f));
-		destroy = true;
+		if (type == Type::GRENADE)
+		{
+			nowScene->obm.AddObject(new AttackCollider(L"player", pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-200, -100), D3DXVECTOR2(200, 100) }, damage, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+			nowScene->obm.AddObject(new Effect(L"Player/explode", pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.05f));
+
+			Camera::GetInstance().cameraQuaken = { 10, 10 };
+			destroy = true;
+		}
+		else
+		{
+			nowScene->obm.AddObject(new Effect(L"Player/Hit1", pos, D3DXVECTOR2(0.7, 0.7), D3DXVECTOR2(0.5, 0.5), 0.05f));
+			destroy = true;
+		}
+	}
+
+	if (type == Type::GRENADE)
+	{
+		ri.rotate += 180 * deltaTime;
+		dir.y -= deltaTime;
 	}
 
 	if (pos.x < Camera::GetInstance().cameraPos.x - 960 || pos.x > Camera::GetInstance().cameraPos.x + 960)
@@ -84,9 +103,20 @@ void Bullet::OnCollision(Collider& coli)
 
 		if (type != Type::SNIPER)
 		{
-			D3DXVECTOR2 randPos = D3DXVECTOR2(nowScene->GetRandomNum(-50, 50), nowScene->GetRandomNum(-50, 50));
-			nowScene->obm.AddObject(new Effect(L"Player/Hit1", coli.obj->pos + randPos + D3DXVECTOR2(0, 120), D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0.5, 0.5), 0.05f));
-			destroy = true;
+			if (type == Type::GRENADE)
+			{
+				nowScene->obm.AddObject(new AttackCollider(L"player", pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-200, -100), D3DXVECTOR2(200, 100) }, damage, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+				nowScene->obm.AddObject(new Effect(L"Player/explode", pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.05f));
+
+				Camera::GetInstance().cameraQuaken = { 10, 10 };
+				destroy = true;
+			}
+			else
+			{
+				D3DXVECTOR2 randPos = D3DXVECTOR2(nowScene->GetRandomNum(-50, 50), nowScene->GetRandomNum(-50, 50));
+				nowScene->obm.AddObject(new Effect(L"Player/Hit1", coli.obj->pos + randPos + D3DXVECTOR2(0, 120), D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0.5, 0.5), 0.05f));
+				destroy = true;
+			}
 		}
 	}
 

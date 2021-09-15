@@ -8,6 +8,10 @@ public:
 	Sprite hpBck;
 	RenderInfo hpRI;
 
+	Sprite sp;
+	Sprite spBck;
+	RenderInfo spRI;
+
 	CBoss* boss = NULL;
 
 	bool start = false;
@@ -15,5 +19,7 @@ public:
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;
+
+	void SetSprite(std::wstring name, Sprite& spr);
 };
 

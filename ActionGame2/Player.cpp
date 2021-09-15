@@ -8,7 +8,7 @@ Player::Player()
 	hitTime = 0.1f;
 	team = L"player";
 	groundPos = -100;
-	ability.SetAbility(100, 50);
+	ability.SetAbility(100, 500);
 
 	SetState(PlayerIdle::GetInstance());
 	SetCollider(-60, 0, 60, 300, team);
@@ -17,30 +17,30 @@ Player::Player()
 	maxMp = 100;
 	mp = 100;
 
+	outlineShader = new OutlineShader();
+
 	nowScene->obm.AddObject(new PlayerUI(this));
 }
 
 void Player::Update(float deltaTime)
 {
-	if (Input::GetInstance().KeyDown('F'))
+	if (Input::GetInstance().KeyDown('H'))
 	{
-		Hit(20, D3DXVECTOR2(10, 10));
+		ItemEffective(nowScene->GetRandomNum(1, 2));
 	}
 
-	if(fallowCamera) Camera::GetInstance().destCameraPos.x = pos.x;
-	if (attackCancel)
+	std::cout << pos.x << std::endl;
+
+	if (fallowCamera)
 	{
-		cancelTimer -= deltaTime;
-
-		if (cancelTimer <= 0.0f)
-		{
-			Game::GetInstance().timeScale = 1.0f;
-			attackCancel = false;
-		}
+		if(pos.x > -1024 && pos.x < 22770)
+		Camera::GetInstance().destCameraPos.x = pos.x;
 	}
-
+	
+	CancelUpdate(deltaTime);
+	UpdateItem(deltaTime);
+	HealUpdate(deltaTime);
 	PlusMp(deltaTime * 3);
-
 	Combo(deltaTime);
 
 	if (nowState)
@@ -51,8 +51,16 @@ void Player::Update(float deltaTime)
 
 void Player::Render()
 {
+	ri.pos = pos;
+
 	GetSprite(Images::SHADOW).Render(RenderInfo{ D3DXVECTOR2(ri.pos.x, groundPos) });
-	Unit::Render();
+
+	if(superArmor)
+		outlineShader->Render(outlineShader, GetNowSprite(), ri, D3DXVECTOR4(1.0f, 0, 0, 1.0f));
+	else
+		GetNowSprite().Render(ri);
+
+	Object::Render();
 }
 
 void Player::OnCollision(Collider& coli)
@@ -72,7 +80,6 @@ void Player::SetImages()
 
 	std::wstring filePath = L"Assets/Sprites/Unit/Player/";
 
-
 	GetSprite(Images::IDLE).LoadAll(filePath + L"stay", 0.05f);
 	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.05f);
 	GetSprite(Images::JUMP).LoadAll(filePath + L"jump", 0.05f, false);
@@ -81,6 +88,8 @@ void Player::SetImages()
 	GetSprite(Images::SLIDE).LoadAll(filePath + L"slide", 0.05f, false);
 	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.05f, false);
+	GetSprite(Images::STUN).LoadAll(filePath + L"Stun", 0.05f, false);
+	GetSprite(Images::STANDUP).LoadAll(filePath + L"StandUp", 0.05f, false);
 	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
 
 	GetSprite(Images::JUMPATTACK1).LoadAll(filePath + L"jumpAttack1", 0.05f, false);
@@ -144,11 +153,44 @@ void Player::PlusMp(float value)
 	mp = std::clamp(mp, 0.0f, maxMp);
 }
 
+void Player::PlusHp(float value)
+{
+	ability.hp += value;
+
+	ability.hp = std::clamp(ability.hp, 0.0f, ability.maxHp);
+}
+
 void Player::PlusCombo(int value)
 {
 	comboInterval = 0.0f;
 	prevCombo = combo;
 	combo += value;
+}
+
+void Player::ItemEffective(int index)
+{
+	switch (index)
+	{
+	case 1:
+		powerUp = true;
+		break;
+	case 2:
+		grenade = true;
+		break;
+	}
+}
+
+void Player::UpdateItem(float deltaTime)
+{
+	if (powerUp)
+	{
+		powerUpTimer += deltaTime;
+		if (powerUpTimer >= 5.0f)
+		{
+			powerUp = false;
+			powerUpTimer = 0.0f;
+		}
+	}
 }
 
 bool Player::Move(float deltaTime, bool moveShot)
@@ -169,13 +211,56 @@ bool Player::Move(float deltaTime, bool moveShot)
 
 	if (moveDir.x != 0 && !moveShot)
 		ri.scale.x = moveDir.x;
+
 	if (moveDir == D3DXVECTOR2(0, 0))
 		return false;
 
-	pos.x += moveDir.x * deltaTime * 500;
-	groundPos += moveDir.y * deltaTime * 250;
+	if (pos.x + moveDir.x <= -1860)
+	{
+		pos.x = -1859;
+		return false;
+	}
+
+	if (pos.x + moveDir.x >= 23640)
+	{
+		pos.x = 24639;
+		return false;
+	}
+
+
+	pos.x += moveDir.x * deltaTime * ability.speed;
+	groundPos += moveDir.y * deltaTime * ability.speed / 2;
 
 	return true;
+}
+
+void Player::CancelUpdate(float deltaTime)
+{
+	if (attackCancel)
+	{
+		cancelTimer -= deltaTime;
+
+		if (cancelTimer <= 0.0f)
+		{
+			Game::GetInstance().timeScale = 1.0f;
+			attackCancel = false;
+		}
+	}
+}
+
+void Player::HealUpdate(float deltaTime)
+{
+	if(healTimer < healTime) 
+		healTimer += deltaTime;
+
+	if (Input::GetInstance().KeyDown('F'))
+	{
+		if (healTimer >= healTime)
+		{
+			PlusHp(10);
+			healTimer = 0.0f;
+		}
+	}
 }
 
 void Player::Combo(float deltaTime)
@@ -300,7 +385,7 @@ void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet:
 		Camera::GetInstance().cameraQuaken = { 5, 5 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 	}
-	else
+	else if(type == Bullet::Type::SNIPER)
 	{
 		Camera::GetInstance().cameraQuaken = { 15, 15 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire_sniper", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));

@@ -16,3 +16,8 @@ void EnemyManager::SpawnEnemy(D3DXVECTOR2 pos, int enemyType)
 
 	enemyVec.push_back(enemy);
 }
+
+void EnemyManager::SortEnemy(CEnemy* enemy)
+{
+	enemyVec.erase(std::find(enemyVec.begin(), enemyVec.end(), enemy));
+}

@@ -8,10 +8,15 @@ public:
 		MOVE,
 
 		ATTACK1,
+
+		ATTACKREADY,
 		ATTACK2,
+		ATTACKEND,
+
 		ATTACK3,
 
 		HIT,
+		STUN,
 		DIE,
 
 		SHADOW,
@@ -24,10 +29,15 @@ public:
 	CState<CBoss>* nowState = NULL;
 
 	Range* detectRange = NULL;
-	ColorShader* colorShader = NULL;
 
 	int pattern = 0;
 	float restTime = 0.0f;
+
+	int rushIndex = 0;
+
+	float spAmount = 100;
+	float spMaxAmout = 100;
+	float spHealTimer = 0.0f;
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

@@ -8,14 +8,19 @@ public:
 		float hp;
 		float maxHp;
 		float speed;
+		float power;
 
 		void SetAbility(float hp, float speed)
 		{
 			this->hp = hp;
 			this->maxHp = hp;
 			this->speed = speed;
+			power = 0;
 		}
 	};
+
+	ColorShader* colorShader = NULL;
+	OutlineShader* outlineShader = NULL;
 
 	std::vector<Sprite> sprites;
 	RenderInfo ri;

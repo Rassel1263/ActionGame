@@ -21,6 +21,8 @@ StageFont::StageFont(Type type)
 
 	spr.bCamera = false;
 	bck.bCamera = false;
+
+	layer = 2;
 }
 
 void StageFont::Update(float deltaTime)
@@ -48,7 +50,7 @@ void StageFont::Update(float deltaTime)
 			spr.color.a -= deltaTime * 0.5f;
 
 			if (bck.color.a >= 1.0f)
-				destroy = true;
+				Game::GetInstance().ChangeScene(new MainScene());
 		}
 	}
 

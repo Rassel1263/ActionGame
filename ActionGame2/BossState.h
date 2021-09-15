@@ -30,6 +30,16 @@ public:
 	virtual void ExitState(CBoss* obj) override;
 };
 
+class BossStun : public CState<CBoss>
+{
+public:
+	static BossStun* GetInstance();
+
+	virtual void EnterState(CBoss* obj) override;
+	virtual void UpdateState(CBoss* obj, float deltaTime) override;
+	virtual void ExitState(CBoss* obj) override;
+};
+
 class BossPattern1 : public CState<CBoss>
 {
 public:
@@ -63,6 +73,8 @@ public:
 class BossDie : public CState<CBoss>
 {
 public:
+	bool restoration = false;
+
 	static BossDie* GetInstance();
 
 	virtual void EnterState(CBoss* obj) override;

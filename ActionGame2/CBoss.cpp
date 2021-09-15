@@ -7,12 +7,13 @@ CBoss::CBoss()
     ri.scale.x = -1;
     this->pos = D3DXVECTOR2(1500, 0);
     this->groundPos = pos.y;
+    this->superArmor = true;
 
     SetRigid(1);
 
     colorShader = new ColorShader();
+    outlineShader = new OutlineShader();
 
-    Camera::GetInstance().destCameraPos.x = pos.x;
     nowScene->obm.AddObject(new BossUI(this));
     nowScene->obm.AddObject(new BossIntro());
 }
@@ -20,6 +21,18 @@ CBoss::CBoss()
 void CBoss::Update(float deltaTime)
 {
     UpdatePattern(deltaTime);
+
+    if (spAmount <= 0.0f)
+    {
+        spHealTimer += deltaTime;
+
+        if (spHealTimer >= 3.0f)
+        {
+            spAmount = spMaxAmout;
+            spHealTimer = 0.0f;
+            superArmor = true;
+        }
+    }
 
     if (nowState)
         nowState->UpdateState(this, deltaTime);
@@ -34,8 +47,11 @@ void CBoss::Render()
 
     if (hit)
         colorShader->Render(colorShader, GetNowSprite(), ri, D3DXVECTOR4(1.0, 1.0, 1.0, 0.8f));
+    else if (superArmor)
+        outlineShader->Render(outlineShader, GetNowSprite(), ri, D3DXVECTOR4(1.0f, 0, 0, 1.0f));
     else
         GetNowSprite().Render(ri);
+
 
     Object::Render();
 }
@@ -59,6 +75,13 @@ void CBoss::Hit(float damage, D3DXVECTOR2 addForce)
     if (hit) return;
 
     Unit::Hit(damage, addForce);
+
+    spAmount -= damage;
+    if (spAmount <= 0.0f)
+    {
+        superArmor = false;
+        spAmount = 0.0f;
+    }
 
     if (nowScene->player->attackNum == -1)
     {
@@ -149,4 +172,5 @@ void CBoss::ResetPattern()
 {
     pattern = 0;
     onAttack = false;
+    rushIndex = 0;
 }

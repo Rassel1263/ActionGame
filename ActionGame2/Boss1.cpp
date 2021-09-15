@@ -4,7 +4,7 @@
 Boss1::Boss1()
 {
 	hitTime = 0.1f;
-	ability.SetAbility(1000, 100);
+	ability.SetAbility(100, 100);
 	SetImages();
 
 	CreateCollider(D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), L"enemy");
@@ -39,6 +39,7 @@ void Boss1::SetImages()
 	GetSprite(Images::ATTACK1).LoadAll(filePath + L"Attack1", 0.05f, false);
 	GetSprite(Images::ATTACK2).LoadAll(filePath + L"Attack2", 0.05f, false);
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.025f, false);
+	GetSprite(Images::STUN).LoadAll(filePath + L"stun", 0.025f, false);
 	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
 
 	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");

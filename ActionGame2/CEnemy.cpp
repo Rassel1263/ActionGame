@@ -11,6 +11,7 @@ CEnemy::CEnemy(D3DXVECTOR2 pos)
 	SetRigid(1);
 
 	colorShader = new ColorShader();
+	outlineShader = new OutlineShader();
 
 	nowScene->obm.AddObject(ui = new EnemyUI(this));
 }
@@ -30,6 +31,8 @@ void CEnemy::Render()
 
 	if (hit)
 		colorShader->Render(colorShader, GetNowSprite(), ri, D3DXVECTOR4(1.0, 1.0, 1.0, 0.8f));
+	else if (superArmor)
+		outlineShader->Render(outlineShader, GetNowSprite(), ri, D3DXVECTOR4(1.0f, 0, 0, 1.0f));
 	else
 		GetNowSprite().Render(ri);
 
@@ -53,6 +56,9 @@ void CEnemy::OnCollision(Collider& coli)
 void CEnemy::Hit(float damage, D3DXVECTOR2 addForce)
 {
 	if (hit) return;
+
+	if (nowScene->player->powerUp)
+		damage *= 0.3f;
 
 	Unit::Hit(damage, addForce);
 
@@ -139,10 +145,13 @@ bool CEnemy::Move(float deltaTime)
 void CEnemy::Destroy()
 {
 	ui->destroy = true;
-	destroy = true;
-
 	attackRange->destroy = true;
 	detectRange->destroy = true;
+	nowScene->AddScore(nowScene->GetRandomNum(1000, 3000));
+
+	nowScene->enemyManager.SortEnemy(this);
+
+	destroy = true;
 }
 
 void CEnemy::SetState(CState<CEnemy>* nextState)

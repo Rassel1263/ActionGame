@@ -63,6 +63,16 @@ public:
 	virtual void ExitState(CEnemy* obj) override;
 };
 
+class EnemyStun : public CState<CEnemy>
+{
+public:
+	static EnemyStun* GetInstance();
+
+	virtual void EnterState(CEnemy* obj) override;
+	virtual void UpdateState(CEnemy* obj, float deltaTime) override;
+	virtual void ExitState(CEnemy* obj) override;
+};
+
 class EnemyDie : public CState<CEnemy>
 {
 public:

@@ -10,10 +10,11 @@ ShaderManager::~ShaderManager()
 HRESULT ShaderManager::CreateEffect(std::string name, LPCWSTR fileName, DWORD flag)
 {
 #ifdef _DEBUG
-	flag != D3DXSHADER_DEBUG;
+	flag |= D3DXSHADER_DEBUG;
 #endif
 	LPD3DXBUFFER pError;
 	LPD3DXEFFECT pEffect;
+
 
 	if (SUCCEEDED(D3DXCreateEffectFromFileW(DXUTGetD3D9Device(), fileName, NULL, NULL, flag,
 		NULL, &pEffect, &pError)))

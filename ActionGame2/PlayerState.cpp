@@ -30,6 +30,12 @@ void PlayerIdle::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
+	if (Input::GetInstance().KeyDown('D') && obj->grenade)
+	{
+		obj->SetState(PlayerGrenade::GetInstance());
+		return;
+	}
+
 	if (Input::GetInstance().KeyDown('C'))
 	{
 		obj->SetState(PlayerJump::GetInstance());
@@ -82,6 +88,12 @@ void PlayerMove::UpdateState(Player* obj, float deltaTime)
 		return;
 	}
 
+	if (Input::GetInstance().KeyDown('D') && obj->grenade)
+	{
+		obj->SetState(PlayerGrenade::GetInstance());
+		return;
+	}
+
 	if (Input::GetInstance().KeyDown('C'))
 	{
 		obj->SetState(PlayerJump::GetInstance());
@@ -124,6 +136,12 @@ void PlayerJump::EnterState(Player* obj)
 
 void PlayerJump::UpdateState(Player* obj, float deltaTime)
 {
+	if (obj->hit)
+	{
+		obj->SetState(PlayerHit::GetInstance());
+		return;
+	}
+
 	if (obj->velocity.y < 0.0f)
 	{
 		obj->SetState(PlayerFall::GetInstance());
@@ -266,7 +284,7 @@ void PlayerJumpAttack::UpdateState(Player* obj, float deltaTime)
 			return;
 		}
 		else
-			obj->SetAni(PluseEnum(Player::Images, Player::Images::JUMPATTACK1, combo));
+			obj->SetAni(PlusEnum(Player::Images, Player::Images::JUMPATTACK1, combo));
 	}
 
 	if (timer > 0.2f && !obj->GetNowSprite().bAnimation)
@@ -347,7 +365,7 @@ void PlayerWeakAttack::UpdateState(Player* obj, float deltaTime)
 		}
 		else
 		{
-			obj->SetAni(PluseEnum(Player::Images, Player::Images::WEAKATTACK1, combo));
+			obj->SetAni(PlusEnum(Player::Images, Player::Images::WEAKATTACK1, combo));
 		}
 	}
 
@@ -418,6 +436,33 @@ void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
 void PlayerStrongAttack::ExitState(Player* obj)
 {
 	obj->onAttack = false;
+}
+
+
+PlayerGrenade* PlayerGrenade::GetInstance()
+{
+	static PlayerGrenade instance;
+	return &instance;
+}
+
+void PlayerGrenade::EnterState(Player* obj)
+{
+	obj->SetAni(Player::Images::GRENADE);
+	nowScene->obm.AddObject(new Bullet(obj->team, obj->pos + D3DXVECTOR2(100, 50), D3DXVECTOR2(obj->ri.scale.x, 1.0f), 800, 30, obj->groundPos, Bullet::Type::GRENADE));
+}
+
+void PlayerGrenade::UpdateState(Player* obj, float deltaTime)
+{
+	if (!obj->GetNowSprite().bAnimation)
+	{
+		obj->SetState(PlayerIdle::GetInstance());
+		return;
+	}
+}
+
+void PlayerGrenade::ExitState(Player* obj)
+{
+	obj->grenade = false;
 }
 
 
@@ -541,6 +586,8 @@ void PlayerSpecialAttack::ExitState(Player* obj)
 	obj->onAttack = false;
 }
 
+
+
 PlayerHit* PlayerHit::GetInstance()
 {
 	static PlayerHit instance;
@@ -554,6 +601,12 @@ void PlayerHit::EnterState(Player* obj)
 
 void PlayerHit::UpdateState(Player* obj, float deltaTime)
 {
+	if (abs(obj->velocity.y) > 0.0f)
+	{
+		obj->SetState(PlayerStun::GetInstance());
+		return;
+	}
+
 	if (!obj->GetNowSprite().bAnimation)
 	{
 		obj->SetState(PlayerIdle::GetInstance());
@@ -571,6 +624,63 @@ PlayerDie* PlayerDie::GetInstance()
 	static PlayerDie instance;
 	return &instance;
 }
+
+PlayerStun* PlayerStun::GetInstance()
+{
+	static PlayerStun instance;
+	return &instance;
+}
+
+void PlayerStun::EnterState(Player* obj)
+{
+	obj->bCollider = false;
+	obj->SetAni(Player::Images::STUN);
+
+	timer = 2.0f;
+}
+
+void PlayerStun::UpdateState(Player* obj, float deltaTime)
+{
+	timer -= deltaTime;
+
+	if (timer <= 0.0f || Input::GetInstance().KeyDown('C'))
+	{
+		obj->SetState(PlayerStandUp::GetInstance());
+		return;
+	}
+}
+
+void PlayerStun::ExitState(Player* obj)
+{
+}
+
+
+PlayerStandUp* PlayerStandUp::GetInstance()
+{
+	static PlayerStandUp instance;
+	return &instance;
+}
+
+void PlayerStandUp::EnterState(Player* obj)
+{
+	obj->SetAni(Player::Images::STANDUP);
+}
+
+void PlayerStandUp::UpdateState(Player* obj, float deltaTime)
+{
+	if (!obj->GetNowSprite().bAnimation)
+	{
+		obj->SetState(PlayerIdle::GetInstance());
+		return;
+	}
+}
+
+void PlayerStandUp::ExitState(Player* obj)
+{
+	obj->bCollider = true;
+}
+
+
 
 void PlayerDie::EnterState(Player* obj)
 {

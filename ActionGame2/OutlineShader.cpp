@@ -33,6 +33,9 @@ HRESULT OutlineShader::SetTexture(const Texture* texture)
 {
 	if (FAILED(shader->SetTexture(shader->GetParameterByName(0, "spriteTexture"), texture->src)))
 		return E_FAIL;
+
+	float textureSize[2] = { texture->info.Width, texture->info.Height };
+	return shader->SetFloatArray(shader->GetParameterByName(0, "textureSize"), textureSize, 2);
 }
 
 HRESULT OutlineShader::SetColor(D3DXVECTOR4 color)
@@ -41,7 +44,7 @@ HRESULT OutlineShader::SetColor(D3DXVECTOR4 color)
 		return E_FAIL;
 }
 
-void OutlineShader::Render(ColorShader* shaderManager, Sprite& sprite, RenderInfo& ri, D3DXVECTOR4 color)
+void OutlineShader::Render(OutlineShader* shaderManager, Sprite& sprite, RenderInfo& ri, D3DXVECTOR4 color)
 {
 
 	shaderManager->Prepare();

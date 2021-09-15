@@ -13,6 +13,12 @@ void BossIdle::EnterState(CBoss* obj)
 
 void BossIdle::UpdateState(CBoss* obj, float deltaTime)
 {
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
 	if (obj->hit && !obj->superArmor)
 	{
 		obj->SetState(BossHit::GetInstance());
@@ -61,6 +67,12 @@ void BossMove::EnterState(CBoss* obj)
 
 void BossMove::UpdateState(CBoss* obj, float deltaTime)
 {
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
 	if (obj->hit && !obj->superArmor)
 	{
 		obj->SetState(BossHit::GetInstance());
@@ -109,6 +121,18 @@ void BossHit::EnterState(CBoss* obj)
 
 void BossHit::UpdateState(CBoss* obj, float deltaTime)
 {
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
+	if (abs(obj->velocity.y) > 100)
+	{
+		obj->SetState(BossStun::GetInstance());
+		return;
+	}
+
 	if (!obj->GetNowSprite().bAnimation)
 	{
 		obj->SetState(BossIdle::GetInstance());
@@ -119,6 +143,36 @@ void BossHit::UpdateState(CBoss* obj, float deltaTime)
 void BossHit::ExitState(CBoss* obj)
 {
 	obj->hit = false;
+}
+
+BossStun* BossStun::GetInstance()
+{
+	static BossStun instance;
+	return &instance;
+}
+
+void BossStun::EnterState(CBoss* obj)
+{
+	obj->SetAni(CBoss::Images::STUN);
+}
+
+void BossStun::UpdateState(CBoss* obj, float deltaTime)
+{
+	if (obj->hit && !obj->superArmor)
+	{
+		obj->SetState(BossStun::GetInstance());
+		return;
+	}
+
+	if (obj->bGround)
+	{
+		obj->SetState(BossIdle::GetInstance());
+		return;
+	}
+}
+
+void BossStun::ExitState(CBoss* obj)
+{
 }
 
 BossPattern1* BossPattern1::GetInstance()
@@ -134,6 +188,19 @@ void BossPattern1::EnterState(CBoss* obj)
 
 void BossPattern1::UpdateState(CBoss* obj, float deltaTime)
 {
+
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
+	if (obj->hit && !obj->superArmor)
+	{
+		obj->SetState(BossHit::GetInstance());
+		return;
+	}
+
 	if (!obj->Pattern1(deltaTime))
 	{
 		obj->SetState(BossIdle::GetInstance());
@@ -154,11 +221,24 @@ BossPattern2* BossPattern2::GetInstance()
 
 void BossPattern2::EnterState(CBoss* obj)
 {
-	obj->SetAni(CBoss::Images::ATTACK2);
+	obj->SetAni(CBoss::Images::ATTACKREADY);
 }
 
 void BossPattern2::UpdateState(CBoss* obj, float deltaTime)
 {
+
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
+	if (obj->hit && !obj->superArmor)
+	{
+		obj->SetState(BossHit::GetInstance());
+		return;
+	}
+
 	if (!obj->Pattern2(deltaTime))
 	{
 		obj->SetState(BossIdle::GetInstance());
@@ -179,10 +259,23 @@ BossPattern3* BossPattern3::GetInstance()
 
 void BossPattern3::EnterState(CBoss* obj)
 {
+	obj->SetAni(CBoss::Images::ATTACK3);
 }
 
 void BossPattern3::UpdateState(CBoss* obj, float deltaTime)
 {
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(BossDie::GetInstance());
+		return;
+	}
+
+	if (obj->hit && !obj->superArmor)
+	{
+		obj->SetState(BossHit::GetInstance());
+		return;
+	}
+
 	if (!obj->Pattern3(deltaTime))
 	{
 		obj->SetState(BossIdle::GetInstance());
@@ -203,10 +296,32 @@ BossDie* BossDie::GetInstance()
 
 void BossDie::EnterState(CBoss* obj)
 {
+	obj->SetAni(CBoss::Images::DIE);
+	obj->bCollider = false;
+	restoration = false;
+	nowScene->stopTime = true;
+
+	nowScene->player->fallowCamera = false;
+	Camera::GetInstance().destCameraPos.x = obj->pos.x;
+	Camera::GetInstance().destCameraPos.y = obj->pos.y + 150;
+	Camera::GetInstance().destDivideProj = 1.5;
+	std::cout << Camera::GetInstance().destCameraPos.x << std::endl;
+
+	Game::GetInstance().timeScale = 0.1f;
 }
 
 void BossDie::UpdateState(CBoss* obj, float deltaTime)
 {
+	if (!obj->GetNowSprite().bAnimation && !restoration)
+	{
+		restoration = true;
+
+		nowScene->player->fallowCamera = true;
+		Camera::GetInstance().destCameraScale = { 1, 1 };
+		Camera::GetInstance().destCameraPos.y = 0.0f;
+		Game::GetInstance().timeScale = 1.0f;
+		Camera::GetInstance().destDivideProj = 1;
+	}
 }
 
 void BossDie::ExitState(CBoss* obj)

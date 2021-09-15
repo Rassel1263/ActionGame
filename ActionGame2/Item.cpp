@@ -4,6 +4,7 @@
 Item::Item(D3DXVECTOR2 pos, int index)
 {
 	this->pos = pos;
+	this->index = index;
 	ri.pivot = { 0.5, 0.0f };
 
 	if (index == 1)
@@ -30,5 +31,8 @@ void Item::Render()
 void Item::OnCollision(Collider& coli)
 {
 	if (coli.tag == L"player")
+	{
+		nowScene->player->ItemEffective(index);
 		destroy = true;
+	}
 }

@@ -38,8 +38,8 @@ void Enemy4::SetImages()
 	GetSprite(Images::ATTACKREADY).LoadAll(filePath + L"ready", 0.02f, false);
 	GetSprite(Images::ATTACK).LoadAll(filePath + L"Attack", 0.02f, false);
 	GetSprite(Images::ATTACKEND).LoadAll(filePath + L"end", 0.02f, false);
-
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.025f, false);
+	GetSprite(Images::STUN).LoadAll(filePath + L"stun", 0.05f, false);
 	GetSprite(Images::DIE).LoadAll(filePath + L"Die", 0.05f, false);
 
 	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");

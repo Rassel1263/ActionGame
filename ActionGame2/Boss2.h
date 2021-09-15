@@ -12,5 +12,7 @@ public:
 	virtual bool Pattern1(float deltaTime) override;
 	virtual bool Pattern2(float deltaTime) override;
 	virtual bool Pattern3(float deltaTime) override;
+
+	virtual int ChoosePattern();
 };
 

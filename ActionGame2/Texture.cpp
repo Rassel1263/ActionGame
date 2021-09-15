@@ -55,7 +55,7 @@ void TextureManager::LoadTexture(int n)
 
 const Texture* TextureManager::GetTexture(std::wstring filePath)
 {
-    std::lock_guard<std::recursive_mutex> guard(locki);
+   // std::lock_guard<std::recursive_mutex> guard(locki);
 
     filePath = std::filesystem::absolute(filePath);
     std::transform(filePath.begin(), filePath.end(), filePath.begin(), std::towlower);
@@ -74,7 +74,7 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
         0,
         0,
         D3DFMT_A8R8G8B8,
-        D3DPOOL_MANAGED,
+        D3DPOOL_DEFAULT,
         D3DX_DEFAULT,
         D3DX_DEFAULT,
         0,
@@ -82,6 +82,8 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
         0,
         &texture->src)))
     {
+        std::wstring path = filePath + L"\n";
+        OutputDebugString(path.c_str());
         delete texture;
         return nullptr;
     }

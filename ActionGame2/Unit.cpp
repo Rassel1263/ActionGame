@@ -34,10 +34,7 @@ void Unit::Update(float deltaTime)
 
 void Unit::Render()
 {
-	ri.pos = pos;
-	GetNowSprite().Render(ri);
 
-	Object::Render();
 }
 
 void Unit::Hit(float damage, D3DXVECTOR2 addForce)

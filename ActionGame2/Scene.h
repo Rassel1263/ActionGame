@@ -8,6 +8,7 @@ public:
 	static float score;
 	float destScore = 0.0f;
 
+	bool stopTime = false;
 	float gameTime = 180.0f;
 
 	std::random_device rd;
@@ -26,5 +27,6 @@ public:
 
 	int GetRandomNum(int min, int max);
 	D3DXVECTOR2 GetRandomVector(int xMin, int xMax, int yMin, int yMax);
+	void AddScore(float value);
 };
 

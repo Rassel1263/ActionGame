@@ -1,7 +1,7 @@
 #pragma once
 
 #define IntEnum(p) static_cast<int>(p)
-#define PluseEnum(a, b, c) static_cast<a>(IntEnum(b) + IntEnum(c))
+#define PlusEnum(a, b, c) static_cast<a>(IntEnum(b) + IntEnum(c))
 
 #include <map>
 #include <vector>
@@ -29,6 +29,7 @@
 
 #include "ShaderManager.h"
 #include "ColorShader.h"
+#include "OutlineShader.h"
 
 #include "Collider.h"
 #include "Object.h"
@@ -58,6 +59,7 @@
 
 #include "CBoss.h"
 #include "Boss1.h"
+#include "Boss2.h"
 #include "BossState.h"
 
 #include "Box.h"
@@ -79,6 +81,8 @@
 
 #include "LoadSprite.h"
 #include "Main.h"
+#include "RankPage.h"
+#include "Help.h"
 
 #include "Scene.h"
 extern Scene* nowScene;
@@ -86,5 +90,6 @@ extern Scene* nowScene;
 #include "GameScene.h"
 #include "GameScene2.h"
 #include "GameScene3.h"
+#include "RankingScene.h"
 
 #include "Game.h"

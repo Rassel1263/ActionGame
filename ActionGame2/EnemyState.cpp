@@ -210,6 +210,12 @@ void EnemyHit::UpdateState(CEnemy* obj, float deltaTime)
 		return;
 	}
 
+	if (abs(obj->velocity.y) > 0.0f)
+	{
+		obj->SetState(EnemyStun::GetInstance());
+		return;
+	}
+
 	if (!obj->GetNowSprite().bAnimation)
 	{
 		obj->SetState(EnemyIdle::GetInstance());
@@ -220,6 +226,37 @@ void EnemyHit::UpdateState(CEnemy* obj, float deltaTime)
 void EnemyHit::ExitState(CEnemy* obj)
 {
 	obj->hit = false;
+}
+
+
+EnemyStun* EnemyStun::GetInstance()
+{
+	static EnemyStun instance;
+	return &instance;
+}
+
+void EnemyStun::EnterState(CEnemy* obj)
+{
+	obj->SetAni(CEnemy::Images::STUN);
+}
+
+void EnemyStun::UpdateState(CEnemy* obj, float deltaTime)
+{
+	if (obj->hit)
+	{
+		obj->SetState(EnemyStun::GetInstance());
+		return;
+	}
+
+	if (obj->bGround)
+	{
+		obj->SetState(EnemyIdle::GetInstance());
+		return;
+	}
+}
+
+void EnemyStun::ExitState(CEnemy* obj)
+{
 }
 
 
@@ -244,4 +281,3 @@ void EnemyDie::UpdateState(CEnemy* obj, float deltaTime)
 void EnemyDie::ExitState(CEnemy* obj)
 {
 }
-

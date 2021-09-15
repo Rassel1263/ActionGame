@@ -2,6 +2,8 @@
 class Item : public Object
 {
 public:
+	int index = 0;
+
 	Sprite spr;
 	RenderInfo ri;
 

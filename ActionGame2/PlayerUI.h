@@ -26,6 +26,9 @@ public:
 	Sprite comboGauge;
 	RenderInfo comboRI;
 
+	Sprite powerUp;
+	Sprite grenade;
+
 	std::vector<Sprite> combo;
 
 	PlayerUI(Player* player);

@@ -398,6 +398,7 @@
     <ClCompile Include="BossState.cpp" />
     <ClCompile Include="BossUI.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="CalcPage.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBoss.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -416,6 +417,7 @@
     <ClCompile Include="GameScene2.cpp" />
     <ClCompile Include="GameScene3.cpp" />
     <ClCompile Include="Grenade.cpp" />
+    <ClCompile Include="Help.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LoadSprite.cpp" />
@@ -431,6 +433,9 @@
     <ClCompile Include="PlayerState.cpp" />
     <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="Range.cpp" />
+    <ClCompile Include="Rank.cpp" />
+    <ClCompile Include="RankingScene.cpp" />
+    <ClCompile Include="RankPage.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SkillDirecting.cpp" />
@@ -439,7 +444,6 @@
     <ClCompile Include="StageFont.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Unit.cpp" />
-    <ClCompile Include="Warning.cpp" />
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AttackCollider.h" />
     <ClInclude Include="Boss1.h" />
@@ -448,6 +452,7 @@
     <ClInclude Include="BossState.h" />
     <ClInclude Include="BossUI.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="CalcPage.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBoss.h" />
     <ClInclude Include="CEnemy.h" />
@@ -469,6 +474,7 @@
     <ClInclude Include="GameScene3.h" />
     <ClInclude Include="Grenade.h" />
     <ClInclude Include="Header.h" />
+    <ClInclude Include="Help.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LoadSprite.h" />
@@ -484,6 +490,9 @@
     <ClInclude Include="PlayerState.h" />
     <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="Range.h" />
+    <ClInclude Include="Rank.h" />
+    <ClInclude Include="RankingScene.h" />
+    <ClInclude Include="RankPage.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Singleton.h" />
@@ -493,7 +502,6 @@
     <ClInclude Include="StageFont.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Unit.h" />
-    <ClInclude Include="Warning.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="DXUT\Core\DXUT.h" />
     <ClInclude Include="DXUT\Core\DXUTenum.h" />
@@ -527,6 +535,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shader\OutlineShader.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shader\ColorShader.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

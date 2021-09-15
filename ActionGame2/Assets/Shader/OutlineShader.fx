@@ -1,10 +1,10 @@
-Texture2D SpriteTexture;
-float2 xTextureSize : VPOS;
+Texture2D spriteTexture;
+float2 textureSize : VPOS;
 float4 color;
 
 sampler2D InputSampler = sampler_state
 {
-    SpriteTexture = <SpriteTexture>;
+    Texture = <spriteTexture>;
 };
 
 struct VertexShaderOutput
@@ -21,7 +21,7 @@ float4 main(VertexShaderOutput input) : COLOR
     
     if (currentPixel.a == 0.0f)
     {
-        float2 uvPix = float2(4 / xTextureSize.x, 4 / xTextureSize.y);
+        float2 uvPix = float2(4 / textureSize.x, 4 / textureSize.y);
         
         if (tex2D(InputSampler, float2(uvPix.x + input.UV.x, input.UV.y)).a > 0 ||
                 tex2D(InputSampler, float2(input.UV.x, uvPix.y + input.UV.y)).a > 0 ||
@@ -31,9 +31,9 @@ float4 main(VertexShaderOutput input) : COLOR
         {
             output = color;
         }
-        
-        return output;
     }
+    
+    return output;
 }
 
 technique Outline
@@ -42,4 +42,4 @@ technique Outline
     {
         PixelShader = compile ps_2_0 main();
     }
-}
+};
