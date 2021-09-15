@@ -73,9 +73,12 @@
 #include "BossIntro.h"
 #include "AfterImage.h"
 #include "Spectrum.h"
+#include "Fade.h"
 #include "SkillDirecting.h"
 #include "Warning.h"
 #include "Mp.h"
+
+#include "CalcPage.h"
 
 #include "Map.h"
 

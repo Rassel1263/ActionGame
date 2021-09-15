@@ -5,12 +5,15 @@ public:
 	Sprite spr;
 	RenderInfo ri;
 
+	bool drawFont = false;
+	bool drawFade = false;
+
 	float hp = 0.0f;
 	float time = 0.0f;
-	int combo = 0.0f;
 	float totalScore = 0.0f;
+	float combo = 0.0f;
 
-	float stopTmer = 0.0f;
+	float stopTimer = 0.0f;
 
 	CalcPage();
 

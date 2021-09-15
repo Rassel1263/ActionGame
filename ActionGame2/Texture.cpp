@@ -103,7 +103,7 @@ void TextureManager::ResetDevice()
             0,
             0,
             D3DFMT_A8R8G8B8,
-            D3DPOOL_MANAGED,
+            D3DPOOL_DEFAULT,
             D3DX_DEFAULT,
             D3DX_DEFAULT,
             0,

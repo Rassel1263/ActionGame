@@ -26,7 +26,7 @@ void Player::Update(float deltaTime)
 {
 	if (Input::GetInstance().KeyDown('H'))
 	{
-		ItemEffective(nowScene->GetRandomNum(1, 2));
+		nowScene->obm.AddObject(new CalcPage());
 	}
 
 	std::cout << pos.x << std::endl;

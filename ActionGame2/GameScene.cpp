@@ -4,6 +4,7 @@
 void GameScene::Init()
 {
 	curStage = 1;
+	nextScene = new GameScene2();
 
 	ShaderManager::GetInstance().CreateEffect("Color", L"Assets/Shader/ColorShader.fx", 1);
 	ShaderManager::GetInstance().CreateEffect("Outline", L"Assets/Shader/OutlineShader.fx", 1);

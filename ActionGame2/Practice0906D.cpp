@@ -52,8 +52,11 @@ HRESULT CALLBACK OnD3D9CreateDevice( IDirect3DDevice9* pd3dDevice, const D3DSURF
 HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFACE_DESC* pBackBufferSurfaceDesc,
                                     void* pUserContext )
 {
-    //DXUTGetD3D9Device()->Reset(&DXUTGetD3D9PresentParameters());
-    //Game::GetInstance().pLine->OnResetDevice();
+    //DXUTGetD3D9PresentParameters().AutoDepthStencilFormat;
+    //DXUTGetD3D9BackBufferSurfaceDesc()->Format;
+
+    Game::GetInstance().Reset();
+    TextureManager::GetInstance().ResetDevice();
   
     return S_OK;
 }
@@ -102,6 +105,8 @@ LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice( void* pUserContext )
 {
+    Game::GetInstance().pVB->Release();
+    Game::GetInstance().pLine->Release();
 }
 
 

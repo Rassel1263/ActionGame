@@ -277,6 +277,9 @@
       <Filter>Object\Main</Filter>
     </ClCompile>
     <ClCompile Include="CalcPage.cpp" />
+    <ClCompile Include="Fade.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -448,6 +451,9 @@
       <Filter>Object\Main</Filter>
     </ClInclude>
     <ClInclude Include="CalcPage.h" />
+    <ClInclude Include="Fade.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

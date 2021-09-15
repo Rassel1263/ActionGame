@@ -4,6 +4,7 @@
 void GameScene3::Init()
 {
 	curStage = 3;
+	nextScene = new RankingScene();
 
 	Game::GetInstance().timeScale = 0.0f;
 	ShaderManager::GetInstance().CreateEffect("Color", L"Assets/Shader/ColorShader.fx", 1);
