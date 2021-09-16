@@ -389,6 +389,8 @@ void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet:
 			nowScene->obm.AddObject(new Effect(L"Player/fire_jump", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 		else
 			nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+
+		SoundManager::GetInstance().Play(L"basicShoot", false);
 	}
 	else if (type == Bullet::Type::AIRSHOT || type == Bullet::Type::MACHINEGUN || type == Bullet::Type::EMACHINEGUN)
 	{

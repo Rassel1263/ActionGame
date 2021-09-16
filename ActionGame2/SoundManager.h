@@ -22,12 +22,12 @@ private:
 	std::map<std::wstring, Sound*> sounds;
 
 public:
-	void Create(std::wstring path, int szSound);
-	void Play(std::wstring path, bool loop = false);
-	void Stop(std::wstring path);
+	void Create(std::wstring name, std::wstring path, int szSound);
+	void Play(std::wstring name, bool loop = false);
+	void Stop(std::wstring name);
 	void StopAll();
 
-	void Setvolume(std::wstring path, int volume);
+	void Setvolume(std::wstring name, int volume);
 	void Reset();
 };
 

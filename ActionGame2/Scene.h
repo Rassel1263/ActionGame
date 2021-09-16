@@ -28,6 +28,8 @@ public:
 	virtual void Render();
 	virtual void UIRender();
 
+	void LoadFiles();
+
 	int GetRandomNum(int min, int max);
 	D3DXVECTOR2 GetRandomVector(int xMin, int xMax, int yMin, int yMax);
 	void AddScore(float value);

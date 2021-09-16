@@ -41,6 +41,9 @@ void GameScene::Init()
 
 void GameScene::Update(float deltaTime)
 {
+	if (Input::GetInstance().KeyDown('V'))
+		SoundManager::GetInstance().Play(L"Assets/Sound/LAttack.mp3", false);
+
 	Scene::Update(deltaTime);
 }
 

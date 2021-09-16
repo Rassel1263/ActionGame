@@ -35,7 +35,7 @@ void Sound::Play(bool loop)
 	WCHAR buffer[255];
 	swprintf_s(buffer, L"play %d_%d from 0%s", soundIDX, curSound, loop ? L" repeat" : L"");
 	mciSendString(buffer, 0, 0, 0);
-	if (++curSound > szSound) curSound = 0;
+	if (++curSound >= szSound) curSound = 0;
 }
 
 void Sound::Stop()
@@ -58,25 +58,24 @@ void Sound::SetVolume(int volume)
 	}
 }
 
-void SoundManager::Create(std::wstring path, int szSound)
+void SoundManager::Create(std::wstring name, std::wstring path, int szSound)
 {
-	auto sf = sounds.find(path);
-
+	auto sf = sounds.find(name);
 	if (sf != sounds.end()) return;
-	sounds.insert({ path, new Sound(path, szSound) });
+	sounds.insert({ name, new Sound(path, szSound) });
 }
 
-void SoundManager::Play(std::wstring path, bool loop)
+void SoundManager::Play(std::wstring name, bool loop)
 {
-	auto sf = sounds.find(path);
+	auto sf = sounds.find(name);
 
 	if (sf == sounds.end()) return;
 	sf->second->Play(loop);
 }
 
-void SoundManager::Stop(std::wstring path)
+void SoundManager::Stop(std::wstring name)
 {
-	auto sf = sounds.find(path);
+	auto sf = sounds.find(name);
 
 	if (sf == sounds.end()) return;
 	sf->second->Stop();
@@ -88,9 +87,9 @@ void SoundManager::StopAll()
 		sound.second->Stop();
 }
 
-void SoundManager::Setvolume(std::wstring path, int volume)
+void SoundManager::Setvolume(std::wstring name, int volume)
 {
-	auto sf = sounds.find(path);
+	auto sf = sounds.find(name);
 
 	if (sf == sounds.end()) return;
 	sf->second->SetVolume(volume);

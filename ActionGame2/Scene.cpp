@@ -63,6 +63,22 @@ void Scene::UIRender()
 	obm.UIRender();
 }
 
+void Scene::LoadFiles()
+{
+	ShaderManager::GetInstance().CreateEffect("Color", L"Assets/Shader/ColorShader.fx", 1);
+	ShaderManager::GetInstance().CreateEffect("Outline", L"Assets/Shader/OutlineShader.fx", 1);
+
+	// Player
+	SoundManager::GetInstance().Create(L"basicShoot", L"Assets/Sound/Player/Bullet/basic.mp3", 1);
+
+	// BGM
+	SoundManager::GetInstance().Create(L"Main", L"Assets/Sound/BGM/main.wav", 1);
+	SoundManager::GetInstance().Create(L"Stage1", L"Assets/Sound/BGM/stage1.wav", 1);
+	SoundManager::GetInstance().Create(L"Stage2", L"Assets/Sound/BGM/stage2-2.wav", 1);
+	SoundManager::GetInstance().Create(L"Stage3", L"Assets/Sound/BGM/stage3.wav", 1);
+	SoundManager::GetInstance().Create(L"Ranking", L"Assets/Sound/BGM/Ranking.wav", 1);
+}
+
 int Scene::GetRandomNum(int min, int max)
 {
 	std::default_random_engine rnd(rd());
