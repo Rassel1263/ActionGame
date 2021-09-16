@@ -1,13 +1,14 @@
 #include "DXUT.h"
 #include "CBoss.h"
 
-CBoss::CBoss()
+CBoss::CBoss(D3DXVECTOR2 pos)
 {
     team = L"enemy";
     ri.scale.x = -1;
-    this->pos = D3DXVECTOR2(1500, 0);
+    this->pos = pos;
     this->groundPos = pos.y;
     this->superArmor = true;
+    nowScene->spawnBoss = true;
 
     SetRigid(1);
 
@@ -15,7 +16,7 @@ CBoss::CBoss()
     outlineShader = new OutlineShader();
 
     nowScene->obm.AddObject(new BossUI(this));
-    nowScene->obm.AddObject(new BossIntro());
+    nowScene->obm.AddObject(new BossIntro(pos.x));
 }
 
 void CBoss::Update(float deltaTime)

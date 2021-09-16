@@ -220,9 +220,6 @@
     <ClCompile Include="BossIntro.cpp">
       <Filter>Object\Unit\Boss</Filter>
     </ClCompile>
-    <ClCompile Include="Combo.cpp">
-      <Filter>Object\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="Nuclear.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
@@ -278,6 +275,10 @@
     </ClCompile>
     <ClCompile Include="CalcPage.cpp" />
     <ClCompile Include="Fade.cpp">
+      <Filter>Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="UIAfterImage.cpp">
       <Filter>Object\Effect</Filter>
     </ClCompile>
   </ItemGroup>
@@ -391,9 +392,6 @@
     <ClInclude Include="BossIntro.h">
       <Filter>Object\Unit\Boss</Filter>
     </ClInclude>
-    <ClInclude Include="Combo.h">
-      <Filter>Object\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Object\Font</Filter>
     </ClInclude>
@@ -452,6 +450,10 @@
     </ClInclude>
     <ClInclude Include="CalcPage.h" />
     <ClInclude Include="Fade.h">
+      <Filter>Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="UIAfterImage.h">
       <Filter>Object\Effect</Filter>
     </ClInclude>
   </ItemGroup>

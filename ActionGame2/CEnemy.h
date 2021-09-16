@@ -28,6 +28,8 @@ public:
 	  
 	CState<CEnemy>* nowState = NULL;
 
+	float restTime = 0.0f;
+	float restTimer = 0.0f;
 
 	Range* attackRange = NULL;
 	Range* detectRange = NULL;
@@ -41,9 +43,8 @@ public:
 	virtual void Hit(float damage, D3DXVECTOR2 addForce) override;
 
 	virtual void Attack(float deltaTime);
-
-	void CreateDetectRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max);
-	void CreateAttackRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max);
+	void CreateDetectRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, float detectGroundPos);
+	void CreateAttackRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, float detectGroundPos);
 
 	bool AttackColliderTarget();
 	bool DetectColliderTarget();

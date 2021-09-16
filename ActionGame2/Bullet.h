@@ -10,6 +10,9 @@ public:
 		SNIPER,
 		GRENADE,
 
+		EMACHINEGUN,
+		ESNIPER,
+
 		ROCK,
 		GOLDROCK,
 	} type;

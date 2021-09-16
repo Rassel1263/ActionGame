@@ -56,7 +56,22 @@ void Unit::SetCollider(float left, float bottom, float right, float top, std::ws
 	Collider::AABB aabb;
 	aabb.min = { left, bottom };
 	aabb.max = { right, top };
-	bodies.push_back(Collider(this, tag, &aabb));
+	bodies.push_back(Collider(this, tag, &aabb, D3DCOLOR_ARGB(255, 0, 255, 0)));
+}
+
+bool Unit::Blink(float deltaTime, int amount)
+{
+	if (blinkCnt >= amount) return false;
+
+	GetNowSprite().color.a += deltaTime * destColor * 5;
+	GetNowSprite().color.a = std::clamp(GetNowSprite().color.a, 0.0f, 1.0f);
+	if (GetNowSprite().color.a >= 1.0f || GetNowSprite().color.a <= 0.0f)
+	{
+		destColor = -destColor;
+		++blinkCnt;
+	}
+
+	return true;
 }
 
 Sprite& Unit::GetNowSprite()

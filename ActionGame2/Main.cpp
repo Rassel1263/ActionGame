@@ -35,6 +35,8 @@ void Main::Update(float deltaTime)
 {
 	ChoiceBtn();
 
+	
+
 	if (Input::GetInstance().KeyDown(VK_RETURN) && !static_cast<MainScene*>(nowScene)->input)
 	{
 		static_cast<MainScene*>(nowScene)->input = true;

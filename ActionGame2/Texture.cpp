@@ -10,6 +10,17 @@ TextureManager::~TextureManager()
     }
 }
 
+void TextureManager::Term()
+{
+    //int n = textures.size();
+
+    //for (auto texture : textures)
+    //{
+    //    SAFE_RELEASE(texture.second->src);
+    //    SAFE_DELETE(texture.second);
+    //}
+}
+
 void TextureManager::SaveFilePath()
 {
     for (auto& file : std::filesystem::recursive_directory_iterator(L"Assets/Sprites"))

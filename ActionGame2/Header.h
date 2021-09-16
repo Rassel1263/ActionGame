@@ -20,6 +20,7 @@
 #include <limits>
 
 #include "Singleton.h"
+#include "SoundManager.h"
 
 #include "Texture.h"
 #include "Sprite.h"
@@ -72,6 +73,7 @@
 #include "StageFont.h"
 #include "BossIntro.h"
 #include "AfterImage.h"
+#include "UIAfterImage.h"
 #include "Spectrum.h"
 #include "Fade.h"
 #include "SkillDirecting.h"
@@ -89,6 +91,7 @@
 
 #include "Scene.h"
 extern Scene* nowScene;
+
 #include "MainScene.h"
 #include "GameScene.h"
 #include "GameScene2.h"

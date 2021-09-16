@@ -14,15 +14,33 @@ void GameScene2::Init()
 
 	Camera::GetInstance().destCameraScale = { 1.0f, 1.0f };
 
-	obm.AddObject(new Map());
+	for (int i = 0; i < 8; ++i)
+		nowScene->obm.AddObject(new Box(D3DXVECTOR2(700 + 1500 * i, nowScene->GetRandomNum(-400, -50))));
+
+	obm.AddObject(new Map(5));
 	obm.AddObject(player = new Player());
-	enemyManager.SpawnEnemy(D3DXVECTOR2(400, 0), 4);
-	obm.AddObject(new Box(D3DXVECTOR2(200, 0)));
+
+	enemyManager.SetEnemyPos(curStage);
+
 	nowScene->obm.AddObject(new StageFont(StageFont::Type::START));
 }
 
 void GameScene2::Update(float deltaTime)
 {
+	enemyManager.SpawnEnemy();
+
+	if (!stopTime)
+		gameTime -= deltaTime;
+
+	if (gameTime <= 0.0f && !timeOver)
+	{
+		timeOver = true;
+		nowScene->obm.AddObject(new StageFont(StageFont::Type::FAIL));
+	}
+
+	if (player->pos.x > 15000 && !spawnBoss)
+		obm.AddObject(boss = new Boss1());
+
 	Scene::Update(deltaTime);
 }
 

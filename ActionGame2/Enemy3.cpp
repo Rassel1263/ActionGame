@@ -5,11 +5,12 @@ Enemy3::Enemy3(D3DXVECTOR2 pos) : CEnemy(pos)
 {
 	enemyType = 3;
 	hitTime = 0.1f;
+	restTime = 1.0f;
 
 	SetImages();
 	SetCollider(-60, 0, 60, 300, team);
-	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
-	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
+	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-700, 0), D3DXVECTOR2(700, 300), 300);
+	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(0, 0), D3DXVECTOR2(0, 0), 300);
 	ability.SetAbility(80, 100);
 
 	SetState(EnemyIdle::GetInstance());
@@ -46,8 +47,8 @@ void Enemy3::Attack(float deltaTime)
 	if (GetSprite(Images::ATTACK).scene == 8 && !onAttack)
 	{
 		onAttack = true;
-		D3DXVECTOR2 playerPos = nowScene->player->pos;
-		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, groundPos)); };
+		D3DXVECTOR2 playerPos = D3DXVECTOR2(nowScene->player->pos.x, nowScene->player->groundPos);
+		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, playerPos.y)); };
 
 		nowScene->obm.AddObject(new Effect(L"enemy/magic", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, true, lambda));
 	};

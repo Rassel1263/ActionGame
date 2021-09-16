@@ -221,7 +221,7 @@ BossPattern2* BossPattern2::GetInstance()
 
 void BossPattern2::EnterState(CBoss* obj)
 {
-	obj->SetAni(CBoss::Images::ATTACKREADY);
+	obj->SetAni(CBoss::Images::ATTACK2);
 }
 
 void BossPattern2::UpdateState(CBoss* obj, float deltaTime)
@@ -316,6 +316,7 @@ void BossDie::UpdateState(CBoss* obj, float deltaTime)
 	{
 		restoration = true;
 
+		nowScene->obm.AddObject(new CalcPage());
 		nowScene->player->fallowCamera = true;
 		Camera::GetInstance().destCameraScale = { 1, 1 };
 		Camera::GetInstance().destCameraPos.y = 0.0f;

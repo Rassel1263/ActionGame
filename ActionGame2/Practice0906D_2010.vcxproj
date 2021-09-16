@@ -404,7 +404,6 @@
     <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ColorShader.cpp" />
-    <ClCompile Include="Combo.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy3.cpp" />
@@ -440,10 +439,12 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="SkillDirecting.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="Spectrum.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StageFont.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="UIAfterImage.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClInclude Include="AfterImage.h" />
     <ClInclude Include="AttackCollider.h" />
@@ -459,7 +460,6 @@
     <ClInclude Include="CEnemy.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ColorShader.h" />
-    <ClInclude Include="Combo.h" />
     <ClInclude Include="CState.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy1.h" />
@@ -499,10 +499,12 @@
     <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SkillDirecting.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="Spectrum.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="StageFont.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="UIAfterImage.h" />
     <ClInclude Include="Unit.h" />
     <None Include="DXUT\Optional\directx.ico" />
     <ClInclude Include="DXUT\Core\DXUT.h" />

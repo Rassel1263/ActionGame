@@ -29,6 +29,8 @@ public:
 	Sprite powerUp;
 	Sprite grenade;
 
+	std::vector<Sprite> enhanceSkill;
+
 	std::vector<Sprite> combo;
 
 	PlayerUI(Player* player);

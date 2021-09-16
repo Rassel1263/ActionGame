@@ -26,18 +26,23 @@ void EnemyIdle::UpdateState(CEnemy* obj, float deltaTime)
 		return;
 	}
 
-	if (obj->AttackColliderTarget())
+	obj->restTimer += deltaTime;
+	if (obj->restTimer >= obj->restTime)
 	{
-		if (obj->enemyType != 4)
-			obj->SetState(EnemyAttack::GetInstance());
-		else
-			obj->SetState(EnemyAttackReady::GetInstance());
-		return;
+		if (obj->AttackColliderTarget())
+		{
+			if (obj->enemyType != 4)
+				obj->SetState(EnemyAttack::GetInstance());
+			else
+				obj->SetState(EnemyAttackReady::GetInstance());
+			return;
+		}
 	}
 }
 
-void EnemyIdle::ExitState(CEnemy* obj)  
+void EnemyIdle::ExitState(CEnemy* obj)
 {
+	obj->restTimer = 0.0f;
 }
 
 EnemyMove* EnemyMove::GetInstance()
@@ -59,19 +64,24 @@ void EnemyMove::UpdateState(CEnemy* obj, float deltaTime)
 		return;
 	}
 
+
 	if (!obj->Move(deltaTime))
 	{
 		obj->SetState(EnemyIdle::GetInstance());
 		return;
 	}
 
-	if (obj->AttackColliderTarget())
+	obj->restTimer += deltaTime;
+	if (obj->restTimer >= obj->restTime)
 	{
-		if (obj->enemyType != 4)
-			obj->SetState(EnemyAttack::GetInstance());
-		else
-			obj->SetState(EnemyAttackReady::GetInstance());
-		return;
+		if (obj->AttackColliderTarget())
+		{
+			if (obj->enemyType != 4)
+				obj->SetState(EnemyAttack::GetInstance());
+			else
+				obj->SetState(EnemyAttackReady::GetInstance());
+			return;
+		}
 	}
 }
 
@@ -121,7 +131,7 @@ EnemyAttack* EnemyAttack::GetInstance()
 void EnemyAttack::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::ATTACK);
-} 
+}
 
 void EnemyAttack::UpdateState(CEnemy* obj, float deltaTime)
 {
@@ -275,7 +285,10 @@ void EnemyDie::EnterState(CEnemy* obj)
 void EnemyDie::UpdateState(CEnemy* obj, float deltaTime)
 {
 	if (!obj->GetNowSprite().bAnimation)
-		obj->Destroy();
+	{
+		if (!obj->Blink(deltaTime, 5))
+			obj->Destroy();
+	}
 }
 
 void EnemyDie::ExitState(CEnemy* obj)

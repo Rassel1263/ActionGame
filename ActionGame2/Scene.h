@@ -9,6 +9,9 @@ public:
 	float destScore = 0.0f;
 
 	bool stopTime = false;
+	bool spawnBoss = false;
+	bool bossIntro = false;
+	bool timeOver = false;
 	float gameTime = 180.0f;
 
 	std::random_device rd;

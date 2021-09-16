@@ -8,7 +8,8 @@ public:
     std::wstring targetName;
     D3DXVECTOR2 addPos;
     bool bHit = false;
-    Range(Unit* unit, std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, D3DXCOLOR color);
+    float detectGroundPos = 0.0f;
+    Range(Unit* unit, std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, D3DXCOLOR color, float detectGroundPos = 100.0f);
 
     virtual void Update(float deltaTime) override;
     virtual void Render() override;

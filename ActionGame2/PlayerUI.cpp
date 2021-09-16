@@ -5,7 +5,7 @@ PlayerUI::PlayerUI(Player* player)
 {
 	this->player = player;
 
-	Load(L"base1.png", base);
+	Load(L"base2.png", base);
 
 	Load(L"hpBck.png", hpBck);
 	Load(L"hp.png", hp);
@@ -23,6 +23,17 @@ PlayerUI::PlayerUI(Player* player)
 
 	Load(L"item1.png", powerUp);
 	Load(L"item2.png", grenade);
+
+
+	for (int i = 0; i < 6; ++i)
+	{
+		if (player->skillEnhance[i])
+		{
+			Sprite spr;
+			Load(L"skill/" + std::to_wstring(i) + L".png", spr);
+			enhanceSkill.push_back(spr);
+		}
+	}
 
 	hpRI.pos = { -800, -400 };
 	mpRI.pos = { -560, -445 };
@@ -69,10 +80,18 @@ void PlayerUI::Render()
 	}
 
 	if (player->powerUp)
-		powerUp.Render(RenderInfo{ D3DXVECTOR2(-400, -445), D3DXVECTOR2(0.7, 0.7)});
+		powerUp.Render(RenderInfo{ D3DXVECTOR2(-400, -445), D3DXVECTOR2(0.7, 0.7) });
 
 	if (player->grenade)
 		grenade.Render(RenderInfo{ D3DXVECTOR2(-300, -445), D3DXVECTOR2(0.7, 0.7) });
+
+	int cnt = 0;
+	for (auto& spr : enhanceSkill)
+	{
+		spr.Render(RenderInfo{ D3DXVECTOR2(-200 + cnt * 100, -445), D3DXVECTOR2(0.2f, 0.2f) });
+		++cnt;
+	}
+
 }
 
 void PlayerUI::UpdateCombo()
@@ -89,7 +108,7 @@ void PlayerUI::UpdateCombo()
 			c.LoadAll(L"Assets/Sprites/UI/Font/Combo/" + str.substr(i, 1) + L".png");
 			c.bCamera = false;
 
-			if(player->combo != 0)
+			if (player->combo != 0)
 				nowScene->obm.AddObject(new AfterImage(c, RenderInfo{ D3DXVECTOR2(800 + i * 50, 100) }, D3DXVECTOR2(1.5, 1.5), D3DCOLOR_ARGB(70, 255, 255, 255), 1100, false));
 
 			i++;

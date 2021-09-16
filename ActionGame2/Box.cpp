@@ -14,6 +14,9 @@ Box::Box(D3DXVECTOR2 pos)
 	bodies.push_back(Collider(this, L"box", &aabb));
 
 	this->pos = pos;
+	this->groundPos = pos.y;
+
+	layer = 1080 - (groundPos + 540);
 }
 
 void Box::Update(float deltaTime)

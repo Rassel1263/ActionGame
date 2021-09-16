@@ -17,6 +17,8 @@ public:
 	std::vector<std::thread> threads;
 	LoadSprite spr;
 
+	bool pause = false;
+
 	float screenWidth = 1920;
 	float screenHeight = 1080;
 
@@ -39,6 +41,7 @@ public:
 	void DrawLine(D3DXVECTOR2 p1, D3DXVECTOR2 p2, D3DXMATRIX matrix, D3DCOLOR color);
 
 	void Reset();
+	void Term();
 
 };
 

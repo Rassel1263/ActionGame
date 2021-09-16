@@ -24,5 +24,6 @@ public:
 	void LoadTexture(int n);
 	const Texture* GetTexture(std::wstring filePath);
 	void ResetDevice();
+	void Term();
 };
 

@@ -1,10 +1,11 @@
 #include "DXUT.h"
 #include "Boss2.h"
 
-Boss2::Boss2()
+Boss2::Boss2() : CBoss(D3DXVECTOR2(16000, -100))
 {
 	hitTime = 0.1f;
 	ability.SetAbility(1000, 100);
+
 	SetImages();
 
 	CreateCollider(D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), L"enemy");
@@ -38,8 +39,8 @@ void Boss2::SetImages()
 	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.05f);
 	GetSprite(Images::ATTACK1).LoadAll(filePath + L"Attack1", 0.05f, false);
 
-	GetSprite(Images::ATTACKREADY).LoadAll(filePath + L"AttackReady", 0.05f, false);
-	GetSprite(Images::ATTACK2).LoadAll(filePath + L"Attack2", 0.02f, false);
+	GetSprite(Images::ATTACK2).LoadAll(filePath + L"AttackReady", 0.02f, false);
+	GetSprite(Images::ATTACK2RUSH).LoadAll(filePath + L"Attack2", 0.05f, false);
 	GetSprite(Images::ATTACKEND).LoadAll(filePath + L"AttackEnd", 0.05f, false);
 
 	GetSprite(Images::ATTACK3).LoadAll(filePath + L"Attack3", 0.01f, false);
@@ -57,17 +58,17 @@ bool Boss2::Pattern1(float deltaTime)
 	if (GetNowSprite().scene == 18 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(300 * ri.scale.x, 20), { D3DXVECTOR2(-300, 0), D3DXVECTOR2(50, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(200 * ri.scale.x, 20), { D3DXVECTOR2(-200, 0), D3DXVECTOR2(200, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
 	}
 	else if (GetNowSprite().scene == 25 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(300 * ri.scale.x, 20), { D3DXVECTOR2(-300, 0), D3DXVECTOR2(50, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(200 * ri.scale.x, 20), { D3DXVECTOR2(-200, 0), D3DXVECTOR2(200, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
 	}
 	else if (GetNowSprite().scene == 34 && !onAttack)
 	{
 		onAttack = true;
-		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(300 * ri.scale.x, 20), { D3DXVECTOR2(-300, 0), D3DXVECTOR2(50, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+		nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(200 * ri.scale.x, 20), { D3DXVECTOR2(-200, 0), D3DXVECTOR2(200, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
 	}
 	else
 		onAttack = false;
@@ -83,12 +84,12 @@ bool Boss2::Pattern2(float deltaTime)
 		return false;
 	}
 
-	if (renderNum == IntEnum(Images::ATTACK2))
+	if (renderNum == IntEnum(Images::ATTACK2RUSH))
 	{
 		if (!onAttack)
 		{
 			onAttack = true;
-			nowScene->obm.AddObject(new AttackCollider(L"enemy", &pos, D3DXVECTOR2(100, 20), { D3DXVECTOR2(-200, 0), D3DXVECTOR2(200, 300) }, 10, D3DXVECTOR2(0, 0), 0.0f, 0.9f, groundPos));
+			nowScene->obm.AddObject(new AttackCollider(L"enemy", &pos, D3DXVECTOR2(100, 20), { D3DXVECTOR2(-200, 0), D3DXVECTOR2(200, 300) }, 10, D3DXVECTOR2(300, 150), 0.3f, 0.9f, groundPos));
 		}
 
 		pos.x += ri.scale.x * 1000 * deltaTime;
@@ -96,7 +97,7 @@ bool Boss2::Pattern2(float deltaTime)
 	}
 
 	if (!GetNowSprite().bAnimation)
-		SetAni(PlusEnum(Images, Images::ATTACKREADY, ++rushIndex));
+		SetAni(PlusEnum(Images, Images::ATTACK2, ++rushIndex));
 
 	return true;
 }
@@ -105,7 +106,7 @@ bool Boss2::Pattern3(float deltaTime)
 {
 	if (!GetNowSprite().bAnimation) return false;
 
-	nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-400, -100), D3DXVECTOR2(400, 400) },1, D3DXVECTOR2(0, 0), 0.0f, 0.98f, groundPos));
+	nowScene->obm.AddObject(new AttackCollider(L"enemy", pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-400, -100), D3DXVECTOR2(400, 400) }, 0.5, D3DXVECTOR2(0, 0), 0.0f, 0.98f, groundPos));
 
 	return true;
 }

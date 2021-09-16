@@ -130,7 +130,7 @@ PlayerJump* PlayerJump::GetInstance()
 void PlayerJump::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::JUMP);
-
+	obj->jump = true;
 	obj->velocity.y = 1200;
 }
 
@@ -227,7 +227,7 @@ void PlayerLanding::UpdateState(Player* obj, float deltaTime)
 void PlayerLanding::ExitState(Player* obj)
 {
 	obj->jumpAttack = false;
-
+	obj->jump = false;
 }
 
 ///////////////////////////
@@ -448,7 +448,7 @@ PlayerGrenade* PlayerGrenade::GetInstance()
 void PlayerGrenade::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::GRENADE);
-	nowScene->obm.AddObject(new Bullet(obj->team, obj->pos + D3DXVECTOR2(100, 50), D3DXVECTOR2(obj->ri.scale.x, 1.0f), 800, 30, obj->groundPos, Bullet::Type::GRENADE));
+	nowScene->obm.AddObject(new Bullet(obj->team, obj->pos + D3DXVECTOR2(obj->ri.scale.x * 100, 150), D3DXVECTOR2(obj->ri.scale.x, 0.1f), 1500, 30, obj->groundPos, Bullet::Type::GRENADE));
 }
 
 void PlayerGrenade::UpdateState(Player* obj, float deltaTime)
@@ -525,7 +525,12 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 			{
 				D3DXVECTOR2 offset = D3DXVECTOR2(250, 240);
 				(change) ? offset.y += 10 : offset.y -= 10;
-				obj->CreateBullet(offset, 1500, 5, Bullet::Type::BASIC);
+
+				if(obj->skillEnhance[2]) // 스킬 2 강화
+					obj->CreateBullet(offset, 1500, 10, Bullet::Type::MACHINEGUN);
+				else
+					obj->CreateBullet(offset, 1500, 5, Bullet::Type::BASIC);
+
 				change = !change;
 
 				obj->attackTimer = obj->maxAttackTimer;
@@ -537,7 +542,11 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if ((obj->GetNowSprite().scene <= 23))
 			if (obj->attackTimer <= 0.0f)
 			{
-				obj->CreateBullet(D3DXVECTOR2(230, 200), 2200, 10, Bullet::Type::MACHINEGUN);
+				if (obj->skillEnhance[3]) // 스킬 3 강화
+					obj->CreateBullet(D3DXVECTOR2(230, 200), 2200, 15, Bullet::Type::EMACHINEGUN);
+				else
+					obj->CreateBullet(D3DXVECTOR2(230, 200), 2200, 10, Bullet::Type::MACHINEGUN);
+
 				obj->attackTimer = obj->maxAttackTimer;
 			}
 	}
@@ -546,8 +555,11 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 		if (obj->attackTimer <= 0.0f && !obj->onAttack)
 		{
 			obj->onAttack = true;
-			obj->CreateBullet(D3DXVECTOR2(250, 150), 3000, 30, Bullet::Type::SNIPER);
 
+			if (obj->skillEnhance[4]) // 스킬 4 강화
+				obj->CreateBullet(D3DXVECTOR2(250, 150), 3000, 60, Bullet::Type::ESNIPER);
+			else
+				obj->CreateBullet(D3DXVECTOR2(250, 150), 3000, 30, Bullet::Type::SNIPER);
 		}
 	}
 	else if (obj->attackNum == 6)
@@ -596,12 +608,13 @@ PlayerHit* PlayerHit::GetInstance()
 
 void PlayerHit::EnterState(Player* obj)
 {
+	Camera::GetInstance().cameraQuaken = { 5, 5};
 	obj->SetAni(Player::Images::HIT);
 }
 
 void PlayerHit::UpdateState(Player* obj, float deltaTime)
 {
-	if (abs(obj->velocity.y) > 0.0f)
+	if (abs(obj->velocity.y) > 10.0f)
 	{
 		obj->SetState(PlayerStun::GetInstance());
 		return;
@@ -634,7 +647,9 @@ PlayerStun* PlayerStun::GetInstance()
 void PlayerStun::EnterState(Player* obj)
 {
 	obj->bCollider = false;
+	obj->jump = true;
 	obj->SetAni(Player::Images::STUN);
+	Camera::GetInstance().cameraQuaken = { 10, 10 };
 
 	timer = 2.0f;
 }
@@ -678,6 +693,7 @@ void PlayerStandUp::UpdateState(Player* obj, float deltaTime)
 void PlayerStandUp::ExitState(Player* obj)
 {
 	obj->bCollider = true;
+	obj->jump = false;
 }
 
 

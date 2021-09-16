@@ -11,7 +11,7 @@ void Object::SetRigid(float mass)
 void Object::CreateCollider(D3DXVECTOR2 min, D3DXVECTOR2 max, std::wstring tag, D3DXCOLOR color )
 {
 	Collider::AABB aabb = { min, max };
-	bodies.push_back(Collider(this, tag, &aabb));
+	bodies.push_back(Collider(this, tag, &aabb, color));
 }
 
 void Object::Update(float deltaTime)
@@ -21,7 +21,9 @@ void Object::Update(float deltaTime)
 		if (!bGround)
 			force.y -= gravity * 20 * mass * deltaTime;
 
-		velocity += force * (1/ mass) * 10;
+		velocity.x += force.x * (1/ mass) * 10;
+		velocity.y += force.y * (1/ mass) * 10;
+
 		force = { 0, 0 };
 		fixedPos = pos;
 		pos += velocity * deltaTime;

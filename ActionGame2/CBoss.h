@@ -9,8 +9,8 @@ public:
 
 		ATTACK1,
 
-		ATTACKREADY,
 		ATTACK2,
+		ATTACK2RUSH,
 		ATTACKEND,
 
 		ATTACK3,
@@ -24,8 +24,7 @@ public:
 		END,
 	};
 
-	CBoss();
-
+	CBoss(D3DXVECTOR2 pos);
 	CState<CBoss>* nowState = NULL;
 
 	Range* detectRange = NULL;

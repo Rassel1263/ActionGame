@@ -5,11 +5,12 @@ Enemy1::Enemy1(D3DXVECTOR2 pos) : CEnemy(pos)
 {
 	enemyType = 1;
 	hitTime = 0.1f;
+	restTime = 0.5f;
 
 	SetImages();
 	SetCollider(-60, 0, 60, 250, team);
-	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200));
-	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 300));
+	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200), 100);
+	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-800, 0), D3DXVECTOR2(800, 300), 300);
 	ability.SetAbility(150, 100);
 
 	SetState(EnemyIdle::GetInstance());

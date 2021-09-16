@@ -78,6 +78,9 @@ void Game::Update(float deltaTime)
 			nextScene = NULL;
 		}
 
+		if (Input::GetInstance().KeyDown(VK_F8))
+			pause = !pause;
+
 		if (Input::GetInstance().KeyDown(VK_CONTROL))
 			timeScale = 0.05f;
 		if (Input::GetInstance().KeyUp(VK_CONTROL))
@@ -85,6 +88,7 @@ void Game::Update(float deltaTime)
 
 		unscaleTime = deltaTime;
 
+		if(!pause)
 		if (nowScene)
 			nowScene->Update(deltaTime * timeScale);
 
@@ -130,4 +134,18 @@ void Game::Reset()
 	DXUTGetD3D9Device()->CreateVertexBuffer(sizeof(CUSTOMVERTEX) * 4, 0,
 		D3DFVF_CUSTOMVERTEX, D3DPOOL_DEFAULT, &pVB, 0);
 
+}
+
+void Game::Term()
+{
+	if (pVB != NULL)
+		pVB->Release();
+
+	for (auto& thread : threads)
+	{
+		if (thread.joinable())
+			thread.join();
+	}
+
+	SAFE_RELEASE(pLine);
 }

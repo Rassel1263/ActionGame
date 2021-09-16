@@ -74,6 +74,7 @@ class BossDie : public CState<CBoss>
 {
 public:
 	bool restoration = false;
+	float timer = 0.0f;
 
 	static BossDie* GetInstance();
 

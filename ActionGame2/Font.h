@@ -6,12 +6,14 @@ class Font : public ObjectUI
 public:
 	std::vector<Sprite> sprites;
 	std::wstring fontName = L"";
+	D3DXCOLOR* color = NULL;
+
 	RenderInfo ri;
 	T& num;
 	int scoreNum = 0;
 	float kerning = 0.0f;
 
-	Font(std::wstring fontName, T& num, D3DXVECTOR2 pos, D3DXVECTOR2 scale, float kerning, int scoreNum, int layer) : num(num)
+	Font(std::wstring fontName, T& num, D3DXVECTOR2 pos, D3DXVECTOR2 scale, float kerning, int scoreNum, int layer, D3DXCOLOR* color = NULL) : num(num)
 	{
 		this->fontName = fontName;
 		this->pos = pos;
@@ -19,6 +21,7 @@ public:
 		this->kerning = kerning;
 		this->scoreNum = scoreNum;
 		this->layer = layer;
+		this->color = color;
 	}
 
 	virtual void Update(float deltaTime) override
@@ -39,6 +42,7 @@ public:
 		{
 			sprites[count].LoadAll(L"Assets/Sprites/UI/Font/" + fontName + std::to_wstring(s - '0') + L".png");
 			sprites[count].bCamera = false;
+			if(color) sprites[count].color = *color;
 			count++;
 		}
 	}

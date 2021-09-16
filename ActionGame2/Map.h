@@ -2,6 +2,8 @@
 class Map : public Object
 {
 public:
+	int widthRatio = 0;
+
 	Sprite layer1;
 	RenderInfo ri;
 
@@ -9,7 +11,7 @@ public:
 
 	Sprite layer3;
 
-	Map();
+	Map(int widthRatio);
 
 	virtual void Update(float deltaTime) override;
 	virtual void Render() override;

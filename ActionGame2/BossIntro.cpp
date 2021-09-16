@@ -1,10 +1,11 @@
 #include "DXUT.h"
 #include "BossIntro.h"
 
-BossIntro::BossIntro()
+BossIntro::BossIntro(float x)
 {
 	nowScene->player->fallowCamera = false;
-	Camera::GetInstance().destCameraPos = { 1500, 0 };
+	nowScene->bossIntro = true;
+	Camera::GetInstance().destCameraPos.x = x;
 
 	spr.LoadAll(L"Assets/Sprites/Effect/enemy/bossIntro.png");
 	spr.color.a = 0.0f;
@@ -13,7 +14,7 @@ BossIntro::BossIntro()
 
 void BossIntro::Update(float deltaTime)
 {
-	spr.color.a += deltaTime * destColor;
+	spr.color.a += deltaTime * destColor * 2;
 
 	if (spr.color.a <= 0.0f || spr.color.a >= 1.0f)
 	{
@@ -25,6 +26,7 @@ void BossIntro::Update(float deltaTime)
 	if (blink >= 4)
 	{
 		nowScene->player->fallowCamera = true;
+		nowScene->bossIntro = false;
 		destroy = true;
 	}
 }

@@ -41,6 +41,10 @@ public:
 	float attackTimer = 0.0f;
 	float maxAttackTimer = 0.0f;
 
+	// bilnk
+	float destColor = -1.0f;
+	int blinkCnt = 0;
+
 	D3DXVECTOR2 GetDistanceFromTarget(D3DXVECTOR2 targetPos);
 
 	Unit();
@@ -50,6 +54,7 @@ public:
 	virtual void Hit(float damage, D3DXVECTOR2 addForce);
 
 	void SetCollider(float left, float bottom, float right, float top, std::wstring tag);
+	bool Blink(float deltaTime, int amount);
 
 	Sprite& GetNowSprite();
 

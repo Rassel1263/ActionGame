@@ -16,30 +16,36 @@ void Scene::Update(float deltaTime)
 		score += tempScore - destScore;
 	}
 
-	if (Input::GetInstance().KeyDown(VK_F1))
-		player->invincible = !player->invincible;
 
-	if (Input::GetInstance().KeyDown(VK_F2))
-		player->PlusMp(player->maxMp);
-
-	if (Input::GetInstance().KeyDown(VK_F3))
+	if (curStage > 0)
 	{
-		for (auto& enemy : enemyManager.enemyVec)
-		{
-			if (enemy->pos.x > Camera::GetInstance().cameraPos.x - 960 &&
-				enemy->pos.x < Camera::GetInstance().cameraPos.x + 960)
+		if (Input::GetInstance().KeyDown(VK_F1))
+			player->invincible = !player->invincible;
 
-				enemy->Hit(enemy->ability.maxHp, D3DXVECTOR2(0, 0));
+		if (Input::GetInstance().KeyDown(VK_F2))
+			player->PlusMp(player->maxMp);
+
+		if (Input::GetInstance().KeyDown(VK_F3))
+		{
+			for (auto& enemy : enemyManager.enemyVec)
+			{
+				if (enemy->pos.x > Camera::GetInstance().cameraPos.x - 960 &&
+					enemy->pos.x < Camera::GetInstance().cameraPos.x + 960)
+
+					enemy->Hit(enemy->ability.maxHp, D3DXVECTOR2(0, 0));
+			}
 		}
 	}
 
 	if (Input::GetInstance().KeyDown(VK_F4))
 		Game::GetInstance().ChangeScene(new MainScene());
-
 	if (Input::GetInstance().KeyDown(VK_F5))
 		Game::GetInstance().ChangeScene(new GameScene());
 	if (Input::GetInstance().KeyDown(VK_F6))
 		Game::GetInstance().ChangeScene(new GameScene2());
+	if (Input::GetInstance().KeyDown(VK_F7))
+		Game::GetInstance().ChangeScene(new GameScene3());
+
 	if (Input::GetInstance().KeyDown(VK_F11))
 		Game::GetInstance().ChangeScene(new RankingScene());
 
@@ -77,3 +83,4 @@ void Scene::AddScore(float value)
 {
 	destScore = value;
 }
+

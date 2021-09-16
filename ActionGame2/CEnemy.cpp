@@ -86,14 +86,14 @@ void CEnemy::Attack(float deltaTime)
 {
 }
 
-void CEnemy::CreateDetectRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max)
+void CEnemy::CreateDetectRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, float detectGroundPos)
 {
-	nowScene->obm.AddObject(detectRange = new Range(this, targetName, addPos, min, max, D3DCOLOR_ARGB(255, 0, 0, 255)));
+	nowScene->obm.AddObject(detectRange = new Range(this, targetName, addPos, min, max, D3DCOLOR_ARGB(255, 0, 0, 255), detectGroundPos));
 }
 
-void CEnemy::CreateAttackRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max)
+void CEnemy::CreateAttackRange(std::wstring targetName, D3DXVECTOR2 addPos, D3DXVECTOR2 min, D3DXVECTOR2 max, float detectGroundPos)
 {
-	nowScene->obm.AddObject(attackRange = new Range(this, targetName, addPos, min, max, D3DCOLOR_ARGB(255, 255, 0, 0)));
+	nowScene->obm.AddObject(attackRange = new Range(this, targetName, addPos, min, max, D3DCOLOR_ARGB(255, 255, 0, 0), detectGroundPos));
 }
 
 bool CEnemy::AttackColliderTarget()
@@ -137,7 +137,8 @@ bool CEnemy::Move(float deltaTime)
 	if (!DetectColliderTarget())
 		return false;
 
-	pos += dir * ability.speed * deltaTime;
+	pos.x += dir.x * ability.speed * deltaTime;
+	groundPos += dir.y * ability.speed / 2 * deltaTime;
 
 	return true;
 }

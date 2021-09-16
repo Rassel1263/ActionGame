@@ -1,17 +1,33 @@
 #pragma once
 #include "Bullet.h"
 
+class EnhanceData : public Singleton<EnhanceData>
+{
+public:
+	std::vector<bool> enHance;
+
+	void Init()
+	{
+		enHance.resize(6);
+
+		for (auto& e : enHance)
+			e = false;
+	}
+
+	void SetData(int idx)
+	{
+		enHance.at(idx) = true;
+	}
+
+	void GetData(std::vector<bool>& vec)
+	{
+		std::copy(enHance.begin(), enHance.end(), std::back_inserter(vec));
+	}
+};
+
 class Player : public Unit
 {
 public:
-	enum InputDir
-	{
-		LEFT,
-		UP,
-		RIGHT,
-		DOWN,
-	};
-
 	enum class Images
 	{
 		IDLE,
@@ -37,12 +53,12 @@ public:
 
 		GRENADE,
 		STRONGATTACK,
-		MACHINEGUN,
-		SNIPER,
-		NUCLEAR,
 
 		GUNKATA,
 		MOVESHOOT,
+		MACHINEGUN,
+		SNIPER,
+		NUCLEAR,
 
 		SHADOW,
 		END,
@@ -54,6 +70,8 @@ public:
 
 	// ÄÞº¸ ½Ã½ºÅÛ
 	std::vector<std::string> comboInputs;
+	std::vector<bool> skillEnhance;
+
 	bool attackCancel = false;
 	bool specialAttack = false;
 	bool invincible = false;
@@ -78,11 +96,13 @@ public:
 	float nuclearTime = 0.0f;
 
 	bool nuclear = false;
+	bool jump = false;
 	bool jumpAttack = false;
 	bool fallowCamera = true;
 
 	int combo = 0;
 	int prevCombo = 0;
+	int maxCombo = 0;
 	float comboInterval = 0.0f;
 
 public:

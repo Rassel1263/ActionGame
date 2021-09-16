@@ -31,6 +31,10 @@ Bullet::Bullet(std::wstring team, D3DXVECTOR2 pos, D3DXVECTOR2 dir, float speed,
 			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet3");
 		else if (type == Type::SNIPER)
 			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet4");
+		else if (type == Type::EMACHINEGUN)
+			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet5");
+		else if (type == Type::ESNIPER)
+			spr.LoadAll(L"Assets/Sprites/bullet/playerBullet6");
 		else if (type == Type::GRENADE)
 			spr.LoadAll(L"Assets/Sprites/bullet/grenade.png");
 
@@ -101,7 +105,7 @@ void Bullet::OnCollision(Collider& coli)
 	{
 		if (abs(groundPos - coli.obj->groundPos) >= 100) return;
 
-		if (type != Type::SNIPER)
+		if (type != Type::SNIPER && type != Type::ESNIPER)
 		{
 			if (type == Type::GRENADE)
 			{

@@ -55,8 +55,8 @@ HRESULT CALLBACK OnD3D9ResetDevice( IDirect3DDevice9* pd3dDevice, const D3DSURFA
     //DXUTGetD3D9PresentParameters().AutoDepthStencilFormat;
     //DXUTGetD3D9BackBufferSurfaceDesc()->Format;
 
-    Game::GetInstance().Reset();
-    TextureManager::GetInstance().ResetDevice();
+    //Game::GetInstance().Reset();
+    //TextureManager::GetInstance().ResetDevice();
   
     return S_OK;
 }
@@ -96,6 +96,15 @@ void CALLBACK OnD3D9FrameRender( IDirect3DDevice9* pd3dDevice, double fTime, flo
 LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
                           bool* pbNoFurtherProcessing, void* pUserContext )
 {
+    switch (uMsg)
+    {
+    case WM_MOUSEMOVE:
+        Input::GetInstance().mousePos = D3DXVECTOR2(LOWORD(lParam) - 960, -HIWORD(lParam) + 540);
+        break;
+    default:
+        break;
+    }
+
     return 0;
 }
 
@@ -105,8 +114,8 @@ LRESULT CALLBACK MsgProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9LostDevice( void* pUserContext )
 {
-    Game::GetInstance().pVB->Release();
-    Game::GetInstance().pLine->Release();
+    //TextureManager::GetInstance().Term();
+    //Game::GetInstance().Term();
 }
 
 

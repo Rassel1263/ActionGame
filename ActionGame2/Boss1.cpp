@@ -1,14 +1,15 @@
 #include "DXUT.h"
 #include "Boss1.h"
 
-Boss1::Boss1()
+Boss1::Boss1() : CBoss(D3DXVECTOR2(16000, -100))
 {
 	hitTime = 0.1f;
-	ability.SetAbility(100, 100);
+	ability.SetAbility(1000, 100);
+		
 	SetImages();
 
 	CreateCollider(D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), L"enemy");
-	nowScene->obm.AddObject(detectRange = new Range(this, L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-700, -400), D3DXVECTOR2(700, 400), D3DCOLOR_ARGB(255, 0, 0, 255)));
+	nowScene->obm.AddObject(detectRange = new Range(this, L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-700, -400), D3DXVECTOR2(700, 400), D3DCOLOR_ARGB(255, 0, 0, 255), 500));
 
 	SetState(BossIdle::GetInstance());
 }
@@ -70,7 +71,7 @@ bool Boss1::Pattern2(float deltaTime)
 
 		D3DXVECTOR2 playerPos = D3DXVECTOR2(nowScene->player->pos.x, nowScene->player->groundPos);
 		auto lambda = [=] {
-			nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, playerPos.y)); };
+		nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, playerPos.y)); };
 
 		nowScene->obm.AddObject(new Effect(L"enemy/magic", playerPos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.05f, 6, true, lambda));
 	}

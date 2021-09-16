@@ -7,8 +7,9 @@ Player::Player()
 
 	hitTime = 0.1f;
 	team = L"player";
+	pos.y = -100;
 	groundPos = -100;
-	ability.SetAbility(100, 500);
+	ability.SetAbility(100, 5000);
 
 	SetState(PlayerIdle::GetInstance());
 	SetCollider(-60, 0, 60, 300, team);
@@ -19,29 +20,31 @@ Player::Player()
 
 	outlineShader = new OutlineShader();
 
+	EnhanceData::GetInstance().GetData(skillEnhance);
 	nowScene->obm.AddObject(new PlayerUI(this));
+
 }
 
 void Player::Update(float deltaTime)
 {
-	if (Input::GetInstance().KeyDown('H'))
-	{
-		nowScene->obm.AddObject(new CalcPage());
-	}
-
-	std::cout << pos.x << std::endl;
+	if (nowScene->bossIntro) return;
 
 	if (fallowCamera)
 	{
-		if(pos.x > -1024 && pos.x < 22770)
-		Camera::GetInstance().destCameraPos.x = pos.x;
+		if (pos.x > -1024 && pos.x < 16800)
+			Camera::GetInstance().destCameraPos.x = pos.x;
 	}
-	
-	CancelUpdate(deltaTime);
-	UpdateItem(deltaTime);
-	HealUpdate(deltaTime);
-	PlusMp(deltaTime * 3);
-	Combo(deltaTime);
+
+	if (ability.hp > 0)
+	{
+		CancelUpdate(deltaTime);
+		UpdateItem(deltaTime);
+		HealUpdate(deltaTime);
+
+		if(skillEnhance[0])
+			PlusMp(deltaTime * 3);
+		Combo(deltaTime);
+	}
 
 	if (nowState)
 		nowState->UpdateState(this, deltaTime);
@@ -55,7 +58,7 @@ void Player::Render()
 
 	GetSprite(Images::SHADOW).Render(RenderInfo{ D3DXVECTOR2(ri.pos.x, groundPos) });
 
-	if(superArmor)
+	if (superArmor)
 		outlineShader->Render(outlineShader, GetNowSprite(), ri, D3DXVECTOR4(1.0f, 0, 0, 1.0f));
 	else
 		GetNowSprite().Render(ri);
@@ -101,16 +104,17 @@ void Player::SetImages()
 	GetSprite(Images::WEAKATTACK3).LoadAll(filePath + L"weakAttack3", 0.02f, false);
 	GetSprite(Images::WEAKATTACK4).LoadAll(filePath + L"weakAttack4", 0.015f, false);
 	GetSprite(Images::WEAKTATCKEND).LoadAll(filePath + L"weakAttackend", 0.1f, false);
+	GetSprite(Images::STRONGATTACK).LoadAll(filePath + L"strongAttack", 0.05f, false);
 
 	GetSprite(Images::GRENADE).LoadAll(filePath + L"grenade", 0.05f, false);
-	GetSprite(Images::STRONGATTACK).LoadAll(filePath + L"strongAttack", 0.05f, false);
+
+	GetSprite(Images::GUNKATA).LoadAll(filePath + L"Skillgunkata", 0.04f, false);
+	GetSprite(Images::MOVESHOOT).LoadAll(filePath + L"SkillmoveShoot", 0.02f, false);
 	GetSprite(Images::MACHINEGUN).LoadAll(filePath + L"Skillmachinegun", 0.03f, false);
 	GetSprite(Images::SNIPER).LoadAll(filePath + L"Skillsniper", 0.05f, false);
 	GetSprite(Images::NUCLEAR).LoadAll(filePath + L"Skillnuclear", 0.05f, false);
 
 
-	GetSprite(Images::GUNKATA).LoadAll(filePath + L"Skillgunkata", 0.04f, false);
-	GetSprite(Images::MOVESHOOT).LoadAll(filePath + L"SkillmoveShoot", 0.02f, false);
 }
 
 void Player::Hit(float damage, D3DXVECTOR2 addForce)
@@ -122,6 +126,9 @@ void Player::Hit(float damage, D3DXVECTOR2 addForce)
 	}
 
 	if (invincible || hit) return;
+
+
+	nowScene->obm.AddObject(new Effect(L"Player/Hit3", pos + D3DXVECTOR2(nowScene->GetRandomNum(-50, 50), nowScene->GetRandomNum(100, 200)), D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0.5, 0.5), 0.05f));
 	Unit::Hit(damage, addForce);
 }
 
@@ -165,10 +172,15 @@ void Player::PlusCombo(int value)
 	comboInterval = 0.0f;
 	prevCombo = combo;
 	combo += value;
+
+	if (combo > maxCombo)
+		maxCombo = combo;
 }
 
 void Player::ItemEffective(int index)
 {
+	nowScene->obm.AddObject(new Effect(L"player/item", &pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(D3DXVECTOR2(0, 150)), 0.3f));
+
 	switch (index)
 	{
 	case 1:
@@ -216,17 +228,14 @@ bool Player::Move(float deltaTime, bool moveShot)
 		return false;
 
 	if (pos.x + moveDir.x <= -1860)
-	{
 		pos.x = -1859;
-		return false;
-	}
 
 	if (pos.x + moveDir.x >= 23640)
-	{
 		pos.x = 24639;
-		return false;
-	}
 
+	int maxY = (nowScene->curStage == 1) ? 200 : -50;
+	if (groundPos + moveDir.y >= maxY)
+		groundPos = maxY;
 
 	pos.x += moveDir.x * deltaTime * ability.speed;
 	groundPos += moveDir.y * deltaTime * ability.speed / 2;
@@ -250,13 +259,14 @@ void Player::CancelUpdate(float deltaTime)
 
 void Player::HealUpdate(float deltaTime)
 {
-	if(healTimer < healTime) 
+	if (healTimer < healTime)
 		healTimer += deltaTime;
 
 	if (Input::GetInstance().KeyDown('F'))
 	{
 		if (healTimer >= healTime)
 		{
+			nowScene->obm.AddObject(new Effect(L"player/heal", &pos, D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0, 150), 1.0f));
 			PlusHp(10);
 			healTimer = 0.0f;
 		}
@@ -306,7 +316,7 @@ void Player::ComboCheck()
 
 	ComboChecking(6, 4, "DO", "DO", "UP", "S");
 
-	if (specialAttack && !jumpAttack)
+	if (specialAttack && !jumpAttack && !jump)
 	{
 		SetState(PlayerSpecialAttack::GetInstance());
 		comboInputs.clear();
@@ -375,17 +385,17 @@ void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet:
 	{
 		Camera::GetInstance().cameraQuaken = { 3, 3 };
 
-		if(jumpShot)
+		if (jumpShot)
 			nowScene->obm.AddObject(new Effect(L"Player/fire_jump", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 		else
 			nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 	}
-	else if (type == Bullet::Type::AIRSHOT || type == Bullet::Type::MACHINEGUN)
+	else if (type == Bullet::Type::AIRSHOT || type == Bullet::Type::MACHINEGUN || type == Bullet::Type::EMACHINEGUN)
 	{
 		Camera::GetInstance().cameraQuaken = { 5, 5 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 	}
-	else if(type == Bullet::Type::SNIPER)
+	else if (type == Bullet::Type::SNIPER || type == Bullet::Type::ESNIPER)
 	{
 		Camera::GetInstance().cameraQuaken = { 15, 15 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire_sniper", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
@@ -401,7 +411,7 @@ void Player::CreateAttackCollider(int scene, D3DXVECTOR2 offset, D3DXVECTOR2 min
 	{
 		onAttack = true;
 		Collider::AABB aabb = { min, max };
-		if(fallow)
+		if (fallow)
 			nowScene->obm.AddObject(new AttackCollider(team, &pos, D3DXVECTOR2(offset.x * ri.scale.x, offset.y), aabb, damage, atkPower, yVec, time, groundPos));
 		else
 			nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(offset.x * ri.scale.x, offset.y), aabb, damage, atkPower, yVec, time, groundPos));
@@ -428,18 +438,29 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	else if (image == Images::GUNKATA)
 	{
 		nowScene->obm.AddObject(new SkillDirecting(attackTimer));
-		nowScene->obm.AddObject(new Effect(L"Player/fire_gunkata", pos + D3DXVECTOR2(0, 240), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5f, 0.5f), 0.04f));
-		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2( -300, 0), D3DXVECTOR2( 300, 400) }, 5, D3DXVECTOR2(20, 0), 0.2f, attackTimer, groundPos));
+
+		if (skillEnhance[1]) // 스킬 1 강화 
+		{
+			nowScene->obm.AddObject(new Effect(L"Player/fire_gunkata2", pos + D3DXVECTOR2(0, 240), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5f, 0.5f), 0.04f));
+			nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 400) }, 8, D3DXVECTOR2(20, 0), 0.2f, attackTimer, groundPos));
+		}
+		else
+		{
+			nowScene->obm.AddObject(new Effect(L"Player/fire_gunkata", pos + D3DXVECTOR2(0, 240), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5f, 0.5f), 0.04f));
+			nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-300, 0), D3DXVECTOR2(300, 400) }, 5, D3DXVECTOR2(20, 0), 0.2f, attackTimer, groundPos));
+		}
+
 		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 	else if (image == Images::MOVESHOOT)
 	{
-		maxAttackTimer =  GetNowSprite().aniMaxtime * 2;
+		maxAttackTimer = GetNowSprite().aniMaxtime * 2;
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 	else if (image == Images::MACHINEGUN)
 	{
 		maxAttackTimer = GetNowSprite().aniMaxtime * 3;
+		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 
 	else if (image == Images::SNIPER)
@@ -448,11 +469,18 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		{
 			if (abs(enemy->groundPos - groundPos) <= 100)
 			{
-				if((ri.scale.x >=  1) ? (enemy->pos.x > pos.x) : (enemy->pos.x < pos.x))
-				nowScene->obm.AddObject(new Effect(L"Player/Sniper", &enemy->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0, 150), 0.3f));
+				if ((ri.scale.x >= 1) ? (enemy->pos.x > pos.x) : (enemy->pos.x < pos.x))
+					nowScene->obm.AddObject(new Effect(L"Player/Sniper", &enemy->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0, 150), 0.3f));
 			}
 		}
 
+		if (abs(nowScene->boss->groundPos - groundPos) <= 100)
+		{
+			if ((ri.scale.x >= 1) ? (nowScene->boss->pos.x > pos.x) : (nowScene->boss->pos.x < pos.x))
+				nowScene->obm.AddObject(new Effect(L"Player/Sniper", &nowScene->boss->pos, D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0, 150), 0.3f));
+		}
+
+		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 		nowScene->obm.AddObject(new SkillDirecting(attackTimer));
 	}
 	else if (image == Images::NUCLEAR)
