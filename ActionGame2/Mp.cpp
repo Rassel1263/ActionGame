@@ -6,7 +6,7 @@ Mp::Mp(D3DXVECTOR2 pos, float startAngle, float amount)
 	this->pos = pos;
 	this->amount = amount;
 
-	if(amount < 0.6f)
+	if(amount < 6.0f)
 		spr.LoadAll(L"Assets/Sprites/effect/Player/Mp/1", 0.05f, false);
 	else
 		spr.LoadAll(L"Assets/Sprites/effect/Player/Mp/2", 0.05f, false);

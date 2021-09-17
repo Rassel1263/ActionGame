@@ -53,6 +53,8 @@ void Main::Update(float deltaTime)
 
 		if (Input::GetInstance().KeyDown(VK_RETURN) && !static_cast<MainScene*>(nowScene)->input)
 		{
+			SoundManager::GetInstance().Play(L"ClickBtn");
+
 			static_cast<MainScene*>(nowScene)->input = true;
 
 			switch (cNum)
@@ -111,6 +113,8 @@ void Main::ChoiceBtn()
 
 	if (cNum != pNum)
 	{
+		SoundManager::GetInstance().Play(L"MoveBtn");
+
 		ui[cNum].scene = 0;
 		ui[pNum].scene = 1;
 	}

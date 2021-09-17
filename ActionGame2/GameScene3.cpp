@@ -39,7 +39,7 @@ void GameScene3::Update(float deltaTime)
 		nowScene->obm.AddObject(new StageFont(StageFont::Type::FAIL));
 	}
 
-	if (player->pos.x > 16000 && !spawnBoss)
+	if (player->pos.x > 15000 && !spawnBoss)
 		obm.AddObject(boss = new Boss2());
 
 	Scene::Update(deltaTime);

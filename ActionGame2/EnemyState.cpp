@@ -210,6 +210,8 @@ EnemyHit* EnemyHit::GetInstance()
 void EnemyHit::EnterState(CEnemy* obj)
 {
 	obj->SetAni(CEnemy::Images::HIT);
+	SoundManager::GetInstance().Play(L"Hit");
+	SoundManager::GetInstance().Play(L"EnemyHitVoi");
 }
 
 void EnemyHit::UpdateState(CEnemy* obj, float deltaTime)
@@ -252,6 +254,12 @@ void EnemyStun::EnterState(CEnemy* obj)
 
 void EnemyStun::UpdateState(CEnemy* obj, float deltaTime)
 {
+	if (obj->ability.hp <= 0)
+	{
+		obj->SetState(EnemyDie::GetInstance());
+		return;
+	}
+
 	if (obj->hit)
 	{
 		obj->SetState(EnemyStun::GetInstance());

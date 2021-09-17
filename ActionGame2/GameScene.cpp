@@ -41,7 +41,7 @@ void GameScene::Update(float deltaTime)
 	if (nowScene->player->pos.x > 15000 && !spawnBoss)
 	{
 		spawnBoss = true;
-		nowScene->obm.AddObject(new CalcPage());
+		nowScene->obm.AddObject(new StageFont(StageFont::Type::CLEAR));
 	}
 
 

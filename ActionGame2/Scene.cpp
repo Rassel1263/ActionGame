@@ -92,7 +92,7 @@ void Scene::LoadFiles()
 	//Attack
 	SoundManager::GetInstance().Create(L"BasicShoot", soundPath + L"Player/Bullet/Basic.mp3", 5);
 
-	SoundManager::GetInstance().Create(L"AirShoot", soundPath + L"Player/Bullet/Airshot.mp3", 1);
+	SoundManager::GetInstance().Create(L"AirShoot", soundPath + L"Player/Bullet/Airshot.mp3", 10);
 	SoundManager::GetInstance().Create(L"AriShootVoi", PlayerVoice + L"AirShoot.mp3", 1);
 
 	SoundManager::GetInstance().Create(L"GunKata", soundPath+ L"Player/Attack/GunKata1.mp3", 1);
@@ -108,16 +108,18 @@ void Scene::LoadFiles()
 	SoundManager::GetInstance().Create(L"NuclearReady", soundPath + L"Player/Attack/NuclearReady.mp3", 1);
 	SoundManager::GetInstance().Create(L"NuclaerSound", soundPath + L"Player/Attack/NuclaerSound.mp3", 1);
 	SoundManager::GetInstance().Create(L"NuclearReady2", soundPath + L"Player/Attack/NuclearReady2.mp3", 1);
-	SoundManager::GetInstance().Create(L"NuclearFall", soundPath + L"Player/Attack/NuclerFall.mp3", 1);
+	SoundManager::GetInstance().Create(L"NuclearFall", soundPath + L"Player/Attack/NuclearFall.mp3", 1);
 	SoundManager::GetInstance().Create(L"NuclearBoom", soundPath + L"Player/Attack/NuclearBoom.mp3", 1);
+	SoundManager::GetInstance().Create(L"NuclearVoi", PlayerVoice + L"Nuclear.mp3", 1);
 
+	SoundManager::GetInstance().Create(L"Grenade", soundPath + L"Player/Attack/Grenade.mp3", 1);
 	SoundManager::GetInstance().Create(L"GrenadeVoi", PlayerVoice + L"Grenade.mp3", 1);
 
 	SoundManager::GetInstance().Create(L"Kick", soundPath + L"Player/Attack/Kick.mp3", 1);
 
 
 	///////////////////////////////////
-	/// Player
+	/// Enemy
 	///////////////////////////////////
 	SoundManager::GetInstance().Create(L"Enemy1", soundPath + L"Enemy/Spawn/1.mp3", 1);
 	SoundManager::GetInstance().Create(L"Enemy2", soundPath + L"Enemy/Spawn/2.mp3", 1);
@@ -129,6 +131,7 @@ void Scene::LoadFiles()
 	SoundManager::GetInstance().Create(L"Enemy3Atk", soundPath + L"Enemy/Attack/3.mp3", 1);
 	SoundManager::GetInstance().Create(L"Enemy3Atk2", soundPath + L"Enemy/Attack/3-2.mp3", 1);
 
+	SoundManager::GetInstance().Create(L"EnemyHitVoi", soundPath + L"Enemy/Hit.mp3", 1);
 
 	SoundManager::GetInstance().Create(L"BossIntro", soundPath + L"Enemy/BossIntro.mp3", 1);
 
@@ -138,15 +141,27 @@ void Scene::LoadFiles()
 	SoundManager::GetInstance().Create(L"Box", soundPath + L"Effect/Box.mp3", 1);
 	SoundManager::GetInstance().Create(L"Start", soundPath + L"Effect/Fight.mp3", 1);
 	SoundManager::GetInstance().Create(L"Hit", soundPath + L"Effect/Hit.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Hit", 300);
 	SoundManager::GetInstance().Create(L"Item", soundPath + L"Effect/Item.mp3", 1);
+	SoundManager::GetInstance().Create(L"Heal", soundPath + L"Effect/Heal.mp3", 1);
+	SoundManager::GetInstance().Create(L"Result", soundPath + L"Effect/Result.mp3", 1);
+
+	// UI
+	SoundManager::GetInstance().Create(L"MoveBtn", soundPath + L"UI/MoveBtn.mp3", 1);
+	SoundManager::GetInstance().Create(L"ClickBtn", soundPath + L"UI/ClickBtn.mp3", 1);
 
 	// BGM
 	SoundManager::GetInstance().Create(L"Main", soundPath + L"BGM/main.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Main", 300);
 
 	SoundManager::GetInstance().Create(L"Stage1", soundPath + L"BGM/stage1.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Stage1", 300);
 	SoundManager::GetInstance().Create(L"Stage2", soundPath + L"BGM/stage2-2.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Stage2", 300);
 	SoundManager::GetInstance().Create(L"Stage3", soundPath + L"BGM/stage3.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Stage3", 300);
 	SoundManager::GetInstance().Create(L"Ranking", soundPath + L"BGM/Ranking.mp3", 1);
+	SoundManager::GetInstance().Setvolume(L"Main", 300);
 
 }
 

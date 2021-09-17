@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "Boss2.h"
 
-Boss2::Boss2() : CBoss(D3DXVECTOR2(16000, -100))
+Boss2::Boss2() : CBoss(D3DXVECTOR2(16000, -200))
 {
 	hitTime = 0.1f;
 	ability.SetAbility(1000, 100);
@@ -39,9 +39,9 @@ void Boss2::SetImages()
 	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.05f);
 	GetSprite(Images::ATTACK1).LoadAll(filePath + L"Attack1", 0.05f, false);
 
-	GetSprite(Images::ATTACK2).LoadAll(filePath + L"AttackReady", 0.02f, false);
-	GetSprite(Images::ATTACK2RUSH).LoadAll(filePath + L"Attack2", 0.05f, false);
-	GetSprite(Images::ATTACKEND).LoadAll(filePath + L"AttackEnd", 0.05f, false);
+	GetSprite(Images::ATTACK2).LoadAll(filePath + L"AttackReady", 0.03f, false);
+	GetSprite(Images::ATTACK2RUSH).LoadAll(filePath + L"Attack2", 0.03f, false);
+	GetSprite(Images::ATTACKEND).LoadAll(filePath + L"AttackEnd", 0.03f, false);
 
 	GetSprite(Images::ATTACK3).LoadAll(filePath + L"Attack3", 0.01f, false);
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.025f, false);

@@ -135,6 +135,7 @@ void PlayerJump::EnterState(Player* obj)
 	obj->SetAni(Player::Images::JUMP);
 	obj->jump = true;
 	obj->velocity.y = 1200;
+	SoundManager::GetInstance().Play(L"JumpVoi");
 }
 
 void PlayerJump::UpdateState(Player* obj, float deltaTime)
@@ -429,7 +430,7 @@ void PlayerStrongAttack::EnterState(Player* obj)
 
 void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
 {
-	obj->CreateAttackCollider(3, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), 10, D3DXVECTOR2(100, 0), 0.05f, 0.1f);
+	obj->CreateAttackCollider(3, D3DXVECTOR2(100, 0), D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 300), 10, D3DXVECTOR2(200, 0), 0.05f, 0.1f);
 
 	if (!obj->GetNowSprite().bAnimation)
 	{
@@ -579,7 +580,6 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 
 			if (Input::GetInstance().KeyUp('S') || obj->nuclearTime <= 0.0f)
 			{
-				SoundManager::GetInstance().Stop(L"NuclearReady2");
 				SoundManager::GetInstance().Play(L"NuclearFall");
 
 				obj->nuclear = false;
@@ -618,7 +618,7 @@ PlayerHit* PlayerHit::GetInstance()
 void PlayerHit::EnterState(Player* obj)
 {
 	Camera::GetInstance().cameraQuaken = { 5, 5};
-	SoundManager::GetInstance().Play(L"Hit" + std::to_wstring(nowScene->GetRandomNum(1, 3)), false);
+	SoundManager::GetInstance().Play(L"Hit" + std::to_wstring(nowScene->GetRandomNum(1, 3)) + L"Voi", false);
 	obj->SetAni(Player::Images::HIT);
 }
 
@@ -640,12 +640,6 @@ void PlayerHit::UpdateState(Player* obj, float deltaTime)
 void PlayerHit::ExitState(Player* obj)
 {
 	obj->hit = false;
-}
-
-PlayerDie* PlayerDie::GetInstance()
-{
-	static PlayerDie instance;
-	return &instance;
 }
 
 PlayerStun* PlayerStun::GetInstance()
@@ -707,6 +701,11 @@ void PlayerStandUp::ExitState(Player* obj)
 }
 
 
+PlayerDie* PlayerDie::GetInstance()
+{
+	static PlayerDie instance;
+	return &instance;
+}
 
 void PlayerDie::EnterState(Player* obj)
 {
@@ -718,6 +717,8 @@ void PlayerDie::EnterState(Player* obj)
 	obj->force.x += -obj->ri.scale.x * 50;
 	obj->bCollider = false;
 	obj->SetAni(Player::Images::DIE);
+
+	SoundManager::GetInstance().Play(L"DieVoi", false);
 }
 
 void PlayerDie::UpdateState(Player* obj, float deltaTime)

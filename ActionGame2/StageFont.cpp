@@ -13,7 +13,12 @@ StageFont::StageFont(Type type)
 		Game::GetInstance().timeScale = 0.0f;
 	}
 	else if (type == Type::CLEAR)
+	{
 		spr.LoadAll(L"Assets/Sprites/effect/StageClear", 0.05f, false);
+		nowScene->stopTime = true;
+		SoundManager::GetInstance().StopAll();
+		SoundManager::GetInstance().Play(L"Result");
+	}
 	else if (type == Type::FAIL)
 	{
 		spr.LoadAll(L"Assets/Sprites/effect/StageFail", 0.05f, false);
@@ -47,6 +52,16 @@ void StageFont::Update(float deltaTime)
 
 	else if (type == Type::CLEAR)
 	{
+		if (!spr.bAnimation)
+		{
+			spr.color.a -= deltaTime * 0.5f;
+
+			if (spr.color.a <= 0.0f)
+			{
+				destroy = true;
+				nowScene->obm.AddObject(new CalcPage());
+			}
+		}
 	}
 
 	else if (type == Type::FAIL)
@@ -66,7 +81,8 @@ void StageFont::Update(float deltaTime)
 
 void StageFont::Render()
 {
-	bck.Render(RenderInfo{});
+	if(type != Type::CLEAR)
+		bck.Render(RenderInfo{});
 
 	ri.pos = pos;
 	spr.Render(ri);

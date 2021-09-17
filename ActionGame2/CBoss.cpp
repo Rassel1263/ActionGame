@@ -53,7 +53,6 @@ void CBoss::Render()
     else
         GetNowSprite().Render(ri);
 
-
     Object::Render();
 }
 
@@ -96,10 +95,10 @@ void CBoss::Hit(float damage, D3DXVECTOR2 addForce)
     else if (nowScene->player->attackNum == 2)
     {
         nowScene->obm.AddObject(new Effect(L"Player/Explode_sniper", pos + D3DXVECTOR2(0, 150) + nowScene->GetRandomVector(-70, 70, -100, 100), D3DXVECTOR2(0.4, 0.4), D3DXVECTOR2(0.5, 0.5), 0.5f, true));
-        nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2) * 0.3f));
+        nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2)));
     }
     else
-        nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(3, 5) * 0.3f));
+        nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(3, 5)));
 
     nowScene->player->PlusCombo(1);
 }

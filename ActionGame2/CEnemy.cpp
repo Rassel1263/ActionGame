@@ -58,26 +58,26 @@ void CEnemy::Hit(float damage, D3DXVECTOR2 addForce)
 	if (hit) return;
 
 	if (nowScene->player->powerUp)
-		damage *= 0.3f;
+		damage *= 1.3f;
 
 	Unit::Hit(damage, addForce);
 
 	if (nowScene->player->attackNum == -1)
 	{
 		nowScene->obm.AddObject(new Effect(L"Player/Hit1", pos + D3DXVECTOR2(0, 150) + nowScene->GetRandomVector(-70, 70, -100, 100), D3DXVECTOR2(1.0, 1.0), D3DXVECTOR2(0.5, 0.5), 0.5f, true));
-		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(6, 10) * 0.1f));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(5, 10)));
 	}
-	if (nowScene->player->attackNum == 0)
+	else if (nowScene->player->attackNum == 0)
 	{
-		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(3, 5) * 0.1f));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2)));
 	}
 	else if (nowScene->player->attackNum == 2)
 	{
 		nowScene->obm.AddObject(new Effect(L"Player/Explode_sniper", pos + D3DXVECTOR2(0, 150) + nowScene->GetRandomVector(-70, 70, -100, 100), D3DXVECTOR2(0.4, 0.4), D3DXVECTOR2(0.5, 0.5), 0.5f, true));
-		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2) * 0.1f));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2)));
 	}
 	else
-		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(3, 5) * 0.1f));
+		nowScene->obm.AddObject(new Mp(pos + D3DXVECTOR2(0, 150), nowScene->GetRandomNum(0, 360), nowScene->GetRandomNum(1, 2)));
 
 	nowScene->player->PlusCombo(1);
 }

@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "Boss1.h"
 
-Boss1::Boss1() : CBoss(D3DXVECTOR2(16000, -100))
+Boss1::Boss1() : CBoss(D3DXVECTOR2(16000, -200))
 {
 	hitTime = 0.1f;
 	ability.SetAbility(1000, 100);

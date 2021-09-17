@@ -88,7 +88,7 @@ void Player::SetImages()
 	GetSprite(Images::JUMP).LoadAll(filePath + L"jump", 0.05f, false);
 	GetSprite(Images::FALL).LoadAll(filePath + L"fall", 0.05f, false);
 	GetSprite(Images::LANDING).LoadAll(filePath + L"landing", 0.05f, false);
-	GetSprite(Images::SLIDE).LoadAll(filePath + L"slide", 0.05f, false);
+	GetSprite(Images::SLIDE).LoadAll(filePath + L"slide", 0.03f, false);
 	GetSprite(Images::SHADOW).LoadAll(L"Assets/Sprites/effect/shadow");
 	GetSprite(Images::HIT).LoadAll(filePath + L"hit", 0.05f, false);
 	GetSprite(Images::STUN).LoadAll(filePath + L"Stun", 0.05f, false);
@@ -266,6 +266,7 @@ void Player::HealUpdate(float deltaTime)
 	{
 		if (healTimer >= healTime)
 		{
+			SoundManager::GetInstance().Play(L"Heal");
 			nowScene->obm.AddObject(new Effect(L"player/heal", &pos, D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0, 150), 1.0f));
 			PlusHp(10);
 			healTimer = 0.0f;
@@ -439,7 +440,11 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	SetAni(image);
 	attackTimer = GetNowSprite().aniMaxtime * attackScene;
 
-	if (image == Images::SLIDE)
+	if (image == Images::WEAKATTACK4)
+	{
+		SoundManager::GetInstance().Play(L"AirShootVoi");
+	}
+	else if (image == Images::SLIDE)
 	{
 		velocity.x += ri.scale.x * 3000;
 		SoundManager::GetInstance().Play(L"Slide", false);
@@ -512,9 +517,10 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		nowScene->obm.AddObject(new Nuclear(D3DXVECTOR2(pos.x + 500 * ri.scale.x, pos.y)));
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 
+		SoundManager::GetInstance().Play(L"NuclearVoi", false);
 		SoundManager::GetInstance().Play(L"NuclearReady", false);
 		SoundManager::GetInstance().Play(L"NuclearSound", false);
-		SoundManager::GetInstance().Play(L"NuclearReady2", true);
+		SoundManager::GetInstance().Play(L"NuclearReady2", false);
 	}
 
 	nowScene->obm.AddObject(new Effect(L"Player/command", pos + D3DXVECTOR2(0, 300), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.5f, true));

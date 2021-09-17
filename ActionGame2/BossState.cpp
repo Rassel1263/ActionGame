@@ -316,7 +316,7 @@ void BossDie::UpdateState(CBoss* obj, float deltaTime)
 	{
 		restoration = true;
 
-		nowScene->obm.AddObject(new CalcPage());
+		nowScene->obm.AddObject(new StageFont(StageFont::Type::CLEAR));
 		nowScene->player->fallowCamera = true;
 		Camera::GetInstance().destCameraScale = { 1, 1 };
 		Camera::GetInstance().destCameraPos.y = 0.0f;

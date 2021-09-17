@@ -20,11 +20,9 @@ public:
 
 	float hp = 0.0f;
 	float time = 0.0f;
-	float totalScore = 0.0f;
 	float combo = 0.0f;
 
 	float stopTimer = 0.0f;
-	float drawTimer = 0.0f;
 	float drawFadeTimer = 0.0f;
 
 	CalcPage();

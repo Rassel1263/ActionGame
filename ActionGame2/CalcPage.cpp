@@ -3,10 +3,6 @@
 
 CalcPage::CalcPage()
 {
-	SoundManager::GetInstance().StopAll();
-
-	nowScene->stopTime = true;
-
 	bck.LoadAll(L"Assets/Sprites/UI/calcBck.png");
 	bck.color.a = 0.0f;
 	bck.bCamera = false;
@@ -21,7 +17,7 @@ CalcPage::CalcPage()
 
 	this->hp = nowScene->player->ability.hp;
 	this->time = nowScene->gameTime;
-	this->totalScore = nowScene->score + nowScene->destScore;
+	nowScene->score = nowScene->score + nowScene->destScore;
 	this->combo = nowScene->player->maxCombo;
 
 	nameGroups.resize(6);
@@ -46,12 +42,6 @@ CalcPage::CalcPage()
 
 void CalcPage::Update(float deltaTime)
 {
-	if (drawTimer < 2.0f)
-	{
-		drawTimer += deltaTime;
-		return;
-	}
-
 	if (bck.color.a < 1.0f)
 		bck.color.a += deltaTime;
 
@@ -67,7 +57,7 @@ void CalcPage::Update(float deltaTime)
 			nowScene->obm.AddObject(new Font(L"Score/", hp, D3DXVECTOR2(0, 300), D3DXVECTOR2(1, 1), 100, 0, layer + 1, &fontColor));
 			nowScene->obm.AddObject(new Font(L"Score/", time, D3DXVECTOR2(0, 100), D3DXVECTOR2(1, 1), 100, 0, layer + 1, &fontColor));
 			nowScene->obm.AddObject(new Font(L"Combo/", combo, D3DXVECTOR2(0, -100), D3DXVECTOR2(1, 1), 100, 0, layer + 1, &fontColor));
-			nowScene->obm.AddObject(new Font(L"Score/", totalScore, D3DXVECTOR2(500, -300), D3DXVECTOR2(1, 1), 100, 3, layer + 1, &fontColor));
+			nowScene->obm.AddObject(new Font(L"Score/", nowScene->score, D3DXVECTOR2(500, -300), D3DXVECTOR2(1, 1), 100, 3, layer + 1, &fontColor));
 		}
 
 		stopTimer += deltaTime;
@@ -164,5 +154,5 @@ void CalcPage::CalcNum(float& num, float deltaTime, float speed)
 
 	if (num < 0) num = 0;
 
-	totalScore += tempNum - num;
+	nowScene->score += tempNum - num;
 }
