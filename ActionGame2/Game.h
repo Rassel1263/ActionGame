@@ -15,7 +15,6 @@ class Game : public Singleton<Game>
 {
 public:
 	std::vector<std::thread> threads;
-	LoadSprite spr;
 
 	bool pause = false;
 

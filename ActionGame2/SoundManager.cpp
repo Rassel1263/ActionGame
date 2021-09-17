@@ -16,7 +16,6 @@ Sound::Sound(std::wstring path, int szSound)
 		mciSendString(buffer, 0, 0, 0);
 		swprintf_s(buffer, TEXT("stop %d_%d"), soundIDX, i);
 		mciSendString(buffer, 0, 0, 0);
-
 	}
 }
 

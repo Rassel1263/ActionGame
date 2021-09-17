@@ -46,6 +46,7 @@ void Box::OnCollision(Collider& coli)
 	{
 		if (!hit)
 		{
+			SoundManager::GetInstance().Play(L"Box");
 			bCollider = false;
 			hit = true;
 		}

@@ -10,17 +10,6 @@ TextureManager::~TextureManager()
     }
 }
 
-void TextureManager::Term()
-{
-    //int n = textures.size();
-
-    //for (auto texture : textures)
-    //{
-    //    SAFE_RELEASE(texture.second->src);
-    //    SAFE_DELETE(texture.second);
-    //}
-}
-
 void TextureManager::SaveFilePath()
 {
     for (auto& file : std::filesystem::recursive_directory_iterator(L"Assets/Sprites"))
@@ -33,6 +22,18 @@ void TextureManager::SaveFilePath()
 
     fileSize = filePaths.size();
 }
+
+void TextureManager::Term()
+{
+   int n = textures.size();
+
+   for (auto texture : textures)
+   {
+       SAFE_RELEASE(texture.second->src);
+       SAFE_DELETE(texture.second);
+   }
+}
+
 
 void TextureManager::LoadFile()
 {
@@ -55,7 +56,7 @@ void TextureManager::LoadTexture(int n)
      
         wchar_t temp[256] = L"";
 
-        wsprintfW(temp, L"thread : %d    FilePath : %s              filePathSize : %d\n", n, filePath.c_str(), (int)filePaths.size());
+        wsprintfW(temp, L"thread : %d    FilePath : %s             filePathSize : %d\n", n, filePath.c_str(), (int)filePaths.size());
         OutputDebugString(temp);
         
         TextureManager::GetInstance().GetTexture(filePath);
@@ -66,7 +67,7 @@ void TextureManager::LoadTexture(int n)
 
 const Texture* TextureManager::GetTexture(std::wstring filePath)
 {
-   // std::lock_guard<std::recursive_mutex> guard(locki);
+   std::lock_guard<std::recursive_mutex> guard(locki);
 
     filePath = std::filesystem::absolute(filePath);
     std::transform(filePath.begin(), filePath.end(), filePath.begin(), std::towlower);

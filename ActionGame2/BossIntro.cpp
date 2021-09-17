@@ -7,6 +7,9 @@ BossIntro::BossIntro(float x)
 	nowScene->bossIntro = true;
 	Camera::GetInstance().destCameraPos.x = x;
 
+	SoundManager::GetInstance().StopAll();
+	SoundManager::GetInstance().Play(L"BossIntro");
+
 	spr.LoadAll(L"Assets/Sprites/Effect/enemy/bossIntro.png");
 	spr.color.a = 0.0f;
 	spr.bCamera = false;
@@ -25,6 +28,8 @@ void BossIntro::Update(float deltaTime)
 
 	if (blink >= 4)
 	{
+		SoundManager::GetInstance().Play(L"BossField", true);
+
 		nowScene->player->fallowCamera = true;
 		nowScene->bossIntro = false;
 		destroy = true;

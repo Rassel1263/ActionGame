@@ -15,6 +15,7 @@ void Nuclear::Update(float deltaTime)
 
 	if (nowScene->player->nuclear)
 	{
+
 		if (Input::GetInstance().KeyPress(VK_RIGHT))
 			pos.x += deltaTime * 500;
 
@@ -34,6 +35,8 @@ void Nuclear::Update(float deltaTime)
 		nowScene->obm.AddObject(new SkillDirecting(1.0f, 2));
 		Camera::GetInstance().cameraQuaken = { 50, 50};
 		nowScene->obm.AddObject(new AttackCollider(L"player", pos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-500, 0), D3DXVECTOR2(500, 300) }, 100, D3DXVECTOR2(0, 0), 0.0f, 0.1f, groundPos));
+		SoundManager::GetInstance().Stop(L"NuclearFall");
+		SoundManager::GetInstance().Play(L"NuclearBoom", false);
 	}
 
 	if (!nowScene->player->nuclear)

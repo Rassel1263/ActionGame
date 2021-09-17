@@ -2,6 +2,9 @@
 class Main : public Object
 {
 public:
+	static bool intro;
+
+	Sprite introSpr;
 	std::vector<Sprite> ui;
 
 	int cNum = 0;

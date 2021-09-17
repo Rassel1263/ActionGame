@@ -11,7 +11,7 @@ Enemy3::Enemy3(D3DXVECTOR2 pos) : CEnemy(pos)
 	SetCollider(-60, 0, 60, 300, team);
 	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-700, 0), D3DXVECTOR2(700, 300), 300);
 	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(0, 0), D3DXVECTOR2(0, 0), 300);
-	ability.SetAbility(80, 100);
+	ability.SetAbility(50, 100);
 
 	SetState(EnemyIdle::GetInstance());
 }
@@ -51,5 +51,6 @@ void Enemy3::Attack(float deltaTime)
 		auto lambda = [=] {nowScene->obm.AddObject(new AttackCollider(L"enemy", playerPos, D3DXVECTOR2(0, 0), { D3DXVECTOR2(-100, 0), D3DXVECTOR2(100, 200) }, 10, D3DXVECTOR2(0, 100), 0.1f, 0.05f, playerPos.y)); };
 
 		nowScene->obm.AddObject(new Effect(L"enemy/magic", nowScene->player->pos, D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.1), 0.1f, 6, true, lambda));
+		SoundManager::GetInstance().Play(L"Enemy3Atk");
 	};
 }

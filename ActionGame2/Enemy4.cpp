@@ -11,7 +11,7 @@ Enemy4::Enemy4(D3DXVECTOR2 pos) : CEnemy(pos)
 	SetCollider(-60, 0, 60, 300, team);
 	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-400, 0), D3DXVECTOR2(400, 200), 100);
 	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-600, 0), D3DXVECTOR2(600, 300), 300);
-	ability.SetAbility(300, 100);
+	ability.SetAbility(150, 100);
 
 
 	SetState(EnemyIdle::GetInstance());

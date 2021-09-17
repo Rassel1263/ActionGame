@@ -1,8 +1,15 @@
 #include "DXUT.h"
 #include "Main.h"
 
+bool Main::intro = false;
+
 Main::Main()
 {
+	if (!intro)
+		introSpr.LoadAll(L"Assets/Sprites/UI/Intro", 0.03f, false);
+
+	SoundManager::GetInstance().Play(L"Main", true);
+
 	Camera::GetInstance().destCameraPos = { 0, 0 };
 	Camera::GetInstance().cameraPos = { 0, 0 };
 
@@ -33,49 +40,65 @@ Main::Main()
 
 void Main::Update(float deltaTime)
 {
-	ChoiceBtn();
-
-	
-
-	if (Input::GetInstance().KeyDown(VK_RETURN) && !static_cast<MainScene*>(nowScene)->input)
+	if (!intro)
 	{
-		static_cast<MainScene*>(nowScene)->input = true;
+		if (!introSpr.bAnimation)
+			intro = true;
 
-		switch (cNum)
-		{
-		case 0:
-			Game::GetInstance().ChangeScene(new GameScene());
-			break;
-		case 1:
-			nowScene->obm.AddObject(new RankPage());
-			break;
-		case 2:
-			nowScene->obm.AddObject(new Help());
-			break;
-		case 3:
-			PostQuitMessage(0);
-			break;
-		}
+		introSpr.Update(deltaTime);
 	}
+	else 
+	{
+		ChoiceBtn();
 
-	for (int i = 4; i < 7; ++i)
-		ui[i].Update(deltaTime);
+		if (Input::GetInstance().KeyDown(VK_RETURN) && !static_cast<MainScene*>(nowScene)->input)
+		{
+			static_cast<MainScene*>(nowScene)->input = true;
+
+			switch (cNum)
+			{
+			case 0:
+				Game::GetInstance().ChangeScene(new GameScene());
+				SoundManager::GetInstance().StopAll();
+				break;
+			case 1:
+				nowScene->obm.AddObject(new RankPage());
+				break;
+			case 2:
+				nowScene->obm.AddObject(new Help());
+				break;
+			case 3:
+				PostQuitMessage(0);
+				break;
+			}
+		}
+
+		for (int i = 4; i < 7; ++i)
+			ui[i].Update(deltaTime);
+	}
 }
 
 void Main::Render()
 {
-	ui[6].Render(RenderInfo{ D3DXVECTOR2(0, 0), D3DXVECTOR2(2, 2) });
+	if (!intro)
+		introSpr.Render(RenderInfo{D3DXVECTOR2(0, 0), D3DXVECTOR2(2, 2)});
+	else
+	{
+		ui[6].Render(RenderInfo{ D3DXVECTOR2(0, 0), D3DXVECTOR2(2, 2) });
 
-	ui[5].Render(RenderInfo{ D3DXVECTOR2(-450, 180) });
+		ui[5].Render(RenderInfo{ D3DXVECTOR2(-450, 180) });
 
-	ui[4].Render(RenderInfo{});
+		ui[4].Render(RenderInfo{ D3DXVECTOR2(-880 + cNum * 450, -400) });
 
-	for (int i = 0; i < 4; ++i)
-		ui[i].Render(RenderInfo{ D3DXVECTOR2(-700 + i * 450, -400) });
+		for (int i = 0; i < 4; ++i)
+			ui[i].Render(RenderInfo{ D3DXVECTOR2(-700 + i * 450, -400) });
+	}
 }
 
 void Main::ChoiceBtn()
 {
+	if (static_cast<MainScene*>(nowScene)->input) return;
+
 	pNum = cNum;
 
 	if (Input::GetInstance().KeyDown(VK_LEFT))

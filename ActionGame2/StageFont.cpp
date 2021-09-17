@@ -39,6 +39,7 @@ void StageFont::Update(float deltaTime)
 
 			if (bck.color.a <= 0.0f)
 			{
+				SoundManager::GetInstance().Play(L"Start");
 				destroy = true;
 			}
 		}

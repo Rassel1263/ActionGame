@@ -11,7 +11,7 @@ Enemy2::Enemy2(D3DXVECTOR2 pos) : CEnemy(pos)
 	SetCollider(-60, 0, 60, 300, team);
 	CreateAttackRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-500, 0), D3DXVECTOR2(500, 200), 100);
 	CreateDetectRange(L"player", D3DXVECTOR2(0, 0), D3DXVECTOR2(-800, 0), D3DXVECTOR2(800, 300), 300);
-	ability.SetAbility(120, 100);
+	ability.SetAbility(70, 100);
 
 	SetState(EnemyIdle::GetInstance());
 }
@@ -48,5 +48,6 @@ void Enemy2::Attack(float deltaTime)
 	{
 		onAttack = true;
 		nowScene->obm.AddObject(new Bullet(team, pos + D3DXVECTOR2(ri.scale.x * 50, 150), D3DXVECTOR2(ri.scale.x, 0), 1000, 5, groundPos, Bullet::Type::ROCK));
+		SoundManager::GetInstance().Play(L"Enemy2Atk");
 	}
 }

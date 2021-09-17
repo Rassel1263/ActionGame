@@ -5,6 +5,7 @@ void GameScene::Init()
 {
 	curStage = 1;
 	nextScene = new GameScene2();
+	SoundManager::GetInstance().StopAll();
 
 	LoadFiles();
 	SoundManager::GetInstance().Play(L"Stage1", true);

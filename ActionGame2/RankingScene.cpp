@@ -4,6 +4,7 @@
 
 void RankingScene::Init()
 {
+	SoundManager::GetInstance().StopAll();
 	SoundManager::GetInstance().Play(L"Ranking", true);
 
 	Camera::GetInstance().destCameraPos = { 0, 0 };

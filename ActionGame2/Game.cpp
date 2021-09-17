@@ -14,12 +14,6 @@ Game::~Game()
 	if (pVB != NULL)
 		pVB->Release();
 
-	for (auto& thread : threads)
-	{
-		if (thread.joinable())
-			thread.join();
-	}
-
 	SAFE_RELEASE(pLine);
 }
 
@@ -55,63 +49,49 @@ HRESULT Game::Init()
 
 	Camera::GetInstance().Init();
 	Input::GetInstance().Start();
-
-	/*TextureManager::GetInstance().SaveFilePath();
-	spr.Init();
-
-	for (int i = 0; i < 12; i++)
-		threads.emplace_back(&TextureManager::LoadTexture, &TextureManager::GetInstance(), i);*/
 }
 
 void Game::Update(float deltaTime)
 {
-	//if (TextureManager::GetInstance().textureLoad)
+	Input::GetInstance().Update();
+
+	if (nextScene)
 	{
-		Input::GetInstance().Update();
+		SAFE_DELETE(nowScene);
 
-		if (nextScene)
-		{
-			SAFE_DELETE(nowScene);
+		nowScene = nextScene;
+		nowScene->Init();
+		nextScene = NULL;
+	}
 
-			nowScene = nextScene;
-			nowScene->Init();
-			nextScene = NULL;
-		}
+	if (Input::GetInstance().KeyDown(VK_F8))
+		pause = !pause;
 
-		if (Input::GetInstance().KeyDown(VK_F8))
-			pause = !pause;
+	if (Input::GetInstance().KeyDown(VK_CONTROL))
+		timeScale = 0.05f;
+	if (Input::GetInstance().KeyUp(VK_CONTROL))
+		timeScale = 1.0f;
 
-		if (Input::GetInstance().KeyDown(VK_CONTROL))
-			timeScale = 0.05f;
-		if (Input::GetInstance().KeyUp(VK_CONTROL))
-			timeScale = 1.0f;
+	unscaleTime = deltaTime;
 
-		unscaleTime = deltaTime;
-
-		if(!pause)
+	if (!pause)
 		if (nowScene)
 			nowScene->Update(deltaTime * timeScale);
 
-		Camera::GetInstance().Update(deltaTime);
-	}
-	//else spr.Update(deltaTime);
+	Camera::GetInstance().Update(deltaTime);
 }
 
 void Game::Render()
 {
-	//if(TextureManager::GetInstance().textureLoad)
-	{
-		if(nowScene)
-			nowScene->Render();
+	if (nowScene)
+		nowScene->Render();
 
-		D3DXMATRIX matProj;
-		D3DXMatrixOrthoLH(&matProj, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight, 0.01f, 1000.0f);
-		DXUTGetD3D9Device()->SetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMATRIX matProj;
+	D3DXMatrixOrthoLH(&matProj, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight, 0.01f, 1000.0f);
+	DXUTGetD3D9Device()->SetTransform(D3DTS_PROJECTION, &matProj);
 
-		if(nowScene)
-			nowScene->UIRender();
-	}
-	//else spr.Render();
+	if (nowScene)
+		nowScene->UIRender();
 }
 
 void Game::ChangeScene(Scene* nextScene)

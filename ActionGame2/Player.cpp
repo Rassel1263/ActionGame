@@ -9,7 +9,7 @@ Player::Player()
 	team = L"player";
 	pos.y = -100;
 	groundPos = -100;
-	ability.SetAbility(100, 5000);
+	ability.SetAbility(100, 500);
 
 	SetState(PlayerIdle::GetInstance());
 	SetCollider(-60, 0, 60, 300, team);
@@ -390,17 +390,21 @@ void Player::CreateBullet(D3DXVECTOR2 offset, float speed, float damage, Bullet:
 		else
 			nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
 
-		SoundManager::GetInstance().Play(L"basicShoot", false);
+		SoundManager::GetInstance().Play(L"BasicShoot", false);
 	}
 	else if (type == Bullet::Type::AIRSHOT || type == Bullet::Type::MACHINEGUN || type == Bullet::Type::EMACHINEGUN)
 	{
 		Camera::GetInstance().cameraQuaken = { 5, 5 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire1", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+
+		SoundManager::GetInstance().Play(L"AirShoot", false);
 	}
 	else if (type == Bullet::Type::SNIPER || type == Bullet::Type::ESNIPER)
 	{
 		Camera::GetInstance().cameraQuaken = { 15, 15 };
 		nowScene->obm.AddObject(new Effect(L"Player/fire_sniper", pos + offset, ri.scale, D3DXVECTOR2(0.5f, 0.5f), 0.05f));
+
+		SoundManager::GetInstance().Play(L"Sniper", false);
 	}
 
 	offset.y += 20;
@@ -436,9 +440,14 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	attackTimer = GetNowSprite().aniMaxtime * attackScene;
 
 	if (image == Images::SLIDE)
+	{
 		velocity.x += ri.scale.x * 3000;
+		SoundManager::GetInstance().Play(L"Slide", false);
+		SoundManager::GetInstance().Play(L"SlideVoi", false);
+	}
 	else if (image == Images::GUNKATA)
 	{
+		SoundManager::GetInstance().Play(L"GunKataVoi", false);
 		nowScene->obm.AddObject(new SkillDirecting(attackTimer));
 
 		if (skillEnhance[1]) // 스킬 1 강화 
@@ -456,17 +465,23 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 	}
 	else if (image == Images::MOVESHOOT)
 	{
+		SoundManager::GetInstance().Play(L"MoveShotVoi", false);
+
 		maxAttackTimer = GetNowSprite().aniMaxtime * 2;
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 	else if (image == Images::MACHINEGUN)
 	{
+		SoundManager::GetInstance().Play(L"MachineVoi", false);
 		maxAttackTimer = GetNowSprite().aniMaxtime * 3;
 		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
 	}
 
 	else if (image == Images::SNIPER)
 	{
+		SoundManager::GetInstance().Play(L"SniperVoi", false);
+		SoundManager::GetInstance().Play(L"SniperReady", false);
+
 		for (auto& enemy : nowScene->enemyManager.enemyVec)
 		{
 			if (abs(enemy->groundPos - groundPos) <= 100)
@@ -476,10 +491,13 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 			}
 		}
 
-		if (abs(nowScene->boss->groundPos - groundPos) <= 100)
+		if (nowScene->boss)
 		{
-			if ((ri.scale.x >= 1) ? (nowScene->boss->pos.x > pos.x) : (nowScene->boss->pos.x < pos.x))
-				nowScene->obm.AddObject(new Effect(L"Player/Sniper", &nowScene->boss->pos, D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0, 150), 0.3f));
+			if (abs(nowScene->boss->groundPos - groundPos) <= 100)
+			{
+				if ((ri.scale.x >= 1) ? (nowScene->boss->pos.x > pos.x) : (nowScene->boss->pos.x < pos.x))
+					nowScene->obm.AddObject(new Effect(L"Player/Sniper", &nowScene->boss->pos, D3DXVECTOR2(1.5, 1.5), D3DXVECTOR2(0, 150), 0.3f));
+			}
 		}
 
 		CreateAfterImage(0, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
@@ -493,6 +511,10 @@ void Player::SetSpecialAttack(Images image, int attackScene, float afterImageTim
 		nowScene->obm.AddObject(new SkillDirecting(0.0f, 1));
 		nowScene->obm.AddObject(new Nuclear(D3DXVECTOR2(pos.x + 500 * ri.scale.x, pos.y)));
 		CreateAfterImage(3, 0.0f, D3DCOLOR_ARGB(125, 255, 255, 255));
+
+		SoundManager::GetInstance().Play(L"NuclearReady", false);
+		SoundManager::GetInstance().Play(L"NuclearSound", false);
+		SoundManager::GetInstance().Play(L"NuclearReady2", true);
 	}
 
 	nowScene->obm.AddObject(new Effect(L"Player/command", pos + D3DXVECTOR2(0, 300), D3DXVECTOR2(1, 1), D3DXVECTOR2(0.5, 0.5), 0.5f, true));

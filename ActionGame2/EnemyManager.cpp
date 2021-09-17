@@ -27,6 +27,8 @@ void EnemyManager::SpawnEnemy()
 	{
 		if (nowScene->player->pos.x + 900 > info[infoIndex].pos.x)
 		{
+			SoundManager::GetInstance().Play(L"Enemy" + std::to_wstring(info[infoIndex].enemyType));
+
 			if (info[infoIndex].enemyType == 1)
 				nowScene->obm.AddObject(enemy = new Enemy1(info[infoIndex].pos));
 			else if (info[infoIndex].enemyType == 2)

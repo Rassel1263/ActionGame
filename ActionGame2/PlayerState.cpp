@@ -72,6 +72,7 @@ PlayerMove* PlayerMove::GetInstance()
 void PlayerMove::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::MOVE);
+	SoundManager::GetInstance().Play(L"Walk", true);
 }
 
 void PlayerMove::UpdateState(Player* obj, float deltaTime)
@@ -115,6 +116,8 @@ void PlayerMove::UpdateState(Player* obj, float deltaTime)
 
 void PlayerMove::ExitState(Player* obj)
 {
+
+	SoundManager::GetInstance().Stop(L"Walk");
 }
 
 ///////////////////////////
@@ -420,6 +423,8 @@ void PlayerStrongAttack::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::STRONGATTACK);
 	obj->attackNum = -1;
+
+	SoundManager::GetInstance().Play(L"Kick");
 }
 
 void PlayerStrongAttack::UpdateState(Player* obj, float deltaTime)
@@ -449,6 +454,7 @@ void PlayerGrenade::EnterState(Player* obj)
 {
 	obj->SetAni(Player::Images::GRENADE);
 	nowScene->obm.AddObject(new Bullet(obj->team, obj->pos + D3DXVECTOR2(obj->ri.scale.x * 100, 150), D3DXVECTOR2(obj->ri.scale.x, 0.1f), 1500, 30, obj->groundPos, Bullet::Type::GRENADE));
+	SoundManager::GetInstance().Play(L"GrenadeVoi");
 }
 
 void PlayerGrenade::UpdateState(Player* obj, float deltaTime)
@@ -573,6 +579,9 @@ void PlayerSpecialAttack::UpdateState(Player* obj, float deltaTime)
 
 			if (Input::GetInstance().KeyUp('S') || obj->nuclearTime <= 0.0f)
 			{
+				SoundManager::GetInstance().Stop(L"NuclearReady2");
+				SoundManager::GetInstance().Play(L"NuclearFall");
+
 				obj->nuclear = false;
 				obj->bCollider = true;
 				obj->GetNowSprite().bAniStop = true;
@@ -609,6 +618,7 @@ PlayerHit* PlayerHit::GetInstance()
 void PlayerHit::EnterState(Player* obj)
 {
 	Camera::GetInstance().cameraQuaken = { 5, 5};
+	SoundManager::GetInstance().Play(L"Hit" + std::to_wstring(nowScene->GetRandomNum(1, 3)), false);
 	obj->SetAni(Player::Images::HIT);
 }
 

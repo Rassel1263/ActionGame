@@ -33,6 +33,7 @@ void Item::OnCollision(Collider& coli)
 	if (coli.tag == L"player")
 	{
 		nowScene->player->ItemEffective(index);
+		SoundManager::GetInstance().Play(L"Item");
 		destroy = true;
 	}
 }

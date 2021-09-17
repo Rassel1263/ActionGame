@@ -1,30 +1,50 @@
 #include "DXUT.h"
+#include "LoadSprite.h"
 
-void LoadSprite::Init()
+LoadSprite::LoadSprite()
 {
-	intro.LoadAll(L"Assets/Sprites/UI/Intro", 0.02f, false);
+    loadingBar.LoadAll(L"Assets/Sprites/UI/IntroPro.png");
+    loadingFrame.LoadAll(L"Assets/Sprites/UI/IntroProBck.png");
+    loadingBar.widthRatio = 0.0f;
 
-	progress.LoadAll(L"Assets/Sprites/UI/IntroPro.png");
-	progressBck.LoadAll(L"Assets/Sprites/UI/IntroProBck.png");
+    TextureManager::GetInstance().SaveFilePath();
 
-	maxSize = TextureManager::GetInstance().filePaths.size();
+    for (int i = 0; i < 12; i++)
+        threads.emplace_back(&TextureManager::LoadTexture, &TextureManager::GetInstance(), i);
 
+    maxSize = TextureManager::GetInstance().filePaths.size();
+}
+
+LoadSprite::~LoadSprite()
+{
+    for (auto& thread : threads)
+    {
+        if (thread.joinable())
+            thread.join();
+    }
 }
 
 void LoadSprite::Update(float deltaTime)
 {
-	intro.Update(deltaTime);
+    size = TextureManager::GetInstance().filePaths.size();
 
-	size = TextureManager::GetInstance().filePaths.size();
-	progress.widthRatio = 1 - size / (float)maxSize;
+    if (TextureManager::GetInstance().textureLoad)
+    {
+        loadingBar.color.a -= deltaTime;
 
-	Camera::GetInstance().Update(deltaTime);
+        if (loadingBar.color.a <= 0.0f)
+        {
+            nowScene->obm.AddObject(new Main());
+            destroy = true;
+        }
+    }
+
+    loadingBar.widthRatio = 1 - size / (float)maxSize;
 }
 
 void LoadSprite::Render()
 {
-	intro.Render(RenderInfo{D3DXVECTOR2(0, 0), D3DXVECTOR2(2, 2)});
-
-	progressBck.Render(RenderInfo{D3DXVECTOR2(0, -200)});
-	progress.Render(RenderInfo{D3DXVECTOR2(-14, -209)});
+    loadingFrame.Render(RenderInfo{ D3DXVECTOR2(0, 0)});
+    loadingBar.Render(RenderInfo{ D3DXVECTOR2(-14, -9)});
 }
+

@@ -3,6 +3,8 @@
 
 CalcPage::CalcPage()
 {
+	SoundManager::GetInstance().StopAll();
+
 	nowScene->stopTime = true;
 
 	bck.LoadAll(L"Assets/Sprites/UI/calcBck.png");

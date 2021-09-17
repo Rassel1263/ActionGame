@@ -2,18 +2,25 @@
 class LoadSprite : public Object
 {
 public:
-	Sprite intro;
+    Sprite spr;
+    Sprite loading;
+    Sprite loadingRepeat;
 
-	Sprite progress;
-	Sprite progressBck;
+    Sprite loadingBar;
+    Sprite loadingFrame;
 
-	int size = 0.0f;
-	int maxSize = 0.0f;
+    float size = 0;
+    float maxSize = 0;
 
+    std::vector<std::thread> threads;
 
-	void Init();
+    bool oneLoad = false;
 
-	virtual void Update(float deltaTime) override;
-	virtual void Render() override;
+    float loadTimer = 1.0f;
+    LoadSprite();
+    ~LoadSprite();
+
+    virtual void Update(float deltaTime) override;
+    virtual void Render() override;
 };
 

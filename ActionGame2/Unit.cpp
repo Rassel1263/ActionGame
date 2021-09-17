@@ -47,6 +47,7 @@ void Unit::Hit(float damage, D3DXVECTOR2 addForce)
 
 	hit = true;
 	this->ability.hp -= damage;
+	SoundManager::GetInstance().Play(L"Hit");
 
 	if (ability.hp <= 0) ability.hp = 0;
 }

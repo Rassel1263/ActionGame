@@ -5,9 +5,10 @@ void GameScene3::Init()
 {
 	curStage = 3;
 	nextScene = new RankingScene();
+	SoundManager::GetInstance().StopAll();
 
 	LoadFiles();
-	SoundManager::GetInstance().Play(L"stage3", true);
+	SoundManager::GetInstance().Play(L"Stage3", true);
 
 	nowScene->obm.AddObject(new Font<float>(L"Score/", score, D3DXVECTOR2(800, 500), D3DXVECTOR2(1, 1), 30, 3, 1));
 	nowScene->obm.AddObject(new Font<float>(L"Time/", gameTime, D3DXVECTOR2(0, 500), D3DXVECTOR2(1, 1), 50, 0, 1));

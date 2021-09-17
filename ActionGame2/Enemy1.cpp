@@ -52,5 +52,6 @@ void Enemy1::Attack(float deltaTime)
 		aabb.min = { -100, 0 };
 		aabb.max = { 100, 400 };
 		nowScene->obm.AddObject(new AttackCollider(team, pos, D3DXVECTOR2(100 * ri.scale.x, 0), aabb, 5, D3DXVECTOR2(100, 0), 0, 0.05f, groundPos));
+		SoundManager::GetInstance().Play(L"Enemy1Atk");
 	}
 }
