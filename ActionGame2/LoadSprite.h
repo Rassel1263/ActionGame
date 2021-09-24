@@ -13,6 +13,7 @@ public:
     float maxSize = 0;
 
     std::vector<std::thread> threads;
+    std::mutex lock;
 
     bool oneLoad = false;
 

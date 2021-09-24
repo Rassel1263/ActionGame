@@ -25,50 +25,42 @@ void TextureManager::SaveFilePath()
 
 void TextureManager::Term()
 {
-   int n = textures.size();
-
-   for (auto texture : textures)
-   {
-       SAFE_RELEASE(texture.second->src);
-       SAFE_DELETE(texture.second);
-   }
-}
-
-
-void TextureManager::LoadFile()
-{
-    std::lock_guard<std::recursive_mutex> gaurd(lock);
-
-    filePaths.pop();
+   //for (auto texture : textures)
+   //{
+   //    SAFE_RELEASE(texture.second->src);
+   //    SAFE_DELETE(texture.second);
+   //}
 }
 
 void TextureManager::LoadTexture(int n)
 {
-    static int a = 0;
-    while (!filePaths.empty())
+    while (true)
     {
-        std::cout << n << "      " << a++ << std::endl;
-
         std::wstring filePath;
-        filePath = filePaths.front();
+        {
 
-        LoadFile();
-     
-        wchar_t temp[256] = L"";
+            std::lock_guard<std::mutex> gaurd(lock);
 
-        wsprintfW(temp, L"thread : %d    FilePath : %s             filePathSize : %d\n", n, filePath.c_str(), (int)filePaths.size());
-        OutputDebugString(temp);
-        
+            if (filePaths.empty())
+                break;
+
+            wchar_t temp[256] = L"";
+            wsprintfW(temp, L"thread : %d    FilePath : %s             filePathSize : %d\n", n, filePath.c_str(), (int)filePaths.size());
+            OutputDebugString(temp);
+
+            filePath = filePaths.front();
+            filePaths.pop();
+        }
+
         TextureManager::GetInstance().GetTexture(filePath);
     }
 
-    textureLoad = true;
+    ++threadCount;
+    std::cout << threadCount << std::endl;
 }
 
 const Texture* TextureManager::GetTexture(std::wstring filePath)
 {
-   std::lock_guard<std::recursive_mutex> guard(locki);
-
     filePath = std::filesystem::absolute(filePath);
     std::transform(filePath.begin(), filePath.end(), filePath.begin(), std::towlower);
 
@@ -83,7 +75,7 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
         filePath.c_str(),
         D3DX_DEFAULT_NONPOW2,
         D3DX_DEFAULT_NONPOW2,
-        0,
+        1,
         0,
         D3DFMT_A8R8G8B8,
         D3DPOOL_DEFAULT,
@@ -99,6 +91,7 @@ const Texture* TextureManager::GetTexture(std::wstring filePath)
         delete texture;
         return nullptr;
     }
+    std::lock_guard<std::mutex> gaurd(insertLock);
 
     return textures.insert({ filePath, texture }).first->second;
 }

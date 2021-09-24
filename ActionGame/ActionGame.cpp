@@ -157,7 +157,7 @@ INT main( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTCreateWindow( L"ActionGame" );
 
 #ifdef _DEBUG
-    DXUTCreateDevice( false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+    DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
 #else
     DXUTCreateDevice(false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight);
 #endif

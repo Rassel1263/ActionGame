@@ -84,7 +84,7 @@ void Player::SetImages()
 	std::wstring filePath = L"Assets/Sprites/Unit/Player/";
 
 	GetSprite(Images::IDLE).LoadAll(filePath + L"stay", 0.05f);
-	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.05f);
+	GetSprite(Images::MOVE).LoadAll(filePath + L"move", 0.03f);
 	GetSprite(Images::JUMP).LoadAll(filePath + L"jump", 0.05f, false);
 	GetSprite(Images::FALL).LoadAll(filePath + L"fall", 0.05f, false);
 	GetSprite(Images::LANDING).LoadAll(filePath + L"landing", 0.05f, false);

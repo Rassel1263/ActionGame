@@ -14,8 +14,6 @@ struct CUSTOMVERTEX
 class Game : public Singleton<Game>
 {
 public:
-	std::vector<std::thread> threads;
-
 	bool pause = false;
 
 	float screenWidth = 1920;

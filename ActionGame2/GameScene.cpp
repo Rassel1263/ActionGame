@@ -45,6 +45,7 @@ void GameScene::Update(float deltaTime)
 	}
 
 
+
 	Scene::Update(deltaTime);
 }
 

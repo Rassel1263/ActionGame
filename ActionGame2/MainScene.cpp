@@ -11,7 +11,7 @@ void MainScene::Init()
 	EnhanceData::GetInstance().Init();
 	LoadFiles();
 
-	if (!TextureManager::GetInstance().textureLoad)
+	if (TextureManager::GetInstance().threadCount <= 0)
 		nowScene->obm.AddObject(new LoadSprite());
 	else
 		nowScene->obm.AddObject(new Main());

@@ -28,10 +28,10 @@ void LoadSprite::Update(float deltaTime)
 {
     size = TextureManager::GetInstance().filePaths.size();
 
-    if (TextureManager::GetInstance().textureLoad)
+    if (TextureManager::GetInstance().threadCount >= 12)
     {
         loadingBar.color.a -= deltaTime;
-
+    
         if (loadingBar.color.a <= 0.0f)
         {
             nowScene->obm.AddObject(new Main());
@@ -44,6 +44,8 @@ void LoadSprite::Update(float deltaTime)
 
 void LoadSprite::Render()
 {
+    std::lock_guard<std::mutex> gaurd(lock);
+
     loadingFrame.Render(RenderInfo{ D3DXVECTOR2(0, 0)});
     loadingBar.Render(RenderInfo{ D3DXVECTOR2(-14, -9)});
 }

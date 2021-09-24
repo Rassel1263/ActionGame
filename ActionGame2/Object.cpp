@@ -35,6 +35,7 @@ void Object::Update(float deltaTime)
 
 		if (pos.y <= groundPos)
 		{
+
 			bGround = true;
 			pos.y = groundPos;
 		}

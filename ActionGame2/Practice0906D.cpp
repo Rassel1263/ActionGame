@@ -124,6 +124,8 @@ void CALLBACK OnD3D9LostDevice( void* pUserContext )
 //--------------------------------------------------------------------------------------
 void CALLBACK OnD3D9DestroyDevice( void* pUserContext )
 {
+    //TextureManager::GetInstance().Term();
+    //Game::GetInstance().Term();
 }
 
 
@@ -155,14 +157,24 @@ INT main( HINSTANCE, HINSTANCE, LPWSTR, int )
     DXUTSetHotkeyHandling( true, true, true );  // handle the default hotkeys
     DXUTSetCursorSettings( true, true ); // Show the cursor and clip it when in full screen
     DXUTCreateWindow( L"Practice0906D" );
+
     Game::GetInstance().Check();
 
-#ifdef _DEBUG
-    DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
-#else 
-    DXUTCreateDevice( false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
-#endif
+    CoInitializeEx(NULL, COINIT_MULTITHREADED);
+    DXUTDeviceSettings settings;
+    DXUTFindValidDeviceSettings(&settings, &settings);
+    settings.d3d9.pp.BackBufferWidth = Game::GetInstance().screenWidth;
+    settings.d3d9.pp.BackBufferHeight = Game::GetInstance().screenHeight;
+    settings.d3d9.BehaviorFlags |= D3DCREATE_MULTITHREADED;
 
+#ifdef _DEBUG
+    //DXUTCreateDevice( true, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+    settings.d3d9.pp.Windowed = true;
+#else 
+    //DXUTCreateDevice( false, Game::GetInstance().screenWidth, Game::GetInstance().screenHeight );
+    settings.d3d9.pp.Windowed = false;
+#endif
+    DXUTCreateDeviceFromSettings(&settings);
     // Start the render loop
     DXUTMainLoop();
 

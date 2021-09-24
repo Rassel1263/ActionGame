@@ -11,9 +11,7 @@ void Game::Check()
 
 Game::~Game()
 {
-	if (pVB != NULL)
-		pVB->Release();
-
+	SAFE_RELEASE(pVB);
 	SAFE_RELEASE(pLine);
 }
 
@@ -118,14 +116,7 @@ void Game::Reset()
 
 void Game::Term()
 {
-	if (pVB != NULL)
-		pVB->Release();
-
-	for (auto& thread : threads)
-	{
-		if (thread.joinable())
-			thread.join();
-	}
+	SAFE_RELEASE(pVB);
 
 	SAFE_RELEASE(pLine);
 }
